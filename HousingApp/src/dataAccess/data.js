@@ -1,5 +1,3 @@
-import "./App.css"
-import Pages from "./components/pages/Pages"
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -21,9 +19,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-function App() {
-  return <Pages />
-}
-
-export default App
-
+export default app;
