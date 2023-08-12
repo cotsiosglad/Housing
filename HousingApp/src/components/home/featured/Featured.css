@@ -5,8 +5,17 @@
   padding: 30px;
   cursor: pointer;
 }
+
 .featured img {
   width: 65px;
   height: 65px;
   margin: auto;
+}
+
+.background {
+  background: #50504e;
+}
+
+.box {
+  background: #50504e;
 }
