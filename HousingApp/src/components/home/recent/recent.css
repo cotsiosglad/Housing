@@ -16,7 +16,8 @@
 }
 
 .recent p {
-  color: #72809d;
+  color: var(--color3);
+  font-weight: bold;
 }
 
 .recent .button {
@@ -25,7 +26,7 @@
 }
 
 .recent {
-  background: #50504e;
+  background: var(--color2);;
 }
 
 .btn2 {
@@ -35,4 +36,13 @@
 
 .label {
   color: #282725;
+}
+
+.recent .box img{
+  border-radius: 16px 16px 0px 0px;
+}
+
+.recent .box{
+  background-color: var(--color1);
+    border-radius: 16px;
 }

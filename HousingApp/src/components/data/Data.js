@@ -24,32 +24,60 @@ export const nav = [
     path: "/contact",
   },
 ]
+// export const featured = [
+//   {
+//     cover: "../images/hero/h1.png",
+//     name: "Family House",
+//     total: "122 Property",
+//   },
+//   {
+//     cover: "../images/hero/h2.png",
+//     name: "House & Villa",
+//     total: "155 Property",
+//   },
+//   {
+//     cover: "../images/hero/h3.png",
+//     name: "Apartment",
+//     total: "300 Property",
+//   },
+//   {
+//     cover: "../images/hero/h4.png",
+//     name: "Office & Studio",
+//     total: "80 Property",
+//   },
+//   {
+//     cover: "../images/hero/h6.png",
+//     name: "Villa & Condo",
+//     total: "80 Property",
+//   },
+// ]
+
 export const featured = [
-  {
-    cover: "../images/hero/h1.png",
-    name: "Family House",
-    total: "122 Property",
-  },
+  
   {
     cover: "../images/hero/h2.png",
-    name: "House & Villa",
-    total: "155 Property",
+    name: "House",
+    total: "155 Properties",
   },
   {
     cover: "../images/hero/h3.png",
     name: "Apartment",
-    total: "300 Property",
+    total: "300 Properties",
   },
   {
     cover: "../images/hero/h4.png",
-    name: "Office & Studio",
+    name: "Office",
     total: "80 Property",
-  },
-  {
-    cover: "../images/hero/h6.png",
-    name: "Villa & Condo",
-    total: "80 Property",
-  },
+  }
+]
+
+export const projects =[
+{
+  id:1,
+  title:"Nisou Project",
+  description:""
+}
+
 ]
 export const list = [
   {
@@ -79,33 +107,33 @@ export const list = [
     price: "$5,860",
     type: "Offices",
   },
-  {
-    id: 4,
-    cover: "../images/list/p-4.png",
-    name: "Herringbone Realty",
-    location: "5621 Liverpool, London",
-    category: "For Sale",
-    price: "$7,540",
-    type: "Homes & Villas",
-  },
-  {
-    id: 5,
-    cover: "../images/list/p-5.png",
-    name: "Brick Lane Realty",
-    location: "210 Montreal Road, Canada",
-    category: "For Rent",
-    price: "$4,850",
-    type: "Commercial",
-  },
-  {
-    id: 6,
-    cover: "../images/list/p-6.png",
-    name: "Banyon Tree Realty",
-    location: "210 Zirak Road, Canada",
-    category: "For Sale",
-    price: "$2,742",
-    type: "Apartment",
-  },
+  // {
+  //   id: 4,
+  //   cover: "../images/list/p-4.png",
+  //   name: "Herringbone Realty",
+  //   location: "5621 Liverpool, London",
+  //   category: "For Sale",
+  //   price: "$7,540",
+  //   type: "Homes & Villas",
+  // },
+  // {
+  //   id: 5,
+  //   cover: "../images/list/p-5.png",
+  //   name: "Brick Lane Realty",
+  //   location: "210 Montreal Road, Canada",
+  //   category: "For Rent",
+  //   price: "$4,850",
+  //   type: "Commercial",
+  // },
+  // {
+  //   id: 6,
+  //   cover: "../images/list/p-6.png",
+  //   name: "Banyon Tree Realty",
+  //   location: "210 Zirak Road, Canada",
+  //   category: "For Sale",
+  //   price: "$2,742",
+  //   type: "Apartment",
+  // },
 ]
 export const awards = [
   {
@@ -129,56 +157,76 @@ export const awards = [
     name: "IITCA Green Award",
   },
 ]
+// export const location = [
+//   {
+//     id: 1,
+//     name: "New Orleans, Louisiana",
+//     Villas: "12 Villas",
+//     Apartments: "10 Apartments",
+//     Offices: "07 Offices",
+//     cover: "./images/location/city-1.png",
+//   },
+//   {
+//     id: 2,
+//     name: "Jerrsy, United State",
+//     Villas: "12 Villas",
+//     Apartments: "10 Apartments",
+//     Offices: "07 Offices",
+//     cover: "./images/location/city-2.png",
+//   },
+//   {
+//     id: 3,
+//     name: "Liverpool, London",
+//     Villas: "12 Villas",
+//     Apartments: " 10 Apartments",
+//     Offices: "07 Offices",
+//     cover: "./images/location/city-3.png",
+//   },
+//   {
+//     id: 4,
+//     name: "NewYork, United States",
+//     Villas: "12 Villas",
+//     Apartments: " 10 Apartments",
+//     Offices: "07 Offices",
+//     cover: "./images/location/city-4.png",
+//   },
+//   {
+//     id: 5,
+//     name: "Montreal, Canada",
+//     Villas: "12 Villas",
+//     Apartments: " 10 Apartments",
+//     Offices: "07 Offices",
+//     cover: "./images/location/city-5.png",
+//   },
+//   {
+//     id: 6,
+//     name: "California, USA",
+//     Villas: "12 Villas",
+//     Apartments: " 10 Apartments",
+//     Offices: "07 Offices",
+//     cover: "./images/location/city-6.png",
+//   },
+// ]
+
 export const location = [
   {
     id: 1,
-    name: "New Orleans, Louisiana",
-    Villas: "12 Villas",
+    name: "Nisou, Nicosia",
+    Villas: "15 Houses",
     Apartments: "10 Apartments",
-    Offices: "07 Offices",
+    Offices: "",
     cover: "./images/location/city-1.png",
   },
   {
     id: 2,
-    name: "Jerrsy, United State",
-    Villas: "12 Villas",
-    Apartments: "10 Apartments",
-    Offices: "07 Offices",
-    cover: "./images/location/city-2.png",
-  },
-  {
-    id: 3,
-    name: "Liverpool, London",
-    Villas: "12 Villas",
-    Apartments: " 10 Apartments",
-    Offices: "07 Offices",
-    cover: "./images/location/city-3.png",
-  },
-  {
-    id: 4,
-    name: "NewYork, United States",
-    Villas: "12 Villas",
-    Apartments: " 10 Apartments",
-    Offices: "07 Offices",
-    cover: "./images/location/city-4.png",
-  },
-  {
-    id: 5,
-    name: "Montreal, Canada",
-    Villas: "12 Villas",
-    Apartments: " 10 Apartments",
-    Offices: "07 Offices",
+    name: "Tseri, Nicosia",
+    Villas: "7 Houses",
+    Apartments: "5 Apartments",
+    Offices: "2 Offices",
     cover: "./images/location/city-5.png",
-  },
-  {
-    id: 6,
-    name: "California, USA",
-    Villas: "12 Villas",
-    Apartments: " 10 Apartments",
-    Offices: "07 Offices",
-    cover: "./images/location/city-6.png",
-  },
+  }
 ]
+
 export const team = [
   {
     list: "50",

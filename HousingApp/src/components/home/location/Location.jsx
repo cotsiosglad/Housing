@@ -10,7 +10,7 @@ const Location = () => {
         <div className='container'>
           <Heading title='Explore By Location' subtitle='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.' />
 
-          <div className='content grid3 mtop'>
+          <div className='content d-flex flex-row justify-content-center flex-wrap'>
             {location.map((item, index) => (
               <div className='box' key={index}>
                 <img src={item.cover} alt='' />

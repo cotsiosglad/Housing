@@ -1,6 +1,9 @@
 .location .box {
   position: relative;
   border-radius: 5px;
+  max-width: 21rem;
+  max-height: 21rem;
+  margin: 15px 15px 15px 15px;
 }
 
 .location {

@@ -14,7 +14,7 @@ const Header = () => {
             <img src='./images/dalogo.png' alt='' />
           </div>
           <div className='nav'>
-            <ul className={navList ? "small" : "flex"}>
+            <ul className={navList ? "small" : "flex"} style={{marginBottom:"0px"}}>
               {nav.map((list, index) => (
                 <li key={index}>
                   <Link to={list.path}>{list.text}</Link>
@@ -23,7 +23,7 @@ const Header = () => {
             </ul>
           </div>
           {/* <div className='button flex'>
-            <h4>
+            <h4>  
               <span>2</span> My List
             </h4>
             <button className='btn1'>

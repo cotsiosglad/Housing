@@ -1,14 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+@import  "./constants.css";
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: LFutura;
+  font-size: large;
 }
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #fff;
+  background-color: var(--color1);
 }
 
 .container {
@@ -24,8 +27,9 @@ body {
 
 a {
   text-decoration: none;
-  color: #000;
+  color: var(--color1);
   text-transform: capitalize;
+  font-family: LFutura;
 }
 
 ul {
@@ -37,7 +41,7 @@ button {
   padding: 17px 30px;
   background: #27ae60;
   border: none;
-  color: #fff;
+  color: var(--color1);
   cursor: pointer;
   font-weight: bold;
 }
@@ -53,14 +57,15 @@ button i {
 }
 
 .heading h1 {
-  color: #dedad9;
+  color: var(--color1);
   font-weight: 600;
   text-transform: capitalize;
   font-size: 35px;
 }
 
 .heading p {
-  color: #72809d;
+  color: var(--color2);
+  font-weight: bold;
 }
 
 textarea,
@@ -73,7 +78,7 @@ input {
 .background {
   padding: 80px 0;
   position: relative;
-  background: #f7f9fc;
+  background: var(--color1);
 }
 
 .grid5 {
@@ -83,7 +88,7 @@ input {
 }
 
 label {
-  color: #dedad9;
+  color: var(--color1);
   font-size: 14px;
 }
 
@@ -134,7 +139,7 @@ img {
 
 .btn4 {
   background-color: #000;
-  color: #fff;
+  color: var(--color1);
 }
 
 .btn5 {
@@ -144,7 +149,7 @@ img {
   font-size: 20px;
   font-weight: 400;
   border: 5px solid #27ae601f;
-  background: #fff;
+  background: var(--color1);
 }
 
 .back {
@@ -173,7 +178,7 @@ img {
 }
 
 .back .container {
-  color: #fff;
+  color: var(--color1);
   padding: 120px 0;
 }
 
@@ -207,4 +212,11 @@ img {
   .back {
     height: 30vh;
   }
+}
+
+@font-face {
+  font-family: "LFutura";
+  src: local("LFutura"),
+    url("./fonts/LFutura.ttf") format("truetype");
+  font-weight: normal;
 }
