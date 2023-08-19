@@ -1,0 +1,57 @@
+import React, { useState } from "react";
+import "./adminLogin.css"
+
+// Initialize Firebase
+
+
+const AdminLogin = () => {
+
+    // State to manage form input values
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    // Function to handle form submission
+    const handleLogin = (e) => {
+        e.preventDefault(); // Prevents the default form submission behavior
+
+        // display the entered values in the console
+        console.log("Username:", username);
+        console.log("Password:", password);
+    };
+
+    return (
+        <div className="login-form-container">
+            <form onSubmit={handleLogin} className="login-form">
+                <h2>Login</h2>
+                <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Enter your username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <button type="submit" className="login-button">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
+};
+export default AdminLogin

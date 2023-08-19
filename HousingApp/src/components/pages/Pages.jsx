@@ -8,23 +8,37 @@ import Pricing from "../pricing/Pricing"
 import Blog from "../blog/Blog"
 import Services from "../services/Services"
 import Contact from "../contact/Contact"
-import adminLogin from "../adminLogin/adminLogin"
+import AdminLogin from "../admin/adminLogin"
+
+
+// Layout component with Header and Footer
+const DefaultLayout = ({ children }) => (
+  <>
+    <Header />
+    {children}
+    <Footer />
+  </>
+);
+
+// Layout component for AdminLogin without Header and Footer
+const AdminLoginLayout = ({ children }) => <>{children}</>;
 
 const Pages = () => {
   return (
     <>
       <Router>
-        <Header />
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/admin' component={adminLogin} />
-          <Route exact path='/about' component={About} />
-          <Route exact path='/services' component={Services} />
-          <Route exact path='/blog' component={Blog} />
-          <Route exact path='/pricing' component={Pricing} />
-          <Route exact path='/contact' component={Contact} />
+          {/* Routes with DefaultLayout */}
+          <Route exact path="/" render={() => <DefaultLayout><Home /></DefaultLayout>} />
+          <Route exact path="/about" render={() => <DefaultLayout><About /></DefaultLayout>} />
+          <Route exact path="/services" render={() => <DefaultLayout><Services /></DefaultLayout>} />
+          <Route exact path="/blog" render={() => <DefaultLayout><Blog /></DefaultLayout>} />
+          <Route exact path="/pricing" render={() => <DefaultLayout><Pricing /></DefaultLayout>} />
+          <Route exact path="/contact" render={() => <DefaultLayout><Contact /></DefaultLayout>} />
+
+          {/* Route for AdminLogin with AdminLoginLayout */}
+          <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
         </Switch>
-        <Footer />
       </Router>
     </>
   )

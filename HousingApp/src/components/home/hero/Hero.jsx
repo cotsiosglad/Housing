@@ -7,17 +7,17 @@ const Hero = () => {
     <>
       <section className='hero'>
         <div className=''>
-        {/* <Header /> */}
+          {/* <Header /> */}
 
           <video className='videoTag' autoPlay loop muted width="100%" height="100%">
-                <source src="./images/pexels-kindel-media-7578550 (2160p).mp4" type='video/mp4' />
-            </video>
-            <div className="hero-mess row">
-              <div className="hero-mess-content col-8">
-                <h2>∆εν είναι απλή αγορά ακινήτου...είναι επένδυση</h2>
-                <p>Επενδύστε στην αγορά ακινήτου,επενδύστε στο αύριο</p>
-              </div>
+            <source src="./images/pexels-kindel-media-7578550 (2160p).mp4" type='video/mp4' />
+          </video>
+          <div className="hero-mess row">
+            <div className="hero-mess-content col-8">
+              <h2>∆εν είναι απλή αγορά ακινήτου...είναι επένδυση</h2>
+              <p>Επενδύστε στην αγορά ακινήτου,επενδύστε στο αύριο</p>
             </div>
+          </div>
           {/* <Heading title='Search Your Next Home ' subtitle='Find new & featured property located in your local city.' />
 
           <form className='flex'>

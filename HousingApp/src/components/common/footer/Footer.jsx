@@ -20,12 +20,12 @@ const Footer = () => {
             </div>
           </div>
 
-          {footer.map((val) => (
-            <div className='box'>
+          {footer.map((val, index) => ( // Add a unique key based on the index
+            <div key={index} className='box'>
               <h3>{val.title}</h3>
               <ul>
-                {val.text.map((items) => (
-                  <li> {items.list} </li>
+                {val.text.map((items, itemIndex) => ( // Add a unique key for the inner map
+                  <li key={itemIndex}> {items.list} </li>
                 ))}
               </ul>
             </div>
