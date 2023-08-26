@@ -14,10 +14,10 @@ body {
   background-color: var(--color1);
 }
 
-.container {
+/* .container {
   max-width: 80%;
   margin: auto;
-}
+} */
 
 .flex {
   display: flex;
@@ -177,7 +177,8 @@ img {
   z-index: -1;
 }
 
-.back .container {
+/* .back .container { */
+.back {
   color: var(--color1);
   padding: 120px 0;
 }
@@ -203,9 +204,9 @@ img {
     width: 100%;
   }
 
-  .container {
+  /* .container {
     max-width: 90%;
-  }
+  } */
 
   .back::after,
   .back img,
