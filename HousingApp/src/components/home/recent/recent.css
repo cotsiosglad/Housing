@@ -46,3 +46,86 @@
   background-color: var(--color1);
     border-radius: 16px;
 }
+
+.houses-grid-item .houses-grid-img {
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: -2px;
+  bottom: -2px;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.3s;
+}
+
+.houses-grid-item {
+  display: block;
+  height: 415px;
+  /* margin: 0 -15px; */
+  position: relative;
+  overflow: hidden;
+  margin: 15px;
+}
+
+.rentals-grid-tabs {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.rentals-grid-tab {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  display: inline-block;
+  line-height: 35px;
+  padding: 0 15px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: bold;
+  font-size: 13px;
+  /* min-width: 145px; */
+  text-align: left;
+  margin: 6px;
+}
+
+.houses-grid-item .houses-grid-content {
+  padding: 0 15px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  color: #fff;
+}
+
+.houses-grid-item .houses-grid-content span {
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.houses-grid-item .houses-grid-content h4 {
+  font-size: 40px;
+  line-height: 52px;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  margin: 0;
+}
+
+.projects .houses-grid-item{
+  margin: 0 -15px !important;
+}
+
+.projects .houses-grid-item .houses-grid-img:hover {
+  left: -15px;
+  right: -15px;
+  top: -15px;
+  bottom: -15px;
+}

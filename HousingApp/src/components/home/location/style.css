@@ -7,7 +7,7 @@
 }
 
 .location {
-  background: #50504e;
+  background: var(--color4);
 }
 
 .location img {

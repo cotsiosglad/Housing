@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import Home from "../home/Home"
 import Footer from "../common/footer/Footer"
 import About from "../about/About"
-import Pricing from "../pricing/Pricing"
-import Blog from "../blog/Blog"
+// import Pricing from "../pricing/Pricing"
+import Projects from "../blog/Blog"
 import Services from "../services/Services"
 import Contact from "../contact/Contact"
 import AdminLogin from "../admin/adminLogin"
@@ -32,8 +32,8 @@ const Pages = () => {
           <Route exact path="/" render={() => <DefaultLayout><Home /></DefaultLayout>} />
           <Route exact path="/about" render={() => <DefaultLayout><About /></DefaultLayout>} />
           <Route exact path="/services" render={() => <DefaultLayout><Services /></DefaultLayout>} />
-          <Route exact path="/blog" render={() => <DefaultLayout><Blog /></DefaultLayout>} />
-          <Route exact path="/pricing" render={() => <DefaultLayout><Pricing /></DefaultLayout>} />
+          <Route exact path="/projects" render={() => <DefaultLayout><Projects /></DefaultLayout>} />
+          {/* <Route exact path="/pricing" render={() => <DefaultLayout><Pricing /></DefaultLayout>} /> */}
           <Route exact path="/contact" render={() => <DefaultLayout><Contact /></DefaultLayout>} />
 
           {/* Route for AdminLogin with AdminLoginLayout */}

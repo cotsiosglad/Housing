@@ -7,9 +7,12 @@ const Recent = () => {
   return (
     <>
       <section className='recent padding'>
-        <div className='container d-flex flex-row justify-content-center flex-wrap'>
-          <Heading title='Recent Property Listed' subtitle='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.' />
-          <RecentCard />
+        {/* <div className='container d-flex flex-row justify-content-center flex-wrap'> */}
+        <div className='container'>
+          <Heading title='Recent Projects Listed' subtitle='Recently Active or Completed Projects' />
+          <div className="row">
+            <RecentCard />
+          </div>
         </div>
       </section>
     </>

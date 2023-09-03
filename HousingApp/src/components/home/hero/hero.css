@@ -3,7 +3,8 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  height: 90vh;
+  background: var(--color4);
+  /* height: 90vh; */
   width: 100%;
 }
 .hero .container {
@@ -51,7 +52,7 @@ form h4 {
 
 .hero-mess{
   position: absolute;
-  top:42%;
+  top:50%;
   left: 60px;
   color: var(--color1);
 }

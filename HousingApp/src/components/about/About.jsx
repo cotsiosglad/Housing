@@ -8,18 +8,51 @@ const About = () => {
   return (
     <>
       <section className='about'>
-        <Back name='About Us' title='About Us - Who We Are?' cover={img} />
+        {/* <Back name='About Us' title='About Us - Who We Are?' cover={img} /> */}
+        <Back name='About Us' title='Σχετικά με εμάς - Ποιοί είμαστε;' cover={img} />
         <div className='container flex mtop'>
-          <div className='left row'>
-            <Heading title='Our Agency Story' subtitle='Check out our company story and work process' />
+          <div className='row'>
+            <div className="col-7">
+              <Heading title='Ποιοι Είμαστε' subtitle='' />
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-            <button className='btn2'>More About Us</button>
+              <p>H <b>Domus Alba</b> είναι μία νέα εταιρεία που έρχεται να επαναπροσδιορίσει
+                  το τι σημαίνει αγορά ακινήτου, κατοικίας ή διαμερίσματος:
+                  σημαίνει επένδυση.</p>
+              <p><b>"Domus alba"</b> θα πει <b>«Λευκός οίκος»</b>. Θα πει ότι εκεί όπου σήμερα άλλοι
+                δεν βλέπουν τίποτα, στην <b>Domus Alba</b> βλέπουμε τρόπους να επενδύσουμε
+                στο αύριο. Αξιοποιώντας ό,τι πιο καινοτόμο έχει να προσφέρει η αγορά
+                ακινήτων, είτε πρόκειται για ιδιοκατοίκηση είτε για αξιοποίηση και
+                εκμετάλλευση ακινήτου, προσφέρουμε ολοκληρωμένες προτάσεις
+                και εξειδικευμένες λύσεις για όλα τα κοινωνικά στρώματα.
+              </p>
+              <Heading title='Γιατί Εμάς' subtitle='' />
+              <p>Κάθε στέλεχος της <b>Domus Alba</b> προσφέρει, με την πολυετή εμπειρία του στον χώρο,
+              την εξειδίκευση και την εμπεριστατωμένη ματιά που απαιτεί κάθε έργο. Όλοι οι μέτοχοι,
+              καθώς και το εργατικό προσωπικό, διευθυντές, εργολάβοι και σύμβουλοι μελετητές, έχουν
+              άμεση επαφή με όλους τους τομείς των αρμοδιοτήτων τους και εποπτεύουν πλήρως την πρόοδο
+              κάθε έργου σε κάθε στάδιο ανάπτυξής του.</p>
+              <Heading title='Το Όραμα μας' subtitle='' />
+              <p>
+                Το όραμά μας στην <b>Domus Alba</b> είναι ένα:
+                με την πολυετή τεχνογνωσία των έμπειρων στελεχών μας και την
+                αστείρευτη ανάγκη μας για γνώση και εξέλιξη κατορθώνουμε να
+                ανοίγουμε τον δρόμο ώστε κάθε δική σας αγορά να αποδεικνύεται
+                μία προσοδοφόρα επένδυση. Σ’ αυτό βασίζεται η δική μας επιτυχία:
+                γιατί... αγορά ακινήτου σημαίνει επένδυση!
+              </p>
+              <p>
+                Όσον αφορά τα έργα της εταιρείας, όλα γίνονται με ίδια κεφάλαια
+                και είναι άμεσα μεταβιβάσιμα με την υπογραφή του αγοραπωλητήριου
+                εγγράφου. Επιπλέον, κανένα έργο δεν έχει εμπράγματο βάρος,
+                συνεπώς καμία υποθήκη.
+              </p>
+            </div>
+            
+            <div className="col-5 align-self-center">
+                <img src='./immio.jpg' alt='' />
+            </div>
           </div>
-          <div className='right row'>
-            <img src='./immio.jpg' alt='' />
-          </div>
+          
         </div>
       </section>
     </>
