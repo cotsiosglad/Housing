@@ -9,6 +9,7 @@ import Projects from "../blog/Blog"
 import Services from "../services/Services"
 import Contact from "../contact/Contact"
 import AdminLogin from "../admin/adminLogin"
+import AdminMainPage from "../admin/adminMainPage"
 
 
 // Layout component with Header and Footer
@@ -38,6 +39,7 @@ const Pages = () => {
 
           {/* Route for AdminLogin with AdminLoginLayout */}
           <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
+          <Route exact path="/admin-main" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} />
         </Switch>
       </Router>
     </>
