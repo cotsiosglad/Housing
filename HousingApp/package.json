@@ -4,10 +4,13 @@
   "private": true,
   "dependencies": {
     "@syncfusion/ej2-react-grids": "^22.2.11",
+    "@syncfusion/ej2-react-navigations": "^22.2.11",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^10.0.0",
+    "fslightbox-react": "^1.7.6",
+    "primereact": "^9.6.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-icons": "^4.10.1",

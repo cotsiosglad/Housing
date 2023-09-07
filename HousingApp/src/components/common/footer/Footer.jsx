@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 // import { footer } from "../../data/Data"
 import { BsFillTelephoneFill,BsFacebook,BsFillPinMapFill } from 'react-icons/bs';
 import "./footer.css"
+import logoImg from "../images/dalogo.png"
 
 const Footer = () => {
   return (
@@ -13,7 +14,8 @@ const Footer = () => {
             <div className="col-2">
               <div className='logo'>
               <Link to="/">
-                <img src='./images/dalogo.png' alt='' />
+                {/* <img src='./images/dalogo.png' alt='' /> */}
+                <img src={logoImg} alt='' />
               </Link>
                 {/* <img src='../images/logo-light.png' alt='' /> */}
                 {/* <h2>Any help you need</h2>

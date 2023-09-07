@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom";
 import { list } from "../../data/Data"
 import { BsBuildingFill,BsFillLayersFill,BsFillPinMapFill } from 'react-icons/bs';
 import background from "../../images/services.jpg";
@@ -47,9 +48,12 @@ const RecentCard = () => {
           return (
             // <div className="row">
               <div className="col-md-4" key={val.id}>
+                <Link to={`/projects/${val.id}`}>
               <div className='box shadow houses-grid-item'>
+              
                 <div className='houses-grid-img' style={{ backgroundImage: `url(${background})` }}>
                   {/* <img src={cover} alt='' /> */}
+                  
                 </div>
                 <div className="houses-grid-content">
                   <span>Completed</span>
@@ -67,6 +71,7 @@ const RecentCard = () => {
                   </span>
                 </div>
               </div>
+              </Link>
               </div>
             //</div>
             
