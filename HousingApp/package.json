@@ -12,6 +12,7 @@
     "fslightbox-react": "^1.7.6",
     "primereact": "^9.6.2",
     "react": "^18.1.0",
+    "react-chatbot-kit": "^2.1.2",
     "react-dom": "^18.1.0",
     "react-icons": "^4.10.1",
     "react-router-dom": "^5.3.3",

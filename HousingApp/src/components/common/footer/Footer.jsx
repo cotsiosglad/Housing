@@ -1,11 +1,26 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 // import { footer } from "../../data/Data"
-import { BsFillTelephoneFill,BsFacebook,BsFillPinMapFill } from 'react-icons/bs';
+import { BsFillTelephoneFill, BsFacebook, BsFillPinMapFill } from 'react-icons/bs';
 import "./footer.css"
 import logoImg from "../images/dalogo.png"
+import Chatbot from "react-chatbot-kit";
+import 'react-chatbot-kit/build/main.css';
+import config from "../../../components/chatbot/chatconfig";
+import MessageParser from "../../../components/chatbot/chatMessageParser";
+import ActionProvider from "../../../components/chatbot/chatActionProvider";
 
 const Footer = () => {
+  const [showBot, toggleBot] = useState(true);
+
+  const saveMessages = (messages, HTMLString) => {
+    localStorage.setItem('chat_messages', JSON.stringify(messages));
+  };
+
+  // const loadMessages = () => {
+  //   const messages = JSON.parse(localStorage.getItem('chat_messages'));
+  //   return messages;
+  // };
   return (
     <>
       <footer>
@@ -13,10 +28,10 @@ const Footer = () => {
           <div className="row box">
             <div className="col-2">
               <div className='logo'>
-              <Link to="/">
-                {/* <img src='./images/dalogo.png' alt='' /> */}
-                <img src={logoImg} alt='' />
-              </Link>
+                <Link to="/">
+                  {/* <img src='./images/dalogo.png' alt='' /> */}
+                  <img src={logoImg} alt='' />
+                </Link>
                 {/* <img src='../images/logo-light.png' alt='' /> */}
                 {/* <h2>Any help you need</h2>
                 <p>Find the best deal for you!</p> */}
@@ -33,15 +48,15 @@ const Footer = () => {
                 <a href="https://goo.gl/maps/gGd1bFMoN7TgSRKy8" target="_blank" rel="noreferrer"> 170, Strovolou Avenue Street 2480 Στρόβολος, Κύπρος</a>
               </span>
             </div>
-                <div className="offset-1 col-2 align-self-center">
-                  <span className="d-block">
-                    <BsFillTelephoneFill /> +357 97729606
-                  </span>
-                  <span className="d-block">
-                    <BsFacebook />
-                    <a href="https://www.facebook.com/domusalbacy/" target="_blank" rel="noreferrer"> domusalbacy</a>
-                  </span>
-                </div>
+            <div className="offset-1 col-2 align-self-center">
+              <span className="d-block">
+                <BsFillTelephoneFill /> +357 97729606
+              </span>
+              <span className="d-block">
+                <BsFacebook />
+                <a href="https://www.facebook.com/domusalbacy/" target="_blank" rel="noreferrer"> domusalbacy</a>
+              </span>
+            </div>
           </div>
 
           {/* {footer.map((val, index) => ( // Add a unique key based on the index
@@ -59,6 +74,18 @@ const Footer = () => {
       {/* <div className='legal'>
         <span>Rights belong to CCNE</span>
       </div> */}
+      <div className="App">
+        {showBot && (
+          <Chatbot
+            config={config}
+            actionProvider={ActionProvider}
+            // messageHistory={loadMessages()}
+            messageParser={MessageParser}
+            saveMessages={saveMessages}
+          />
+        )}
+        <button onClick={() => toggleBot((prev) => !prev)}>Bot</button>
+      </div>
     </>
   )
 }

@@ -9,7 +9,7 @@ const Recent = () => {
       <section className='recent padding'>
         {/* <div className='container d-flex flex-row justify-content-center flex-wrap'> */}
         <div className='container'>
-          <Heading title='Recent Projects Listed' subtitle='Recently Active or Completed Projects' />
+          <Heading title='Latest Projects' subtitle='Recently Active or Completed Projects' />
           <div className="row">
             <RecentCard />
           </div>
