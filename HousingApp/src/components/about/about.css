@@ -12,6 +12,10 @@
   margin-bottom: 20px;
   line-height: 30px;
 }
+
+.about .heading h1{
+  color: var(--color4);
+}
 @media screen and (max-width: 768px) {
   .about .container {
     flex-direction: column;

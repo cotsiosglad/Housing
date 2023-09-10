@@ -8,9 +8,12 @@ const Blog = () => {
   return (
     <>
       <section className='blog-out mb'>
-        <Back name='Blog' title='Blog Grid - Our Blogs' cover={img} />
-        <div className='container recent'>
-          <RecentCard />
+        <Back name='Development' title='Investment Projects' cover={img} />
+        <div className='container projects mtop'>
+          <div className="row">
+            <RecentCard />
+
+          </div>
         </div>
       </section>
     </>

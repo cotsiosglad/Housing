@@ -1,8 +1,9 @@
 import React from "react"
-import Featured from "./featured/Featured"
+// import Featured from "./featured/Featured"
 import Hero from "./hero/Hero"
-import Location from "./location/Location"
+// import Location from "./location/Location"
 import Recent from "./recent/Recent"
+import Info from "./info/Info"
 // import Price from "./price/Price"
 // import Awards from "./awards/Awards"
 // import Team from "./team/Team"
@@ -11,10 +12,12 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <Featured />
+      <Info />
+      {/* <Featured /> */}
       <Recent />
       {/* <Awards /> */}
-      <Location />
+      {/* <Location /> */}
+
       {/* <Team />
       <Price /> */}
     </>
