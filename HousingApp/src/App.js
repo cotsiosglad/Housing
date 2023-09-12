@@ -1,6 +1,7 @@
 import "./App.css"
 import "./fonts/LFutura.ttf"
 import Pages from "./components/pages/Pages"
+import {useEffect,useRef} from "react"
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from "firebase/app";
 // import firebaseConfig from "./components/firebaseConfig/firebaseconfig";
@@ -83,9 +84,74 @@ Firestore.readDocs(readDoc)
 // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
-function App() {
-	return <Pages />
 
+
+function App() {
+	// const targetRef = useRef(null);
+	const options = {
+		root: null, // Use the viewport as the root
+		rootMargin: '0px', // Margin around the root, in pixels
+		threshold: 0.4, // The ratio of the target's visibility to trigger the callback
+	  };
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(entries => {
+		  // Loop over the entries
+		  entries.forEach(entry => {
+			// If the element is visible
+			if (entry.isIntersecting) {
+			  // Add the animation class
+			  entry.target.classList.add('section-show');
+			}
+		  });
+		},options);
+	
+		const squareElement = Array.from(document.getElementsByTagName('section'));//document.querySelector('section');
+	
+		if (squareElement && squareElement.length>0) 
+		{
+			squareElement.forEach(s=>observer.observe(s));
+		  	//observer.observe(squareElement);
+		}
+	  }, []);
+
+	// useEffect(() => {
+		
+	// 	const options = {
+	// 	  root: null, // Use the viewport as the root
+	// 	  rootMargin: '0px', // Margin around the root, in pixels
+	// 	  threshold: 0.5, // The ratio of the target's visibility to trigger the callback
+	// 	};
+	  
+	// 	const callback = (entries, observer) => {
+	// 	  entries.forEach((entry) => {
+	// 		if (entry.isIntersecting) {
+	// 		  // Element is in the viewport
+	// 		  console.log('Element is in the viewport');
+	// 		  // You can perform actions here, like adding a class or triggering animations
+	// 		  entry.target.classList.add('section-show');
+	// 		} else {
+	// 		  // Element is out of the viewport
+	// 		  console.log('Element is out of the viewport');
+	// 		  // You can perform actions here, like removing a class or resetting animations
+	// 		}
+	// 	  });
+	// 	};
+	  
+	// 	const observer = new IntersectionObserver(callback, options);
+	  
+	// 	if (targetRef.current) {
+	// 	  observer.observe(targetRef.current);
+	// 	}
+	  
+	// 	return () => {
+	// 	  if (targetRef.current) {
+	// 		observer.unobserve(targetRef.current);
+	// 	  }
+	// 	};
+	//   }, []);
+	  
+	return <Pages />
 }
 
 export default App
