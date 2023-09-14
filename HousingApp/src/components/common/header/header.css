@@ -1,107 +1,156 @@
-header {
-  background-color: rgba(0, 0, 0, 0);
-  /* height: 10vh; */
-  /* box-shadow: 0 5px 30px rgb(0 22 84 / 10%); */
-  padding: 5px 0;
-  position: sticky;
+#header{
+  background-color: transparent;
+  transition: all 800ms ease;
+}
+
+#header {
+  margin: 0 auto;
+  z-index: 9999;
+  background-color: var(--blue);
+  margin-bottom: 0;
+  z-index: 9999;
+  position: fixed;
   top: 0;
-  z-index: 99999;
+  width: 100%;
 }
 
-header .container {
-  margin-bottom: 10px !important;
-  margin-top: 10px;
+#header .container{
+  z-index: 100;
+  padding: 0px 0px 0px 0px;
+  height: 90px;
+  max-width: 986px;
+  margin: 0 auto;
+  position: relative;
 }
 
-.nav {
-  font-size: 24px;
-  font-family: sans-serif;
+#logo{
+  position: relative;
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+  /* opacity: 0.01; */
 }
 
-header img {
-  width: 80px;
+#logo a {
+  display: block;
+  width: 132px;
+  position: absolute;
+  left: 0px;
+  background-color: var(--black);
 }
 
-header a {
-  /* margin-left: 20px; */
-  /* transition: 0.5s;
-  font-weight: 500; */
-  margin: 0px 10px 0px 10px;
+#logo img {
+  margin: 26px auto 26px;
+  display: block;
+  height: 6rem;
+  background-color: black;
+  padding: 26px 0px 26px 0px;
 }
 
-header a:hover {
-  /* color: #dedad9; */
-  /* text-decoration: underline; */
-  transition: 0.7s;
+.topicons {
+  position: absolute;
+  right: -5px;
+  top: 31px;
+  display: block;
+}
+
+.topicons a{
   color: var(--color4);
 }
 
-header li {
-  border-radius: 0.1cm;
+.nav-holder {
+  z-index: 9999;
+  margin: 0 auto;
+  right: 0;
 }
 
-header li:hover {
-  background-color: var(--color1);
-  transition: 0.7s;
+.show-full {
+  display: block !important;
 }
 
-header span {
-  width: auto;
-  padding: 0px 6px;
-  background: #27ae60;
-  border-radius: 50px;
-  color: #ffffff;
-  margin-right: 4px;
+.nav {
   font-weight: 400;
+  display: table;
+  margin: 0 auto;
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+  
 }
 
-header h4 {
-  font-weight: 500;
-  margin-right: 20px;
+.nav > ul {
+  height: 20px;
+  display: table-row;
 }
 
-header .toggle {
-  display: none;
+.nav ul {
+  list-style: inside none none;
 }
 
-@media screen and (max-width: 768px) {
-  header {
-    padding: 0;
+.clearfix {
+  clear: both;
+}
+
+.nav > ul > li {
+  padding-left: 40px;
+  padding-right: 0px;
+  display: table-cell;
+  text-align: left;
+}
+
+.nav li {
+  position: relative;
+}
+
+.nav li a {
+  color: var(--color1);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.nav > ul > li > a {
+  height: 100%;
+  font-size: 15px;
+  text-align: left;
+  text-transform: uppercase;
+  font-weight: 400;
+  padding-left: 10px;
+  padding-right: 10px;
+  letter-spacing: 1.5px;
+  padding-bottom: 5px;
+  color: #ffffff;
+}
+
+.nav > ul > li:hover > a, .nav > ul:not( :hover ) > li.active > a {
+  color: var(--color4);
+}
+
+.nottop {
+  background-color: rgba(255,255,255,0.98)!important;
+}
+
+.nottop li a {
+  color: var(--color4)!important;
+}
+
+@media only screen and (min-width: 1150px){
+  .nav {
+      position: absolute;
+      left: 210px;
+      top: 35px;
   }
 
-  header img {
-    margin-top: 30px;
+  .nav > ul > li > a {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size .3s;
   }
 
-  header .button {
-    display: none;
-  }
-
-  header .nav .flex {
-    display: none;
-  }
-
-  ul {
-    margin: 0px !important;
-  }
-
-  header .toggle {
-    display: block;
-    margin-top: 20px;
-  }
-
-  header .small {
-    position: absolute;
-    top: 10vh;
-    left: 0;
-    width: 100%;
-    background-color: #27ae60;
-    padding: 20px;
-  }
-
-  header li a {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: #fff;
+  .nav > ul > li:hover > a, .nav > ul:not( :hover ) > li.active > a {
+    background-size: 100% 1px;
   }
 }

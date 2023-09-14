@@ -1,8 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 @import "./constants.css";
-@import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
 
 * {
   padding: 0;
@@ -193,6 +190,19 @@ img {
 
 .mb {
   margin-bottom: 80px;
+}
+
+.section-show{
+  /* animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-delay: 2s; */
+  transition: all 800ms ease;
+  opacity: 1;
+}
+
+section{
+  opacity: 0;
 }
 
 @media screen and (max-width: 800px) {

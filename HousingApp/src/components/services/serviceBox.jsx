@@ -28,5 +28,6 @@ const ServiceBox = () => {
     </>
   )
 }
-
+//for service cards
+//https://uiverse.io/htwarriors108/tasty-stingray-56
 export default ServiceBox
