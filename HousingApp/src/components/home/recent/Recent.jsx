@@ -2,6 +2,7 @@ import React from "react"
 import Heading from "../../common/Heading"
 import "./recent.css"
 import RecentCard from "./RecentCard"
+import useIntersectionObserver from "../../../customHooks/useIntersectionObserver"//  ../customHooks/useIntersectionObserver'; // Import the custom hook
 
 const Recent = () => {
 
@@ -40,11 +41,15 @@ const Recent = () => {
 	// 	};
 	//   }, []);
 
-  
+	// useIntersectionObserver({
+	// 	root: null,
+	// 	rootMargin: '0px',
+	// 	threshold: 0.4,
+	// });
     
   return (
     <>
-      <section className='recent padding'>
+      <section className='recent padding' data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-easing="linear">
         {/* <div className='container d-flex flex-row justify-content-center flex-wrap'> */}
         <div className='container'>
           <Heading title='Latest Projects' subtitle='Recently Active or Completed Projects' />

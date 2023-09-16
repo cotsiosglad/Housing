@@ -50,9 +50,11 @@
 
 .topicons {
   position: absolute;
-  right: -5px;
-  top: 31px;
-  display: block;
+  /* right: -5px; */
+  right: -6rem;
+  /* top: 31px; */
+  top: 27px;
+  /* display: block; */
 }
 
 .topicons a{

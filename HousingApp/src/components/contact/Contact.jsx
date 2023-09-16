@@ -2,10 +2,12 @@ import React from "react"
 import img from "../images/pricing.jpg"
 import Back from "../common/Back"
 import "./contact.css"
+import ScrollToTop from "../../customHelperComponents/ScrollToTop"
 
 const Contact = () => {
   return (
     <>
+    <ScrollToTop/>
       <section className='contact mb'>
         <Back name='Contact Us' title='Get Helps & Friendly Support' cover={img} />
         <div className='container'>

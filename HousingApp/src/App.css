@@ -5,7 +5,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: LFutura;
+  /* font-family: LFutura; */
+  font-family: system-ui;
   font-size: large;
 }
 
@@ -28,8 +29,10 @@ body {
 a {
   text-decoration: none;
   color: var(--color1);
-  text-transform: capitalize;
-  font-family: LFutura;
+  /* text-transform: capitalize; */
+  /* font-family: LFutura; */
+  
+  font-family: system-ui;
 }
 
 ul {
@@ -201,9 +204,9 @@ img {
   opacity: 1;
 }
 
-section{
+/* section{
   opacity: 0;
-}
+} */
 
 @media screen and (max-width: 800px) {
 

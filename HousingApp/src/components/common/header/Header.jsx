@@ -4,6 +4,7 @@ import { nav } from "../../data/Data"
 import { Link } from "react-router-dom"
 import logoImg from "../images/dalogo.png"
 import {  BsFacebook } from 'react-icons/bs';
+import SocialMediaBar from "./SocialMediaBar"
 
 //for social media icons
 //https://uiverse.io/PapaUiiss404/honest-ape-75
@@ -73,18 +74,19 @@ return(
         <div className="show-mobile">
           
         </div>
-        <div id="logo">
+        <div id="logo" data-aos="fade-in" data-aos-delay="100"  data-aos-duration="3000" data-aos-offset="0">
           <a href="/">
             <img src={logoImg} alt="Logo"/>
           </a>
         </div>
         <div className="topicons">
-          <span className="d-block">
+          {/* <span className="d-block">
             <BsFacebook />
             <a href="https://www.facebook.com/domusalbacy/" target="_blank" rel="noreferrer"> domusalbacy</a>
-          </span>
+          </span> */}
+          <SocialMediaBar/>
         </div>
-        <div className="nav-holder show-full">
+        <div className="nav-holder show-full" data-aos="fade-in" data-aos-delay="600"  data-aos-duration="3000" data-aos-offset="0">
          <nav className='nav'>
           <ul className='clearfix'>
             {nav.map((list, index) => (

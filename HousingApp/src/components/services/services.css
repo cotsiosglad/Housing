@@ -11,3 +11,7 @@
     list-style: square;
     /* border-top: black solid 2px; */
 }
+
+.service-box{
+    animation-name: fadeUp;
+}
