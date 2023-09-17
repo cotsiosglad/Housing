@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 // import { footer } from "../../data/Data"
-import { CiFacebook, CiTwitter, CiLinkedin, CiInstagram,CiPhone,CiMail,CiLocationOn} from 'react-icons/ci';
+import { CiFacebook, CiTwitter, CiLinkedin, CiInstagram, CiPhone, CiMail, CiLocationOn } from 'react-icons/ci';
 import "./footer.css"
 import logoImg from "../images/dalogo.png"
 import Chatbot from "react-chatbot-kit";
@@ -96,45 +96,45 @@ const Footer = () => {
         <div className='container'>
           <div className="row">
             <div className="col-md-4 d-flex justify-content-center align-items-center">
-               <div className='logo'>
+              <div className='logo'>
                 <Link to="/">
-                   <img src={logoImg} alt='' />
-                 </Link>
-               </div>
+                  <img src={logoImg} alt='' />
+                </Link>
+              </div>
             </div>
             <div className="col-md-4">
               <h5>Follow Us</h5>
-                <div className="footer-social-bar">
-                  <div>
-                    <CiInstagram />
-                      <a href="#" target="_blank" rel="noreferrer">domulsAlbaInstagram</a>
-                  </div>
-                  <div>
-                    <CiTwitter />
-                      <a href="#" target="_blank" rel="noreferrer">domulsAlbaTwitter</a>
-                  </div>
-                  <div>
-                    <CiInstagram />
-                      <a href="#" target="_blank" rel="noreferrer">domulsAlbaLinkedIn</a>
-                  </div>
-                  <div>
-                    <CiFacebook />
-                      <a href="https://www.facebook.com/domusalbacy/" target="_blank" rel="noreferrer">domusalbacy</a>
-                  </div>
+              <div className="footer-social-bar">
+                <div>
+                  <CiInstagram />
+                  <a href="#" target="_blank" rel="noreferrer">domulsAlbaInstagram</a>
                 </div>
+                <div>
+                  <CiTwitter />
+                  <a href="#" target="_blank" rel="noreferrer">domulsAlbaTwitter</a>
+                </div>
+                <div>
+                  <CiLinkedin />
+                  <a href="#" target="_blank" rel="noreferrer">domulsAlbaLinkedIn</a>
+                </div>
+                <div>
+                  <CiFacebook />
+                  <a href="https://www.facebook.com/domusalbacy/" target="_blank" rel="noreferrer">domusalbacy</a>
+                </div>
+              </div>
 
             </div>
             <div className="col-md-4">
               <h5>Contact</h5>
               <div >
-                <CiPhone/>+357 97729606
+                <CiPhone />+357 97729606
               </div>
               <div>
-                <CiMail/>
+                <CiMail />
                 <a href="mailto:hadjisymeoubros@gmail.com" target="_blank">hadjisymeoubros@gmail.com</a>
               </div>
               <div>
-                <CiLocationOn/>
+                <CiLocationOn />
                 <a href="https://goo.gl/maps/gGd1bFMoN7TgSRKy8" target="_blank" rel="noreferrer">170, Strovolou Avenue Street, Strovolos, Cyprus</a>
               </div>
 
