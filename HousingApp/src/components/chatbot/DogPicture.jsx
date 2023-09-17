@@ -1,22 +1,22 @@
-// new file called DogPicture.jsx
-import React, { useEffect, useState } from 'react';
+// // new file called DogPicture.jsx
+// import React, { useEffect, useState } from 'react';
 
-const DogPicture = () => {
-    const [imageUrl, setImageUrl] = useState('');
+// const DogPicture = () => {
+//     const [imageUrl, setImageUrl] = useState('');
 
-    useEffect(() => {
-        fetch('https://dog.ceo/api/breeds/image/random')
-            .then((res) => res.json())
-            .then((data) => {
-                setImageUrl(data.message);
-            });
-    }, []);
+//     useEffect(() => {
+//         fetch('https://dog.ceo/api/breeds/image/random')
+//             .then((res) => res.json())
+//             .then((data) => {
+//                 setImageUrl(data.message);
+//             });
+//     }, []);
 
-    return (
-        <div>
-            <img src={imageUrl} alt='a dog' />
-        </div>
-    );
-};
+//     return (
+//         <div>
+//             <img src={imageUrl} alt='a dog' />
+//         </div>
+//     );
+// };
 
-export default DogPicture;
+// export default DogPicture;
