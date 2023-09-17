@@ -77,3 +77,16 @@ button li {
   background: #282725;
   color: #dedad9;
 }
+
+footer h5{
+  color: #ffffff;
+  padding-bottom: 17px;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+footer a{
+  padding-left: 5px;
+}

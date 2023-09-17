@@ -81,6 +81,21 @@ form h4 {
   
 }
 
+.homeslider {
+  margin-bottom: 0px;
+  min-height: 43.75vw;
+  width: 100%;
+  background-color: var(--black);
+}
+
+.slideritem {
+  display: block;
+  background-size: cover;
+  background-position: center;
+  height: 43.75vw;
+  position: relative;
+}
+
 @media screen and (max-width: 800px) {
   .hero .container {
     padding-top: 30%;
