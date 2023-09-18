@@ -1,7 +1,7 @@
 import "./App.css"
 //import "./fonts/LFutura.ttf"
 import Pages from "./components/pages/Pages"
-import {useEffect,useRef} from "react"
+import { useEffect, useRef } from "react"
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from "firebase/app";
 // import firebaseConfig from "./components/firebaseConfig/firebaseconfig";
@@ -89,6 +89,8 @@ Firestore.readDocs(readDoc)
 //const analytics = getAnalytics(app);
 
 
+
+
 function App() {
 	// // const targetRef = useRef(null);
 	// const options = {
@@ -97,7 +99,7 @@ function App() {
 	// 	threshold: 0.4, // The ratio of the target's visibility to trigger the callback
 	//   };
 
-	  
+
 	//   useEffect(() => {
 	// 	const options = {
 	// 		root: null, // Use the viewport as the root
@@ -113,13 +115,13 @@ function App() {
 	// 		  }
 	// 		});
 	// 	  }, options);
-	  
+
 	// 	  const sectionElements = document.querySelectorAll('section');
-	  
+
 	// 	  if (sectionElements.length > 0) {
 	// 		sectionElements.forEach(s => observer.observe(s));
 	// 	  }
-	  
+
 	// 	  return () => {
 	// 		sectionElements.forEach(s => observer.unobserve(s));
 	// 	  };
@@ -127,13 +129,13 @@ function App() {
 	//   }, []);
 
 	// useEffect(() => {
-		
+
 	// 	const options = {
 	// 	  root: null, // Use the viewport as the root
 	// 	  rootMargin: '0px', // Margin around the root, in pixels
 	// 	  threshold: 0.5, // The ratio of the target's visibility to trigger the callback
 	// 	};
-	  
+
 	// 	const callback = (entries, observer) => {
 	// 	  entries.forEach((entry) => {
 	// 		if (entry.isIntersecting) {
@@ -148,33 +150,33 @@ function App() {
 	// 		}
 	// 	  });
 	// 	};
-	  
+
 	// 	const observer = new IntersectionObserver(callback, options);
-	  
+
 	// 	if (targetRef.current) {
 	// 	  observer.observe(targetRef.current);
 	// 	}
-	  
+
 	// 	return () => {
 	// 	  if (targetRef.current) {
 	// 		observer.unobserve(targetRef.current);
 	// 	  }
 	// 	};
 	//   }, []);
-	  
+
 
 	// Define the options for the IntersectionObserver
 	const options = {
 		root: null,
 		rootMargin: '0px',
 		threshold: 0.4,
-	  };
+	};
 	// Use the custom hook in your component
 	//useIntersectionObserver(options); 
-	
+
 	useEffect(() => {
 		AOS.init();
-	  }, [])
+	}, [])
 
 	return <Pages />
 }

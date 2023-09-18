@@ -1,30 +1,37 @@
 // in config.js
 import { createChatBotMessage, createCustomMessage, } from 'react-chatbot-kit';
-import DogPicture from './DogPicture.jsx'
-import CustomMessage from './customMessage.js';
-const botName = 'Domus Alba';
+// import DogPicture from './DogPicture.jsx'
+// import CustomMessage from './customMessage.js';
+import CustomButton from './customButton.js';
 
+const botName = 'Domus Alba';
 const config = {
     initialMessages: [
         createChatBotMessage(`Welcome to ${botName}`),
         createChatBotMessage(
-            "Below are your options re kopellui.",
+            "What can I help you with today.",
             {
                 withAvatar: true,
                 delay: 500,
             }
         ),
-        createCustomMessage('Test', 'custom'),
+        createCustomMessage('These are our services', 'custom'),
     ],
     widgets: [
+        // {
+        //     widgetName: 'services',
+        //     widgetFunc: (props) => <CustomMessage {...props} />,
+        // }
+        // ,
         {
-            widgetName: 'dogPicture',
-            widgetFunc: (props) => <DogPicture {...props} />,
-        },
+            widgetName: 'buttonCreation',
+            widgetFunc: (props) => <CustomButton {...props} />,
+
+        }
     ],
     botName: botName,
     customMessages: {
-        custom: (props) => <CustomMessage {...props} />,
+        custom: (props) => <CustomButton {...props} />,
     },
     customStyles: {
         botMessageBox: {

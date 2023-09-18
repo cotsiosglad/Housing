@@ -31,7 +31,7 @@ a {
   color: var(--color1);
   /* text-transform: capitalize; */
   /* font-family: LFutura; */
-  
+
   font-family: system-ui;
 }
 
@@ -195,7 +195,7 @@ img {
   margin-bottom: 80px;
 }
 
-.section-show{
+.section-show {
   /* animation: fadeInAnimation ease 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
@@ -236,15 +236,4 @@ img {
   src: local("LFutura"),
     url("./fonts/LFutura.ttf") format("truetype");
   font-weight: normal;
-}
-
-.chatBot {
-  /* Your custom styles here */
-  position: fixed;
-  bottom: 20px;
-  /* Adjust this value to control the distance from the bottom */
-  right: 20px;
-  /* Adjust this value to control the distance from the right */
-  background-color: lightblue;
-  border: 1px solid gray;
 }

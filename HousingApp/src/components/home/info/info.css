@@ -1,4 +1,4 @@
-.info-text{
+.info-text {
     letter-spacing: 1.5px;
     text-align: justify;
     align-self: center;
@@ -9,32 +9,33 @@
     width: 450px;
 } */
 
-.info{
+.info {
     background-color: var(--color1);
 }
 
-.info-cards{
+.info-cards {
     text-align: -webkit-center;
 }
-.info-card{
+
+.info-card {
     width: 450px;
     height: 254px;
-    border-radius: 30px;
     background: #212121;
     display: flex;
     align-items: center;
     text-align: left;
     box-shadow: 15px 15px 30px rgb(25, 25, 25),
-                -15px -15px 30px rgb(60, 60, 60);
+        -15px -15px 30px rgb(60, 60, 60);
 }
 
-.info-card-front{
+.info-card-front {
     position: relative;
     left: 180px;
     bottom: 40px;
 }
 
-.info-card ul{
-    list-style-type: square;
+.info-card ul {
+    list-style-type: circle;
     color: var(--color1);
+    font-weight: bold;
 }

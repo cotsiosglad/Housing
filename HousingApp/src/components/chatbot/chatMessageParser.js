@@ -3,12 +3,18 @@
 import React from 'react';
 
 const MessageParser = ({ children, actions }) => {
+
     const parse = (message) => {
-        if (message.includes('hello')) {
-            console.log('hi');
+        const lowercasedMessage = message.toLowerCase();
+        if (lowercasedMessage.includes('hello')) {
+            actions.handleHello();
         }
-        if (message.includes('dog')) {
-            actions.handleDog();
+        else if (lowercasedMessage.includes('service') || (lowercasedMessage.includes('υπηρε'))) {
+            actions.handleServices();
+        }
+        else {
+            // This is the default message for unrecognized input
+            actions.handleDefault();
         }
     };
 

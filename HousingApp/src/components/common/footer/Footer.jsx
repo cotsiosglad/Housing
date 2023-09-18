@@ -1,6 +1,9 @@
 import React, { useState } from "react"
+// import { Button } from 'primereact/button';
 import { Link } from "react-router-dom"
 // import { footer } from "../../data/Data"
+import { BsFillTelephoneFill, BsFacebook, BsFillPinMapFill } from 'react-icons/bs';
+import chatbotImage from "../footer/chatbot1.png"
 import { CiFacebook, CiTwitter, CiLinkedin, CiInstagram, CiPhone, CiMail, CiLocationOn } from 'react-icons/ci';
 import "./footer.css"
 import logoImg from "../images/dalogo.png"
@@ -9,6 +12,7 @@ import 'react-chatbot-kit/build/main.css';
 import config from "../../../components/chatbot/chatconfig";
 import MessageParser from "../../../components/chatbot/chatMessageParser";
 import ActionProvider from "../../../components/chatbot/chatActionProvider";
+import "../../../components/chatbot/chatBot.css"
 
 const Footer = () => {
   const [showBot, toggleBot] = useState(true);
@@ -166,7 +170,9 @@ const Footer = () => {
             saveMessages={saveMessages}
           />
         )}
-        <button onClick={() => toggleBot((prev) => !prev)}>Bot</button>
+        {/* <button className="chatBot" onClick={() => toggleBot((prev) => !prev)}>Chat with us!</button> */}
+        <button className="chatBot" rounded="true" onClick={() => toggleBot((prev) => !prev)}>
+          <img alt="logo" src={chatbotImage} className="chatbot-logo"></img></button>
       </div>
     </>
   )
