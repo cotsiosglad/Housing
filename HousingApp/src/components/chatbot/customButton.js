@@ -18,14 +18,12 @@ const CustomButton = (props) => {
                 <>
                     <p>Here are our services: </p>
                     {services.map((items, index) => (
-                        <div className='service-box col-md-4' key={index}>
-                            {items.title}
+                        <div className='col-md-4' key={index}>
+                            <li><Link to="/services">{items.titleType}</Link></li>
+
                         </div>
                     ))}
                     <br></br>
-                    <Link to="/services">
-                        <button>Services Page</button>
-                    </Link>
                 </>
             );
         } else if (selectedOption === "Projects") {
@@ -33,13 +31,15 @@ const CustomButton = (props) => {
                 <>
                     <p>Below are our projects</p>
                     {projects.map((items, index) => (
-                        <div className='service-box col-md-4' key={index}>
-                            <h4>{items.title}</h4>
+                        <div className='col-md-4' key={index}>
+                            <Link to={`/projects/${items.id}`}><h4>{items.title}</h4></Link>
+                            <p>Available 3</p>
                         </div>
                     ))}
-                    <Link to="/projects">
+
+                    {/* <Link to="/projects">
                         <button>Projects Page</button>
-                    </Link>
+                    </Link> */}
                 </>);
         } else if (selectedOption === "Contact Us")
             return (

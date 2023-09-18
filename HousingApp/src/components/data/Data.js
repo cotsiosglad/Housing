@@ -76,6 +76,21 @@ export const projects = [
     id: 1,
     title: "Nisou Project",
     description: ""
+  },
+  {
+    id: 2,
+    title: "Tseri Project",
+    description: ""
+  },
+  {
+    id: 3,
+    title: "Latsia Project",
+    description: ""
+  },
+  {
+    id: 4,
+    title: "Geri Project",
+    description: ""
   }
 
 ]

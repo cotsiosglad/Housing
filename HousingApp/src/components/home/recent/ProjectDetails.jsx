@@ -8,6 +8,7 @@ import { LiaMapMarkerSolid,LiaLayerGroupSolid,LiaBedSolid,LiaBathSolid,LiaBuildi
 import FsLightbox from "fslightbox-react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import ScrollToTop from '../../../customHelperComponents/ScrollToTop';
 
 //theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
@@ -72,6 +73,7 @@ const ProjectDetails = ({ match }) => {
   }
   return (
     <>
+    <ScrollToTop />
     <Header/>
       <div className='container'>
         {/* <div className='project-img' style={{ backgroundImage: `url(${backgroundImg})` }}>

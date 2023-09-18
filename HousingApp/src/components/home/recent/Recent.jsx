@@ -2,10 +2,11 @@ import React from "react"
 import Heading from "../../common/Heading"
 import "./recent.css"
 import RecentCard from "./RecentCard"
+import useIntersectionObserver from "../../../customHooks/useIntersectionObserver"//  ../customHooks/useIntersectionObserver'; // Import the custom hook
 
 const Recent = () => {
 
-  // const targetRef = useRef(null);
+	// const targetRef = useRef(null);
 
 	// useEffect(() => {
 	// 	const options = {
@@ -13,7 +14,7 @@ const Recent = () => {
 	// 	  rootMargin: '0px', // Margin around the root, in pixels
 	// 	  threshold: 0.5, // The ratio of the target's visibility to trigger the callback
 	// 	};
-	  
+
 	// 	const callback = (entries, observer) => {
 	// 	  entries.forEach((entry) => {
 	// 		if (entry.isIntersecting) {
@@ -26,13 +27,13 @@ const Recent = () => {
 	// 		}
 	// 	  });
 	// 	};
-	  
+
 	// 	const observer = new IntersectionObserver(callback, options);
-	  
+
 	// 	if (targetRef.current) {
 	// 	  observer.observe(targetRef.current);
 	// 	}
-	  
+
 	// 	return () => {
 	// 	  if (targetRef.current) {
 	// 		observer.unobserve(targetRef.current);
@@ -40,21 +41,25 @@ const Recent = () => {
 	// 	};
 	//   }, []);
 
-  
-    
-  return (
-    <>
-      <section className='recent padding'>
-        {/* <div className='container d-flex flex-row justify-content-center flex-wrap'> */}
-        <div className='container'>
-          <Heading title='Latest Projects' subtitle='Recently Active or Completed Projects' />
-          <div className="row">
-            <RecentCard />
-          </div>
-        </div>
-      </section>
-    </>
-  )
+	// useIntersectionObserver({
+	// 	root: null,
+	// 	rootMargin: '0px',
+	// 	threshold: 0.4,
+	// });
+
+	return (
+		<>
+			<section className='recent padding' data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-easing="linear">
+				{/* <div className='container d-flex flex-row justify-content-center flex-wrap'> */}
+				<div className='container'>
+					<Heading title='Latest Projects' subtitle='Recently Active or Completed Projects' />
+					<div className="row">
+						<RecentCard />
+					</div>
+				</div>
+			</section>
+		</>
+	)
 }
 
 export default Recent

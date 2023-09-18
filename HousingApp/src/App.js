@@ -1,7 +1,7 @@
 import "./App.css"
-import "./fonts/LFutura.ttf"
+//import "./fonts/LFutura.ttf"
 import Pages from "./components/pages/Pages"
-import {useEffect,useRef} from "react"
+import { useEffect, useRef } from "react"
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from "firebase/app";
 // import firebaseConfig from "./components/firebaseConfig/firebaseconfig";
@@ -12,6 +12,9 @@ import config from "./components/chatbot/chatconfig";
 import MessageParser from "./components/chatbot/chatMessageParser";
 import ActionProvider from "./components/chatbot/chatActionProvider";
 //#region NIKOLAS
+import useIntersectionObserver from './customHooks/useIntersectionObserver'; // Import the custom hook
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { initializeApp } from 'firebase/app'
 import { getFirestore, doc, setDoc, getDocs, collection, serverTimestamp } from "firebase/firestore"
 const firebaseConfig = {
@@ -86,43 +89,53 @@ Firestore.readDocs(readDoc)
 //const analytics = getAnalytics(app);
 
 
-function App() {
-	// const targetRef = useRef(null);
-	const options = {
-		root: null, // Use the viewport as the root
-		rootMargin: '0px', // Margin around the root, in pixels
-		threshold: 0.4, // The ratio of the target's visibility to trigger the callback
-	  };
 
-	useEffect(() => {
-		const observer = new IntersectionObserver(entries => {
-		  // Loop over the entries
-		  entries.forEach(entry => {
-			// If the element is visible
-			if (entry.isIntersecting) {
-			  // Add the animation class
-			  entry.target.classList.add('section-show');
-			}
-		  });
-		},options);
-	
-		const squareElement = Array.from(document.getElementsByTagName('section'));//document.querySelector('section');
-	
-		if (squareElement && squareElement.length>0) 
-		{
-			squareElement.forEach(s=>observer.observe(s));
-		  	//observer.observe(squareElement);
-		}
-	  }, []);
+
+function App() {
+	// // const targetRef = useRef(null);
+	// const options = {
+	// 	root: null, // Use the viewport as the root
+	// 	rootMargin: '0px', // Margin around the root, in pixels
+	// 	threshold: 0.4, // The ratio of the target's visibility to trigger the callback
+	//   };
+
+
+	//   useEffect(() => {
+	// 	const options = {
+	// 		root: null, // Use the viewport as the root
+	// 		rootMargin: '0px', // Margin around the root, in pixels
+	// 		threshold: 0.4, // The ratio of the target's visibility to trigger the callback
+	// 	  };
+
+	// 	if ('IntersectionObserver' in window) {
+	// 	  const observer = new IntersectionObserver(entries => {
+	// 		entries.forEach(entry => {
+	// 		  if (entry.isIntersecting) {
+	// 			entry.target.classList.add('section-show');
+	// 		  }
+	// 		});
+	// 	  }, options);
+
+	// 	  const sectionElements = document.querySelectorAll('section');
+
+	// 	  if (sectionElements.length > 0) {
+	// 		sectionElements.forEach(s => observer.observe(s));
+	// 	  }
+
+	// 	  return () => {
+	// 		sectionElements.forEach(s => observer.unobserve(s));
+	// 	  };
+	// 	}
+	//   }, []);
 
 	// useEffect(() => {
-		
+
 	// 	const options = {
 	// 	  root: null, // Use the viewport as the root
 	// 	  rootMargin: '0px', // Margin around the root, in pixels
 	// 	  threshold: 0.5, // The ratio of the target's visibility to trigger the callback
 	// 	};
-	  
+
 	// 	const callback = (entries, observer) => {
 	// 	  entries.forEach((entry) => {
 	// 		if (entry.isIntersecting) {
@@ -137,20 +150,34 @@ function App() {
 	// 		}
 	// 	  });
 	// 	};
-	  
+
 	// 	const observer = new IntersectionObserver(callback, options);
-	  
+
 	// 	if (targetRef.current) {
 	// 	  observer.observe(targetRef.current);
 	// 	}
-	  
+
 	// 	return () => {
 	// 	  if (targetRef.current) {
 	// 		observer.unobserve(targetRef.current);
 	// 	  }
 	// 	};
 	//   }, []);
-	  
+
+
+	// Define the options for the IntersectionObserver
+	const options = {
+		root: null,
+		rootMargin: '0px',
+		threshold: 0.4,
+	};
+	// Use the custom hook in your component
+	//useIntersectionObserver(options); 
+
+	useEffect(() => {
+		AOS.init();
+	}, [])
+
 	return <Pages />
 }
 
