@@ -11,19 +11,21 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         }));
     };
 
-    const handleDog = () => {
+    const handleOptions = (options) => {
         const botMessage = createChatBotMessage(
-            "Here's a nice dog picture for you!",
+            "Below are some possible Options.",
             {
-                widget: 'dogPicture',
+                widget: "options",
+                loading: true,
+                terminateLoading: true,
+                ...options,
             }
         );
-
         setState((prev) => ({
             ...prev,
             messages: [...prev.messages, botMessage],
         }));
-    };
+    }
 
     const handleDefault = () => {
         const botMessage = createChatBotMessage(
@@ -56,9 +58,9 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
                 return React.cloneElement(child, {
                     actions: {
                         handleHello,
-                        handleDog,
                         handleDefault,
                         handleServices,
+                        handleOptions,
                     },
                 });
             })}
