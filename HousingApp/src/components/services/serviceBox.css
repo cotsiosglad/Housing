@@ -77,6 +77,116 @@
     filter: blur(20px);
     animation: animate 5s linear infinite;
   }
+
+  .service-card-container {
+    position: relative;
+    display: flex;
+    /* max-width: 350px; */
+    flex-direction: column;
+    border-radius: 12px;
+    background-color: var(--color4);
+    border: 1px solid #fff;
+    padding: 1.6rem;
+    color: #fff;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+  
+  .service-card-header {
+    position: relative;
+    margin: 0;
+    margin-bottom: 2rem;
+    /* overflow: hidden; */
+    border-radius: 0;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .title {
+    display: block;
+    font-family: sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+    color: #fff
+  }
+  
+  .price-container {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    font-family: sans-serif;
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+  
+  .price-container span:first-child {
+    margin-top: 10px;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+  
+  .price-container span:last-child {
+    align-self: flex-end;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+  
+  .service-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .service-card-content-item {
+    /* display: flex;
+    align-items: center;
+    gap: 10px; */
+    text-align: -webkit-right;
+    align-self: start;
+  }
+  
+  .service-card-content-item span {
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background-color: rgba(255, 255, 255, 0.185);
+    height: 38px;
+    width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: start;
+  }
+  
+  /* .service-card-content-item span svg {
+    height: 12px;
+    width: 12px;
+  } */
+  
+  .service-card-content-item p {
+    /* display: block; */
+    font-family: sans-serif;
+  }
+  
+  .service-card-button {
+    margin-top: 20px;
+    padding: 0;
+  }
+  
+  .service-card-button button {
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    color: var(--color4);
+    outline: 0;
+    border: 0;
+    border-radius: 10px;
+  }
   
   @keyframes animate {
     0% {
@@ -91,3 +201,13 @@
       opacity: 0.3;
     }
   }
+
+  @media screen and (max-width: 450px){
+    .service-card-content-item{
+      text-align: -webkit-center;
+    }
+
+    .service-card-content p{
+      text-align: justify;
+    }
+} 

@@ -3,7 +3,7 @@ import "./header.css"
 import { nav } from "../../data/Data"
 import { Link } from "react-router-dom"
 import logoImg from "../images/dalogo.png"
-import { BsFacebook } from 'react-icons/bs';
+import { BsFacebook  } from 'react-icons/bs';
 import SocialMediaBar from "./SocialMediaBar"
 
 //for social media icons
