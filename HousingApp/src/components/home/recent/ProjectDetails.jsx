@@ -7,6 +7,8 @@ import Heading from '../../common/Heading';
 import { LiaMapMarkerSolid,LiaLayerGroupSolid,LiaBedSolid,LiaBathSolid,LiaBuilding,LiaBoxesSolid,LiaExclamationCircleSolid } from "react-icons/lia";
 import FsLightbox from "fslightbox-react";
 import { DataTable } from 'primereact/datatable';
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import ScrollToTop from '../../../customHelperComponents/ScrollToTop';
 
@@ -20,6 +22,7 @@ import "primereact/resources/primereact.min.css";
 
 const ProjectDetails = ({ match }) => {
   const [toggler, setToggler] = useState(false);
+  const [dialogFormVisible,setDialogFormVisible] = useState(false)
 
   // Extract the project ID from the URL parameter
   const projectId = match.params.id;
@@ -71,6 +74,19 @@ const ProjectDetails = ({ match }) => {
     ]
     
   }
+
+  const dialogFooterTemplate = () => {
+    return <Button label="Ok" icon="pi pi-check" onClick={() => setDialogFormVisible(false)} />;
+  };
+
+  const actionBodyTemplate = (rowData) => {
+    return (
+        <>
+            <Button label="Interested" icon="pi pi-external-link" onClick={() => setDialogFormVisible(true)} />
+        </>
+    );
+};
+
   return (
     <>
     <ScrollToTop />
@@ -199,11 +215,22 @@ const ProjectDetails = ({ match }) => {
               <Column field="verandas" header="Verandas"></Column>
               <Column field="totalArea" header="Total Area"></Column>
               <Column field="status" header="Status"></Column>
+              <Column header="Actions" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }} alignFrozen="right" frozen={true}></Column>
             </DataTable>
           </div>
         </div>
       </div>
     <Footer/>
+
+    <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogFormVisible} style={{ width: '75vw' }} maximizable
+                modal contentStyle={{ height: '300px' }} onHide={() => setDialogFormVisible(false)} footer={dialogFooterTemplate}>
+            {/* <DataTable value={customers} scrollable scrollHeight="flex" tableStyle={{ minWidth: '50rem' }}>
+                <Column field="name" header="Name"></Column>
+                <Column field="country.name" header="Country"></Column>
+                <Column field="representative.name" header="Representative"></Column>
+                <Column field="company" header="Company"></Column>
+            </DataTable> */}
+        </Dialog>
     </>
   );
 };

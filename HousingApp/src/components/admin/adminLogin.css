@@ -52,3 +52,90 @@ input[type="password"] {
 .login-button:hover {
     background-color: #0056b3;
 }
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* .p-button ,.p-button .p-button-icon,.p-datatable-table,.p-inputtext{
+    font-size: 12px!important;
+} */
+
+.side-content{
+    background-image: url("../../../public/images/wall-ad.jpg");
+}
+
+#homeLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    width: 300px;
+    overflow: hidden; 
+}
+
+#homeLogo img{
+    width: 100% !important;
+    height: 55%!important;
+}
+
+/* .rotating-image {
+    animation: rotate 5s linear infinite; 
+    transform-origin: center center; 
+} */
+
+.rotating-image {
+    animation: rotate-horizontal 5s linear infinite; 
+    transform-origin: center center; 
+  }
+  
+/* @keyframes rotate {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+} */
+
+/* @keyframes flip-horizontal {
+    0% {
+      transform: scaleX(1);
+    }
+    50% {
+      transform: scaleX(-1);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  } */
+
+@keyframes rotate-horizontal {
+0% {
+    transform: rotateY(0deg);
+}
+100% {
+    transform: rotateY(360deg); /* Continuous horizontal rotation */
+}
+}
+
+.p-menuitem{
+    width: 100%;
+}
+.p-menubar{
+    position: sticky;
+    top: 5px;
+}
+
+.field-header{
+    color: var(--color3);
+}
+
+@media screen and (max-width: 450px){
+    .p-menubar{
+        position: relative;
+        top:0;
+    }
+} 

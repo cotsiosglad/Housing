@@ -49,29 +49,29 @@ const RecentCard = () => {
             // <div className="row">
               <div className="col-md-4" key={val.id}>
                 <Link to={`/projects/${val.id}`}>
-              <div className='box shadow houses-grid-item'>
-              
-                <div className='houses-grid-img' style={{ backgroundImage: `url(${background})` }}>
-                  {/* <img src={cover} alt='' /> */}
-                  
+                <div className='box shadow houses-grid-item'>
+                
+                  <div className='houses-grid-img' style={{ backgroundImage: `url(${background})` }}>
+                    {/* <img src={cover} alt='' /> */}
+                    
+                  </div>
+                  <div className="houses-grid-content">
+                    <span>Completed</span>
+                    <h4>Project Name</h4>
+                  </div>
+                  <div className="rentals-grid-tabs">
+                    <span className="rentals-grid-tab">
+                      <BsFillPinMapFill /> Nicosia                                        
+                    </span>
+                    <span className="rentals-grid-tab">
+                      <BsBuildingFill /> Residential                                        
+                    </span>
+                    <span className="rentals-grid-tab">
+                      <BsFillLayersFill /> 6 storeys                                        
+                    </span>
+                  </div>
                 </div>
-                <div className="houses-grid-content">
-                  <span>Completed</span>
-                  <h4>Project Name</h4>
-                </div>
-                <div className="rentals-grid-tabs">
-                  <span className="rentals-grid-tab">
-                    <BsFillPinMapFill /> Nicosia                                        
-                  </span>
-                  <span className="rentals-grid-tab">
-                    <BsBuildingFill /> Residential                                        
-                  </span>
-                  <span className="rentals-grid-tab">
-                    <BsFillLayersFill /> 6 storeys                                        
-                  </span>
-                </div>
-              </div>
-              </Link>
+                </Link>
               </div>
             //</div>
             

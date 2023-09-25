@@ -8,8 +8,8 @@ import About from "../about/About"
 import Projects from "../blog/Blog"
 import Services from "../services/Services"
 import Contact from "../contact/Contact"
-import AdminLogin from "../admin/adminLogin"
-import AdminMainPage from "../admin/adminMainPage"
+import AdminLogin from "../admin/AdminLogin"
+import AdminMainPage from "../admin/AdminMainPage"
 import ProjectDetails from "../home/recent/ProjectDetails"
 
 
@@ -56,7 +56,7 @@ const Pages = () => {
 
           {/* Route for AdminLogin with AdminLoginLayout */}
           <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
-          <Route exact path="/admin/home" render={() => <AdminHomePage><AdminMainPage /></AdminHomePage>} />
+          <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} />
           {/* <Route path="/projects/:id">
             <DefaultLayout>
               <ProjectDetails />

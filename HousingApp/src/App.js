@@ -29,9 +29,11 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
-
+//firebase.firestore().collection('restaurants').doc(id).get();
+//firebase.firestore().collection('restaurants').add(data);
+//firebase.firestore().collection('restaurants').doc(); to create new document 
+//https://firebase.google.com/codelabs/firestore-web#8 for filering
 const Firestore = {
 	readDocs: (...args) => {
 		let docs = []
