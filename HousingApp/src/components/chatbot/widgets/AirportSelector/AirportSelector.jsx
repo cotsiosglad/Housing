@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ConditionallyRender } from "react-util-kit";
-
+import { services, projects } from "../../../data/Data"
 import "./AirportSelector.css";
 
 const AirportSelector = ({ selectedAirport, setState, actionProvider }) => {
@@ -36,18 +36,26 @@ const AirportSelector = ({ selectedAirport, setState, actionProvider }) => {
   };
 
   const handleConfirm = () => {
-    actionProvider.handleOptions();
-    toggleDisplaySelector((prevState) => !prevState);
+
+    toggleDisplaySelector(false);
+
+    if (selectedAirport && selectedAirport.nameCompact === "Services") {
+      actionProvider.handleOptions();
+    } else if (selectedAirport && selectedAirport.nameCompact === "Projects") {
+      // setConfirmationMessage("Hello Projects");
+    } else if (selectedAirport && selectedAirport.nameCompact === "Contact Us") {
+      //
+    }
   };
 
   if (!airports) return null;
 
   const createAirportOptions = () => {
-    return airports.map((item) => {
+    return services.map((item) => {
       return (
-        <option key={item.iata} value={item.iata}>
-          {item.nameCompact}
-        </option>
+        <button onClick={handleConfirm}>
+          {item.titleType}
+        </button>
       );
     });
   };
@@ -57,15 +65,21 @@ const AirportSelector = ({ selectedAirport, setState, actionProvider }) => {
       <ConditionallyRender
         ifTrue={displaySelector}
         show={
+          // <>
+          //   {" "}
+          //   <select
+          //     className="airport-selector"
+          //     value={selectedAirport.iata}
+          //     onChange={handleSubmit}
+          //   >
+          //     {createAirportOptions()}
+          //   </select>
+          //   <button className="airport-button-confirm" onClick={handleConfirm}>
+          //     Confirm
+          //   </button>
+          // </>
           <>
-            {" "}
-            <select
-              className="airport-selector"
-              value={selectedAirport.iata}
-              onChange={handleSubmit}
-            >
-              {createAirportOptions()}
-            </select>
+            {createAirportOptions()}
             <button className="airport-button-confirm" onClick={handleConfirm}>
               Confirm
             </button>

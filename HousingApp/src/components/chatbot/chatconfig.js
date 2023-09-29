@@ -6,6 +6,9 @@ import DomusAlbaLogo from "./DALogo/DomusAlbaAvatar.jsx";
 // import AirportSelector from "./AirportSelector.jsx";
 import AirportSelector from "./widgets/AirportSelector/AirportSelector";
 import GeneralOptions from "./widgets/GeneralOptions/GeneralOptions";
+import ProjectLists from './widgets/ProjectList/ProjectList.jsx';
+import ServiceList from './widgets/ServiceList/ServiceList.jsx';
+import ProjectDetailsListed from './widgets/ProjectDetails/ProjectDetailsListed.jsx';
 const botName = 'Domus Alba';
 const config = {
     initialMessages: [
@@ -18,11 +21,12 @@ const config = {
                 delay: 500,
             }
         ),
-        createCustomMessage('These are our services', 'custom'),
+        // createCustomMessage('These are our services', 'custom'),
         createChatBotMessage(
             "First things first, what do you want to check?",
             {
-                widget: "airportSelector",
+                widget: "options",
+                withAvatar: true,
                 delay: 500,
             }
         ),
@@ -53,6 +57,18 @@ const config = {
         {
             widgetName: "options",
             widgetFunc: (props) => <GeneralOptions {...props} />,
+        },
+        {
+            widgetName: "projectlists",
+            widgetFunc: (props) => <ProjectLists {...props} />,
+        },
+        {
+            widgetName: "projectDetailslisted",
+            widgetFunc: (props) => <ProjectDetailsListed {...props} />,
+        },
+        {
+            widgetName: "serviceslist",
+            widgetFunc: (props) => <ServiceList {...props} />,
         },
         // {
         //     widgetName: 'Selector',
