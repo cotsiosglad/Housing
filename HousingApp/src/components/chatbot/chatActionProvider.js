@@ -11,19 +11,82 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         }));
     };
 
-    const handleDog = () => {
+    const handleOptions = (options) => {
         const botMessage = createChatBotMessage(
-            "Here's a nice dog picture for you!",
+            "These are our services.",
             {
-                widget: 'dogPicture',
+                widget: "options",
+                loading: true,
+                terminateLoading: true,
+                ...options,
             }
         );
+        setState((prev) => ({
+            ...prev,
+            messages: [...prev.messages, botMessage],
+        }));
+    }
 
+    const handleServiceList = () => {
+        const botMessage = createChatBotMessage(
+            "These are our services",
+            {
+                widget: "serviceslist",
+                loading: true,
+                terminateLoading: true,
+
+            }
+        );
         setState((prev) => ({
             ...prev,
             messages: [...prev.messages, botMessage],
         }));
     };
+
+    const handleServiceDetails = () => {
+        const botMessage = createChatBotMessage(
+            "Would you like to see more details on a specific service?",
+            {
+                widget: "serviceDetails",
+                loading: true,
+                terminateLoading: true,
+            }
+        );
+        setState((prev) => ({
+            ...prev,
+            messages: [...prev.messages, botMessage],
+        }));
+    }
+    const handleProjectList = () => {
+        const botMessage = createChatBotMessage(
+            "Below are our projects\nClick on any of them to see more details:",
+            {
+                widget: "projectlists",
+                loading: true,
+                terminateLoading: true,
+
+            }
+        );
+        setState((prev) => ({
+            ...prev,
+            messages: [...prev.messages, botMessage],
+        }));
+    };
+
+    const handleProjectDetailslisted = () => {
+        const botMessage = createChatBotMessage(
+            "This project has :",
+            {
+                widget: "projectDetailslisted",
+                loading: true,
+                terminateLoading: true,
+            }
+        );
+        setState((prev) => ({
+            ...prev,
+            messages: [...prev.messages, botMessage],
+        }));
+    }
 
     const handleDefault = () => {
         const botMessage = createChatBotMessage(
@@ -56,9 +119,12 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
                 return React.cloneElement(child, {
                     actions: {
                         handleHello,
-                        handleDog,
                         handleDefault,
                         handleServices,
+                        handleOptions,
+                        handleServiceList,
+                        handleProjectList,
+                        handleProjectDetailslisted,
                     },
                 });
             })}

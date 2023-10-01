@@ -1,5 +1,5 @@
-.info-text {
-    letter-spacing: 1.5px;
+.info-text p {
+    /* letter-spacing: 1.5px; */
     text-align: justify;
     align-self: center;
 }
@@ -39,3 +39,62 @@
     color: var(--color1);
     font-weight: bold;
 }
+
+.info-img img {
+    position: relative;
+    z-index: 2;
+}
+
+.info-img::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: var(--color4);
+    transform: skew(20deg);
+    z-index: 1;
+}
+
+.info .heading h1{
+    color: var(--color4);
+}
+
+.info-box-text{
+    text-align: center;
+}
+
+.info-box-img{
+    margin-bottom: 20px;
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+    min-height: 120px;
+    border-radius: 100%;
+    border: 5px solid var(--color4);
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-box-img svg{
+    font-size: xxx-large;
+}
+
+.card {
+    position: relative;
+    padding: 9px;
+    background-color: var(--color1);
+    border-radius: 35px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-conic-gradient(var(--bg) 0.0000001%, var(--grey) 0.000104%) 60% 60%/600% 600%;
+    filter: opacity(10%) contrast(105%);
+  }

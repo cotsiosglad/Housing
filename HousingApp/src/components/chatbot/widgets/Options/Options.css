@@ -1,0 +1,28 @@
+.options {
+  padding-bottom: 15px;
+}
+
+.option-item:hover {
+  background-color: #427c72;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.options-header {
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.option-item {
+  padding: 8px 15px;
+  border: 2px solid #2898ec;
+  border-radius: 10px;
+  color: #2898ec;
+  font-size: 0.9rem;
+  margin: 3px;
+}

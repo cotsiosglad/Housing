@@ -125,6 +125,7 @@
 {
     .p-dialog {
         height: 100vh!important;
+        width: 100%!important;
 
     }
     .contact-form{

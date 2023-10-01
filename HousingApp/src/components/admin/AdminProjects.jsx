@@ -18,6 +18,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import TextEditor from "./TextEditor"
 import "./adminLogin.css"
+import { writeDoc,getDocById } from '../../firebase';
 
 export default function AdminProjects() {
     let emptyProject = {
@@ -93,7 +94,7 @@ export default function AdminProjects() {
 
     const saveProject = () => {
         setSubmitted(true);
-console.log(textEditorValue)
+        console.log(textEditorValue)
         if (project.title.trim() && textEditorValue) {
             let _projects = [...projects];
             let _project = { ...project };
@@ -102,6 +103,18 @@ console.log(textEditorValue)
 
             if (project.id) {
                 //const index = findIndexById(project.id);
+                
+                try{
+                    debugger;
+                    var aa = getDocById(1,"Projects");
+                    // writeDoc(_project,'Projects')
+                    // writeDoc(_projectDetails,'ProjectsDetails')
+                    console.log(aa);
+                }
+                catch(e){
+                    console.log(e);
+                }
+                
 
                 //_projects[index] = _project;
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'project Updated', life: 3000 });
@@ -429,7 +442,7 @@ console.log(textEditorValue)
 
             <Dialog visible={deleteProjectDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProjectDialogFooter} onHide={hideDeleteProjectDialog}>
                 <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '1.5rem' }} />
                     {project && (
                         <span>
                             Are you sure you want to delete <b>{project.title}</b>?
@@ -440,7 +453,7 @@ console.log(textEditorValue)
 
             <Dialog visible={deleteProjectsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProjectsDialogFooter} onHide={hideDeleteProjectsDialog}>
                 <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '1.5rem' }} />
                     {project && <span>Are you sure you want to delete the selected projects?</span>}
                 </div>
             </Dialog>

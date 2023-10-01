@@ -5,13 +5,13 @@
 
 #header {
   margin: 0 auto;
-  z-index: 9999;
+  z-index: 1100;
   background-color: var(--blue);
   margin-bottom: 0;
-  z-index: 9999;
+  z-index: 1100;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100%; 
 }
 
 #header .container {
@@ -62,7 +62,7 @@
 }
 
 .nav-holder {
-  z-index: 9999;
+  z-index: 1100;
   margin: 0 auto;
   right: 0;
 }

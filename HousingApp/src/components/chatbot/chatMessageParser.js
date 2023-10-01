@@ -6,6 +6,19 @@ const MessageParser = ({ children, actions }) => {
 
     const parse = (message) => {
         const lowercasedMessage = message.toLowerCase();
+        if (this.containsFlightId(message)) {
+            const id = this.containsFlightId(message);
+            return this.actionProvider.handleFlightIdMatch(id);
+        }
+
+        if (
+            message.includes("options") ||
+            message.includes("help") ||
+            message.includes("do for me")
+        ) {
+            return this.actionProvider.handleOptions({ withAvatar: true });
+        }
+
         if (lowercasedMessage.includes('hello')) {
             actions.handleHello();
         }

@@ -15,8 +15,9 @@ import ActionProvider from "./components/chatbot/chatActionProvider";
 import useIntersectionObserver from './customHooks/useIntersectionObserver'; // Import the custom hook
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, setDoc, getDocs, collection, serverTimestamp } from "firebase/firestore"
+// import { initializeApp } from 'firebase/app'
+// import { getFirestore, doc, setDoc, getDocs, collection, serverTimestamp } from "firebase/firestore"
+
 const firebaseConfig = {
 	apiKey: "AIzaSyD-4YcVKrl3j55I2jTGb_3WEZkeyIrQgOw",
 	authDomain: "housing-app-628b7.firebaseapp.com",
@@ -28,51 +29,51 @@ const firebaseConfig = {
 
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-//firebase.firestore().collection('restaurants').doc(id).get();
-//firebase.firestore().collection('restaurants').add(data);
-//firebase.firestore().collection('restaurants').doc(); to create new document 
-//https://firebase.google.com/codelabs/firestore-web#8 for filering
-const Firestore = {
-	readDocs: (...args) => {
-		let docs = []
-		const ref = collection(db, "images")
-		return new Promise(async resolve => {
-			try {
-				const snapshots = await getDocs(ref)
-				snapshots.forEach(doc => {
-					const d = { ...doc.data() }
-					docs.push(d)
-				})
-				console.log(docs)
-			} catch (e) {
-				console.log(e)
-			}
-		})
-	},
-	writeDoc: (...args) => {
-		const [inputs, collection_name] = args
-		return new Promise(async resolve => {
-			// Use randomIndex to generate a random documentID everytime
-			// We use backtick(``) to declare it as a string
-			// This example is when you want to add images in Firestore
-			const randomIndex = Math.floor(Math.random() * 1000000000)
-			try {
-				const imageRef = doc(db, 'images', `${randomIndex}`);
-				await setDoc(imageRef, { title: inputs.title, path: inputs.path, createdAt: serverTimestamp() });
-				resolve('new doc successfully inserted')
-			} catch (e) {
+// const app = initializeApp(firebaseConfig);
+// const db = getFirestore(app);
+// //firebase.firestore().collection('restaurants').doc(id).get();
+// //firebase.firestore().collection('restaurants').add(data);
+// //firebase.firestore().collection('restaurants').doc(); to create new document 
+// //https://firebase.google.com/codelabs/firestore-web#8 for filering
+// const Firestore = {
+// 	readDocs: (...args) => {
+// 		let docs = []
+// 		const ref = collection(db, "images")
+// 		return new Promise(async resolve => {
+// 			try {
+// 				const snapshots = await getDocs(ref)
+// 				snapshots.forEach(doc => {
+// 					const d = { ...doc.data() }
+// 					docs.push(d)
+// 				})
+// 				console.log(docs)
+// 			} catch (e) {
+// 				console.log(e)
+// 			}
+// 		})
+// 	},
+// 	writeDoc: (...args) => {
+// 		const [inputs, collection_name] = args
+// 		return new Promise(async resolve => {
+// 			// Use randomIndex to generate a random documentID everytime
+// 			// We use backtick(``) to declare it as a string
+// 			// This example is when you want to add images in Firestore
+// 			const randomIndex = Math.floor(Math.random() * 1000000000)
+// 			try {
+// 				const imageRef = doc(db, 'images', `${randomIndex}`);
+// 				await setDoc(imageRef, { title: inputs.title, path: inputs.path, createdAt: serverTimestamp() });
+// 				resolve('new doc successfully inserted')
+// 			} catch (e) {
 
-			}
-		})
-	}
-}
+// 			}
+// 		})
+// 	}
+// }
 const inputs = { title: "Nikolas", path: "the image/path" }
 const readDoc = { id: "650291541", collection: "images" }
-const time = serverTimestamp();
+//const time = serverTimestamp();
 //Firestore.writeDoc(inputs)
-Firestore.readDocs(readDoc)
+//Firestore.readDocs(readDoc)
 
 //#endregion
 

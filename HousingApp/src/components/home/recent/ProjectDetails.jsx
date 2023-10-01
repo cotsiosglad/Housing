@@ -15,7 +15,7 @@ import ScrollToTop from '../../../customHelperComponents/ScrollToTop';
 //theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";     
     
-//core
+//core  
 import "primereact/resources/primereact.min.css";                                       
         
 
@@ -98,7 +98,7 @@ const ProjectDetails = ({ match }) => {
         </div> */}
         <div className="project-img">
           <img src={backgroundImg} alt=""/>
-          <div class="project-img-text">{projectData.title}</div>
+          <div className="project-img-text">{projectData.title}</div>
         </div>
         <div className='info-icon-box'>
         <div className='row'>
@@ -183,7 +183,7 @@ const ProjectDetails = ({ match }) => {
           </div>
           <div className='project-wrapper-content'>
             {projectData.imagePaths.map((val,index)=>(
-              <img src={val} onClick={() => setToggler(!toggler)}/>
+              <img src={val} key={index} onClick={() => setToggler(!toggler)}/>
             )
             
             )}
