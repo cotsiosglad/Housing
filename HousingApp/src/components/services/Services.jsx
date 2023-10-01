@@ -11,51 +11,27 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import "../../App.css"
 import "./services.css"
-import useIntersectionObserver from "../../customHooks/useIntersectionObserver"
+// import useIntersectionObserver from "../../customHooks/useIntersectionObserver"
 import ScrollToTop from "../../customHelperComponents/ScrollToTop"; // Import the ScrollToTop component
-
+import DialogContactForm from "../common/DialogContactForm"
 
 
 
 const Services = () => {
-  // useIntersectionObserver({
-	// 	root: null,
-	// 	rootMargin: '0px',
-	// 	threshold: 0.4,
-	// });
-  const emptyContactModel={
-    firstName:"",
-    lastName:"",
-    contactNumber:"",
-    contactEmail:"",
-    notes:""
-  }
+// useIntersectionObserver({
+// 	root: null,
+// 	rootMargin: '0px',
+// 	threshold: 0.4,
+// });~
 
-  const [dialogServiceVisible,setDialogServiceVisible] = useState(false)
-  const [contactModel,setContactModel] = useState(emptyContactModel)
-  const [submitted, setSubmitted] = useState(false);
-  
-  const dialogFooterTemplate = () => {
-    return <Button label="Ok" icon="pi pi-check" onClick={() => setDialogServiceVisible(false)} />;
-  };
+const [dialogServiceVisible,setDialogServiceVisible] = useState(false)
 
-  const onInputChange = (e, name) => {
-    const val = (e.target && e.target.value) || '';
-    let _contact = { ...contactModel };
-
-    _contact[`${name}`] = val;
-
-    setContactModel(_contact);
+const updateDialogServiceVisible = (newState) => {
+  console.log(newState)
+  setDialogServiceVisible(newState);
 };
 
-const onInputNumberChange = (e, name) => {
-  const val = e.value || 0;
-  let _contact = { ...contactModel };
 
-  _contact[`${name}`] = val;
-
-  setContactModel(_contact);
-};
 
   return (
     <>
@@ -68,8 +44,10 @@ const onInputNumberChange = (e, name) => {
           </div>
         </div>
       </div>
+      <DialogContactForm dialogVisibleStage={dialogServiceVisible} updateDialogVisibleState={updateDialogServiceVisible}/>
 
-      <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogServiceVisible} style={{  height:'448px' }}
+{/* 
+      <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogServiceVisible} style={{  height:'448px',width: '75vw' }}
               modal  focusOnShow={true} keepInViewport={true}  contentStyle={{ height: '300px' }} onHide={() => setDialogServiceVisible(false)} footer={dialogFooterTemplate}>
         <div className="container-fluid contact-form">
           <div className="row">
@@ -112,21 +90,7 @@ const onInputNumberChange = (e, name) => {
 
           </div>
         </div>
-          {/* <div class="form-container">
-            <div class="form">
-              <span class="heading">Get in touch</span>
-              <input placeholder="Name" type="text" class="input"/>
-              <input placeholder="Email" id="mail" type="email" class="input"/>
-              <textarea placeholder="Say Hello" rows="10" cols="30" id="message" name="message" class="input"></textarea>
-              <div class="button-container">
-              <div class="send-button">Send</div>
-              <div class="reset-button-container">
-                  <div id="reset-btn" class="reset-button">Reset</div>
-              </div>
-          </div>
-      </div>
-      </div> */}
-      </Dialog>
+      </Dialog> */}
     </>
   )
 }

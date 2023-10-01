@@ -20,9 +20,9 @@ footer {
   grid-gap: 20px;
 } */
 
-footer img {
+/* footer img {
   width: 150px;
-}
+} */
 
 footer h2 {
   font-weight: 500;
@@ -31,6 +31,12 @@ footer h2 {
 footer p {
   color: var(--color1);
   margin: 20px 0;
+}
+.footer-info p{
+  font-family: cursive;
+  color: var(--color2) !important;
+  font-weight: bolder;
+  text-align: center;
 }
 
 footer input {
@@ -84,8 +90,8 @@ button li {
 }
 
 .chatBot {
-  width: 100px;
-  height: 100px;
+  /* width: 100px;
+  height: 100px; */
   border: none;
   outline: none;
   color: #fff;
@@ -205,24 +211,44 @@ footer a {
   margin-bottom: 30px
 }
 
-.align-items-center {
-  justify-content: left;
+footer .socialContainer{
+  border-radius: 0;
 }
 
-.map-box {
-  width: 315px;
+.App{
+  position: fixed;
+  bottom: 0px;
+  /* left: 1px; */
+  right: 5px;
+  
+}
+
+.react-chatbot-kit-chat-container{
+  scale: 0.9 0.8;
+  transform: translateY(75px);
+}
+
+@media screen and (max-width: 450px){
+  footer {
+    text-align: center!important;
+  }
+  
+} 
+
+/* .map-box {
+  /* width: 315px; */
   /* Set your desired width */
-  height: 300px;
+  /* height: 300px; */
   /* Set your desired height */
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
   /* Set your desired background color */
-  border-radius: 10px;
+  /* border-radius: 10px; */
   /* Add rounded corners if desired */
-  overflow: hidden;
+  /* overflow: hidden; */
   /* Hide any overflow content */
-}
+/* }  */
 
-.map-container {
+/* .map-container {
   width: 100%;
   height: 100%;
 }
@@ -230,4 +256,4 @@ footer a {
 iframe {
   height: 300px;
   width: 300px;
-}
+} */

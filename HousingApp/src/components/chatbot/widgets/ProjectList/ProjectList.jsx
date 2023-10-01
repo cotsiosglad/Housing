@@ -2,6 +2,7 @@ import React from "react";
 import { projects } from "../../../data/Data"
 import Options from "../Options/Options";
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import OptionRedirect from "../OptionRedirect/OptionRedirect";
 
 const ProjectLists = props => {
     const Projectlists = projects.map((items, index) => (
@@ -14,7 +15,7 @@ const ProjectLists = props => {
 
     );
 
-    return <Options options={Projectlists} {...props} />;
+    return <OptionRedirect options={Projectlists} {...props} />;
 };
 
 export default ProjectLists;
