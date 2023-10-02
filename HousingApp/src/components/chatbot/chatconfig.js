@@ -9,6 +9,8 @@ import GeneralOptions from "./widgets/GeneralOptions/GeneralOptions";
 import ProjectLists from './widgets/ProjectList/ProjectList.jsx';
 import ServiceList from './widgets/ServiceList/ServiceList.jsx';
 import ProjectDetailsListed from './widgets/ProjectDetails/ProjectDetailsListed.jsx';
+import ContactUs from './widgets/ContactUs/ContactUs.jsx';
+
 const botName = 'Domus Alba';
 const config = {
     initialMessages: [
@@ -69,6 +71,10 @@ const config = {
         {
             widgetName: "serviceslist",
             widgetFunc: (props) => <ServiceList {...props} />,
+        },
+        {
+            widgetName: "contactUs",
+            widgetFunc: (props) => <ContactUs {...props} />,
         },
         // {
         //     widgetName: 'Selector',
