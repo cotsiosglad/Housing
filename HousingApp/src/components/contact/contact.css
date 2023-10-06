@@ -7,7 +7,7 @@
   width: 100%;
   border-radius: 5px;
   margin-bottom: 20px;
-
+  max-height: 200px
 }
 
 .contact input {
@@ -17,6 +17,8 @@
 
 .contact form {
   padding: 30px;
+  border-radius: 40px;
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 768px) {
@@ -32,4 +34,106 @@
   .contact input {
     width: 100%;
   }
+}
+
+/* .contactinfo {
+  border: 2px solid black
+} */
+
+.contact-info {
+  /* position: absolute; */
+  right: 0;
+  top: -50px;
+  width: 300px;
+  background-color: var(--black);
+  padding: 20px 25px 20px 45px;
+  transform-style: preserve-3d;
+  font-weight: 400;
+  border-radius: 0;
+  /* font-weight: bold; */
+  color: #ffffff;
+  font-size: 15px;
+  z-index: 1;
+  padding: 50px;
+}
+
+/* .leftline {
+  margin-top: 60px;
+  border-left: 1px solid #000000;
+  height: 500px;
+  padding-top: 101px;
+} */
+
+.leftline {
+  padding-left: 0px;
+  border-bottom: 1px solid var(--color4);
+  border-right: 1px solid var(--color4);
+  border-top: 1px solid var(--color4);
+  margin-top: 94px;
+  border-left: 1px solid var(--color4);
+  height: 416px;
+  width: 300px;
+  padding-top: 10px;
+  background-color: var(--color4);
+  margin-left: 125px;
+}
+
+.contact-info a {
+  color: #ffffff;
+  font-size: 13px;
+  /* font-weight: bold; */
+}
+
+.svgfacebook a {
+  font-size: 30px
+}
+
+.title {
+  font-size: 28px;
+  color: rgb(82, 88, 107);
+  font-weight: 600;
+  letter-spacing: -1px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.title::before,
+.title::after {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  left: 0px;
+  background-color: rgb(82, 88, 107);
+}
+
+.title::before {
+  width: 18px;
+  height: 18px;
+  background-color: rgb(82, 88, 107);
+}
+
+.title::after {
+  width: 18px;
+  height: 18px;
+  animation: pulse 1s linear infinite;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+div input {
+  opacity: 0.5
 }

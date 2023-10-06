@@ -16,22 +16,22 @@ const config = {
     initialMessages: [
         createChatBotMessage(`Welcome to ${botName}`),
         createChatBotMessage(
-            "What can I help you with today.",
-            {
-                // widget: "Selector",
-                withAvatar: true,
-                delay: 500,
-            }
-        ),
-        // createCustomMessage('These are our services', 'custom'),
-        createChatBotMessage(
-            "First things first, what do you want to check?",
+            "What can I help you with today?",
             {
                 widget: "options",
                 withAvatar: true,
                 delay: 500,
             }
         ),
+        // createCustomMessage('These are our services', 'custom'),
+        // createChatBotMessage(
+        //     "First things first, what do you want to check?",
+        //     {
+        //         widget: "options",
+        //         withAvatar: true,
+        //         delay: 500,
+        //     }
+        // ),
     ],
     state: {
         airports: [],
