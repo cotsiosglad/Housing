@@ -4,7 +4,7 @@ import { classNames } from 'primereact/utils';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 // import { ProductService } from './service/ProductService';
-import {projects as projectList,projectDetails as projectDetailsModel} from '../data/Data'
+import { projects as projectList, projectDetails as projectDetailsModel } from '../data/Data'
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
@@ -18,29 +18,31 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import TextEditor from "./TextEditor"
 import "./adminLogin.css"
-import { writeDoc,getDocById } from '../../firebase';
+import { writeDoc, getDocById, storage } from '../../firebase';
+import { ref, uploadBytes } from "firebase/storage"
+import { v4 } from "uuid";
 
 export default function AdminProjects() {
     let emptyProject = {
-        id:0,
-        title:"",
-        image:"",
-        location:"",
-        region:"",
-        floors:"",
-        bedrooms:"",
-        bathrooms:"",
-        type:"",
-        apartments:"",
-        status:"",
-        availability:""
+        id: 0,
+        title: "",
+        image: "",
+        location: "",
+        region: "",
+        floors: "",
+        bedrooms: "",
+        bathrooms: "",
+        type: "",
+        apartments: "",
+        status: "",
+        availability: ""
     };
 
     let emptyProjectDetails = {
-        id:0,
-        description:"",
-        imagePaths:[],
-        apartmentList:[]
+        id: 0,
+        description: "",
+        imagePaths: [],
+        apartmentList: []
     }
 
     const [projects, setProjects] = useState(null);
@@ -53,11 +55,20 @@ export default function AdminProjects() {
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState(null);
     const [textEditorValue, setTextEditorValue] = useState('');
+    const [imageUpload, setImageUpload] = useState(null);
+    const uploadImage = () => {
+        if (imageUpload == null) return;
+        const imageRef = ref(storage, `images/projects/abc/${v4() + "_" + imageUpload.name}`)
+        uploadBytes(imageRef, imageUpload).then(() => {
+            alert("Image Uploaded")
+        })
+    };
+
     const toast = useRef(null);
     const dt = useRef(null);
 
     useEffect(() => {
-        
+
         //add firebase api here
         //ProductService.getProducts().then((data) => setProjects(data));
         setProjects(projectList);
@@ -70,7 +81,7 @@ export default function AdminProjects() {
     const updateTextEditorValue = (newState) => {
         console.log(newState)
         setTextEditorValue(newState);
-      };
+    };
 
     const openNew = () => {
         setProject(emptyProject);
@@ -98,23 +109,23 @@ export default function AdminProjects() {
         if (project.title.trim() && textEditorValue) {
             let _projects = [...projects];
             let _project = { ...project };
-            let _projectDetails = { ...projectDetails,description:textEditorValue};
+            let _projectDetails = { ...projectDetails, description: textEditorValue };
             console.log(_projectDetails);
 
             if (project.id) {
                 //const index = findIndexById(project.id);
-                
-                try{
+
+                try {
                     debugger;
-                    var aa = getDocById(1,"Projects");
+                    var aa = getDocById(1, "Projects");
                     // writeDoc(_project,'Projects')
                     // writeDoc(_projectDetails,'ProjectsDetails')
                     console.log(aa);
                 }
-                catch(e){
+                catch (e) {
                     console.log(e);
                 }
-                
+
 
                 //_projects[index] = _project;
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'project Updated', life: 3000 });
@@ -137,9 +148,9 @@ export default function AdminProjects() {
         setProject({ ...project });
         //firebase api to get the project details by project id
         setProjectDetails(projectDetailsModel);
-        console.log({project});
-        console.log({projectDetails});
-        console.log({projectDetailsModel});
+        console.log({ project });
+        console.log({ projectDetails });
+        console.log({ projectDetailsModel });
         setProjectDialog(true);
     };
 
@@ -314,9 +325,9 @@ export default function AdminProjects() {
 
                 {/* <DataTable ref={dt} value={projects} size='small' selection={selectedProjects} onSelectionChange={(e) => setSelectedProjects(e.value)} */}
                 <DataTable ref={dt} value={projects} size='small'
-                        dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} projects" globalFilter={globalFilter} header={header} scrollable >
+                    dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} projects" globalFilter={globalFilter} header={header} scrollable >
                     {/* <Column selectionMode="multiple" exportable={false}></Column> */}
                     <Column field="id" header="ID" sortable style={{ minWidth: '5rem' }}></Column>
                     <Column field="title" header="Title" sortable style={{ minWidth: '16rem' }}></Column>
@@ -338,7 +349,7 @@ export default function AdminProjects() {
 
             <Dialog visible={projectDialog} maximized pos style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Project Details" modal className="p-fluid" footer={projectDialogFooter} onHide={hideDialog}>
                 {project.image && <img src={`https://primefaces.org/cdn/primereact/images/project/${project.image}`} alt={project.image} className="project-image block m-auto pb-3" />}
-            
+
                 <div className='container-fluid'>
                     <div className='row'>
                         <div className='col-md-12'>
@@ -351,18 +362,18 @@ export default function AdminProjects() {
                     </div>
                     <div className='row mt-2'>
                         <div className='col-md-12'>
-                        <label htmlFor="description" className="field-header">
-                            Description
-                        </label>
-                        {/* <InputTextarea id="description" value={projectDetails.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} /> */}
+                            <label htmlFor="description" className="field-header">
+                                Description
+                            </label>
+                            {/* <InputTextarea id="description" value={projectDetails.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} /> */}
                             <>
-                            <TextEditor textEditorState={textEditorValue} updateTextEditorState={updateTextEditorValue} className={classNames({ 'p-invalid': submitted && (textEditorValue=="<p><br></p>" || !textEditorValue) })}/>
-                            {/* <HtmlTextEditor textEditorState={textEditorValue} updateTextEditorState={updateTextEditorValue} className={classNames({ 'p-invalid': submitted && (textEditorValue=="<p><br></p>" || !textEditorValue) })}/> */}
-                            
-                            {submitted && (textEditorValue=="<p><br></p>" || !textEditorValue) && <small className="p-error">Description is required.</small>}
+                                <TextEditor textEditorState={textEditorValue} updateTextEditorState={updateTextEditorValue} className={classNames({ 'p-invalid': submitted && (textEditorValue == "<p><br></p>" || !textEditorValue) })} />
+                                {/* <HtmlTextEditor textEditorState={textEditorValue} updateTextEditorState={updateTextEditorValue} className={classNames({ 'p-invalid': submitted && (textEditorValue=="<p><br></p>" || !textEditorValue) })}/> */}
+
+                                {submitted && (textEditorValue == "<p><br></p>" || !textEditorValue) && <small className="p-error">Description is required.</small>}
                             </>
                         </div>
-                        
+
                     </div>
                     <div className='row mt-2'>
                         <div className='col-md-12'>
@@ -382,7 +393,7 @@ export default function AdminProjects() {
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div className='row mt-2'>
                         <div className='col-md-3'>
@@ -403,25 +414,28 @@ export default function AdminProjects() {
                             <label htmlFor="floors" className="field-header">
                                 Floors
                             </label>
-                            <InputNumber id="floors" value={project.floors} onValueChange={(e) => onInputNumberChange(e, 'floors')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.floors })}/>
+                            <InputNumber id="floors" value={project.floors} onValueChange={(e) => onInputNumberChange(e, 'floors')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.floors })} />
                             {submitted && !project.floors && <small className="p-error">Floors is required.</small>}
                         </div>
                         <div className='col-md-3'>
                             <label htmlFor="bedrooms" className="field-header">
                                 Bedrooms
                             </label>
-                            <InputText id="bedrooms" value={project.bedrooms} onChange={(e) => onInputChange(e, 'bedrooms') } required autoFocus className={classNames({ 'p-invalid': submitted && !project.bedrooms })} />
+                            <InputText id="bedrooms" value={project.bedrooms} onChange={(e) => onInputChange(e, 'bedrooms')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.bedrooms })} />
                             {submitted && !project.bedrooms && <small className="p-error">Bedrooms is required.</small>}
                         </div>
                         <div className='col-md-3'>
                             <label htmlFor="bathrooms" className="field-header">
                                 Bathrooms
                             </label>
-                            <InputNumber id="bathrooms" value={project.bathrooms} onValueChange={(e) => onInputNumberChange(e, 'bathrooms')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.bathrooms })}/>
+                            <InputNumber id="bathrooms" value={project.bathrooms} onValueChange={(e) => onInputNumberChange(e, 'bathrooms')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.bathrooms })} />
                             {submitted && !project.bathrooms && <small className="p-error">Bathrooms is required.</small>}
                         </div>
                     </div>
-
+                    {/* <div className='row mt-2'>
+                        <input type="file" onChange={(event) => { setImageUpload(event.target.files[0]) }} />
+                        <button onClick={uploadImage}> Upload Image</button>
+                    </div> */}
                     {/* <div className="formgrid grid">
                         <div className="field col">
                             <label htmlFor="price" className="field-header">
@@ -437,7 +451,7 @@ export default function AdminProjects() {
                         </div>
                     </div> */}
                 </div>
-                
+
             </Dialog>
 
             <Dialog visible={deleteProjectDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProjectDialogFooter} onHide={hideDeleteProjectDialog}>
@@ -460,4 +474,3 @@ export default function AdminProjects() {
         </>
     );
 }
-        

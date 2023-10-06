@@ -43,11 +43,11 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         }));
     };
 
-    const handleServiceDetails = () => {
+    const handleContactUs = () => {
         const botMessage = createChatBotMessage(
-            "Would you like to see more details on a specific service?",
+            "If you want to contact us click on the links below:",
             {
-                widget: "serviceDetails",
+                widget: "contactUs",
                 loading: true,
                 terminateLoading: true,
             }
@@ -125,6 +125,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
                         handleServiceList,
                         handleProjectList,
                         handleProjectDetailslisted,
+                        handleContactUs,
                     },
                 });
             })}

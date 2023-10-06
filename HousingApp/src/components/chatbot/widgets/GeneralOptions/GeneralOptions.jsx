@@ -11,6 +11,10 @@ const chatbotItems = [
   {
     name: "Projects",
     handler: "handleProjectList"
+  },
+  {
+    name: "Contact Us",
+    handler: "handleContactUs"
   }
 ]
 const GeneralOptions = props => {

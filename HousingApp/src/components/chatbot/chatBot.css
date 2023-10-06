@@ -17,3 +17,9 @@
     height: 20px;
     width: 140px;
 }
+
+.react-chatbot-kit-chat-input,
+.react-chatbot-kit-chat-btn-send {
+    pointer-events: none;
+    opacity: 0.2;
+}

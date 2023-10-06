@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom"
 // import { footer } from "../../data/Data"
 import { BsFillTelephoneFill, BsFacebook, BsFillPinMapFill } from 'react-icons/bs';
-import chatbotImage from "../footer/chatbot1.png"
+import chatbotImage from "../footer/chatbot3.png"
 import { CiFacebook, CiTwitter, CiLinkedin, CiInstagram, CiPhone, CiMail, CiLocationOn } from 'react-icons/ci';
 import logoImg from "../images/dalogo.png"
 import Chatbot from "react-chatbot-kit";
@@ -17,7 +17,7 @@ import { services, projects } from "../../data/Data"
 import "./footer.css"
 
 const Footer = () => {
-  const [showBot, toggleBot] = useState(true);
+  const [showBot, toggleBot] = useState(false);
 
   const saveMessages = (messages, HTMLString) => {
     localStorage.setItem('chat_messages', JSON.stringify(messages));
@@ -109,24 +109,24 @@ const Footer = () => {
               </div>
               <div className="footer-info">
                 <p>
-                ∆εν είναι απλή αγορά ακινήτου
+                  ∆εν είναι απλή αγορά ακινήτου
                 </p>
                 <p>
-                Είναι επένδυση
+                  Είναι επένδυση
                 </p>
               </div>
             </div>
             <div className="col-12 col-md-8 col-lg-8">
-            <div className="row">
+              <div className="row">
                 <div className="col-12 col-md-6 col-lg-6">
                   <h5 className="pt-4">Services</h5>
-                  {services.sort().reverse().slice(0,3).map((items, index) => (
+                  {services.sort().reverse().slice(0, 3).map((items, index) => (
                     <div key={index}><Link to="/services">{items.titleType}</Link></div>
                   ))}
                 </div>
                 <div className="col-12 col-md-6 col-lg-6">
                   <h5 className="pt-4">Projects</h5>
-                  {projects.sort().reverse().slice(0,3).map((items, index) => (
+                  {projects.sort().reverse().slice(0, 3).map((items, index) => (
                     <div key={index}><Link to={`/projects/${items.id}`}>{items.title}</Link></div>
                   ))}
                 </div>
@@ -150,13 +150,13 @@ const Footer = () => {
 
                 </div>
                 <div className="col-12 col-md-6 col-lg-6 align-self-center">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d815.6750023054768!2d33.33372926962593!3d35.139159094995286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDA4JzIxLjAiTiAzM8KwMjAnMDMuNyJF!5e0!3m2!1sen!2s!4v1695144534824!5m2!1sen!2s" style={{ border: "0" ,    width: "100%"}} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d815.6750023054768!2d33.33372926962593!3d35.139159094995286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDA4JzIxLjAiTiAzM8KwMjAnMDMuNyJF!5e0!3m2!1sen!2s!4v1695144534824!5m2!1sen!2s" style={{ border: "0", width: "100%" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                 </div>
               </div>
-              
+
             </div>
-            
-            
+
+
 
             {/* <div className="col-md-4">
               <h5>Follow Us</h5>
@@ -191,10 +191,10 @@ const Footer = () => {
               Είναι επένδυση
               </p>
             </div> */}
-            
+
           </div>
           <div className="line"></div>
-          <div className="mb-3"><SocialMediaBar/></div>
+          <div className="mb-3"><SocialMediaBar /></div>
           <div className="App">
             {showBot && (
               <Chatbot
