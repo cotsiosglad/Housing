@@ -34,7 +34,7 @@ footer p {
 }
 .footer-info p{
   font-family: cursive;
-  color: var(--color2) !important;
+  color: var(--color1) !important;
   font-weight: bolder;
   text-align: center;
 }

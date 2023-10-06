@@ -122,44 +122,54 @@ export default ()=>{
                     </div>
                 </div> */}
                 <div className="row mt-4">
-                    <div className="card col-12 col-md-6 col-lg-6 d-flex align-items-center flex-column" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" data-aos-once="true">
-                        <div className="info-box-img">
-                            <FaMedapps/>
-                        </div>
-                        <div className="info-box-text">
-                            <h5>Kαινοτομία</h5>
-                            <p>Διαρκής δέσμευση στην καινοτομία και ανάπτυξη ακινήτων στην Κύπρο. Η αφοσίωσή μας στην καινοτομία διαμορφώνει την ανάπτυξη ακινήτων στην Κύπρο</p>
-                        </div>
-                    </div>
-                    <div className="card col-12 col-md-6 col-lg-6 d-flex align-items-center flex-column" data-aos="fade-left" data-aos-delay="800" data-aos-duration="1000" data-aos-once="true">
-                        <div className="info-box-img">
-                            <FaLaptopHouse/>
-                        </div>
-                        <div className="info-box-text">
-                            <h5>Ποιότητα </h5>
-                            <p>Τα έργα μας αντιπροσωπεύουν επιτυχημένα, ανθεκτικά σχέδια κτιρίων και υψηλή ποιότητα</p>
+                    <div className="info-box col-12 col-md-6 col-lg-6 d" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" data-aos-once="true">
+                        <div className="card d-flex align-items-center flex-column" >
+                            <div className="info-box-img">
+                                <FaMedapps/>
+                            </div>
+                            <div className="info-box-text">
+                                <h5>Kαινοτομία</h5>
+                                <p>Διαρκής δέσμευση στην καινοτομία και ανάπτυξη ακινήτων στην Κύπρο. Η αφοσίωσή μας στην καινοτομία διαμορφώνει την ανάπτυξη ακινήτων στην Κύπρο</p>
+                            </div>
                         </div>
                     </div>
+                    <div className="info-box col-12 col-md-6 col-lg-6 d" data-aos="fade-left" data-aos-delay="800" data-aos-duration="1000" data-aos-once="true">
+                        <div className="card -flex align-items-center flex-column" >
+                            <div className="info-box-img">
+                                <FaLaptopHouse/>
+                            </div>
+                            <div className="info-box-text">
+                                <h5>Ποιότητα </h5>
+                                <p>Τα έργα μας αντιπροσωπεύουν επιτυχημένα, ανθεκτικά σχέδια κτιρίων και υψηλή ποιότητα</p>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
-                <div className="row">
-                    <div className="card col-12 col-md-6 col-lg-6 d-flex align-items-center flex-column" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" data-aos-offset="300" data-aos-once="true">
-                        <div className="info-box-img">
-                            <FaHandshake/>
-                        </div>
-                        <div className="info-box-text">
-                            <h5>Συνεργασίες</h5>
-                            <p>Ισχυρές συνεργασίες στον κλάδο με διακεκριμένους αρχιτέκτονες για εξαιρετικά αποτελέσματα</p>
-                        </div>
-                    </div>
-                    <div className="card col-12 col-md-6 col-lg-6 d-flex align-items-center flex-column" data-aos="fade-left" data-aos-delay="800" data-aos-duration="1000" data-aos-offset="300" data-aos-once="true">
-                        <div className="info-box-img">
-                            <FaPoll/>
-                        </div>
-                        <div className="info-box-text ">
-                            <h5>Kαινοτομία</h5>
-                            <p>Παρακολουθούμε και προβλέπουμε τις τάσεις στην αγορά για να βρισκόμαστε στην επικράτεια της καινοτομίας στον χώρο των ακινήτων</p>
+                <div className="row mt-4">
+                    <div className="info-box col-12 col-md-6 col-lg-6" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" data-aos-offset="300" data-aos-once="true">
+                        <div className="card d-flex align-items-center flex-column">
+                            <div className="info-box-img">
+                                <FaHandshake/>
+                            </div>
+                            <div className="info-box-text">
+                                <h5>Συνεργασίες</h5>
+                                <p>Ισχυρές συνεργασίες στον κλάδο με διακεκριμένους αρχιτέκτονες για εξαιρετικά αποτελέσματα</p>
+                            </div>
                         </div>
                     </div>
+                    <div className="info-box col-12 col-md-6 col-lg-6" data-aos="fade-left" data-aos-delay="800" data-aos-duration="1000" data-aos-offset="300" data-aos-once="true">
+                        <div className="card d-flex align-items-center flex-column" >
+                            <div className="info-box-img">
+                                <FaPoll/>
+                            </div>
+                            <div className="info-box-text ">
+                                <h5>Kαινοτομία</h5>
+                                <p>Παρακολουθούμε και προβλέπουμε τις τάσεις στην αγορά για να βρισκόμαστε στην επικράτεια της καινοτομίας στον χώρο των ακινήτων</p>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </section>

@@ -25,7 +25,7 @@ export default function DialogContactForm ({dialogVisibleStage,updateDialogVisib
   const toast = useRef(null);
   
   const dialogFooterTemplate = () => {
-    return <Button label="Submit" icon="pi pi-check" onClick={saveContactForm} />;
+    return <Button label="Submit" severity="secondary" icon="pi pi-check" onClick={saveContactForm} />;
   };
   
   const onInputChange = (e, name) => {
@@ -105,8 +105,8 @@ console.log("Mobile:"+ isMobile)
             <label htmlFor="lastName" className="field-header">
                           Surname
               </label>
-              <InputText id="lastName" value={contactModel.lastName} onChange={(e) => onInputChange(e, 'lastName') } required autoFocus className={classNames({ 'p-invalid': submitted && !contactModel.lastName })} />
-              {submitted && !contactModel.lastName && <small className="p-error">Surname is required.</small>}
+              <InputText id="lastName" value={contactModel.lastName} onChange={(e) => onInputChange(e, 'lastName') } required autoFocus />
+              {/* {submitted && !contactModel.lastName && <small className="p-error">Surname is required.</small>} */}
           </div>
         </div>
         <div className="row">
@@ -114,7 +114,7 @@ console.log("Mobile:"+ isMobile)
             <label htmlFor="contactNumber" className="field-header">
                             Phone Number
             </label>
-            <InputNumber id="contactNumber" value={contactModel.contactNumber} onValueChange={(e) => onInputNumberChange(e, 'contactNumber')} required autoFocus className={classNames({ 'p-invalid': submitted && (!contactModel.contactNumber && !contactModel.contactEmail) })}/> 
+            <InputNumber useGrouping={false} id="contactNumber" value={contactModel.contactNumber} onValueChange={(e) => onInputNumberChange(e, 'contactNumber')} required autoFocus className={classNames({ 'p-invalid': submitted && (!contactModel.contactNumber && !contactModel.contactEmail) })}/> 
             
           </div>
           <div className="col-12 col-md-6 d-grid">

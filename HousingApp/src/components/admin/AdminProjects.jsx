@@ -227,7 +227,7 @@ export default function AdminProjects() {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <Button label="New" size='small' icon="pi pi-plus" severity="success" onClick={openNew} />
+                <Button label="New" size='small' icon="pi pi-plus" severity="secondary" onClick={openNew} />
                 {/* <Button label="Delete" size='small' icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProjects || !selectedProjects.length} /> */}
             </div>
         );

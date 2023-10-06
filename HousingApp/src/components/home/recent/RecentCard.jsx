@@ -51,13 +51,14 @@ const RecentCard = () => {
                 <Link to={`/projects/${val.id}`}>
                 <div className='box shadow houses-grid-item'>
                 
-                  <div className='houses-grid-img' style={{ backgroundImage: `url(${background})` }}>
+                  {/* <div className='houses-grid-img' style={{ backgroundImage: `url(${background})` }}> */}
+                  <div className='houses-grid-img' style={{ backgroundImage: `url(${val.cover})` }}>
                     {/* <img src={cover} alt='' /> */}
                     
                   </div>
                   <div className="houses-grid-content">
                     <span>Completed</span>
-                    <h4>Project Name</h4>
+                    <h4>{val.name}</h4>
                   </div>
                   <div className="rentals-grid-tabs">
                     <span className="rentals-grid-tab">

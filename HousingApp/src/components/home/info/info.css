@@ -2,6 +2,7 @@
     /* letter-spacing: 1.5px; */
     text-align: justify;
     align-self: center;
+    font-size: larger;
 }
 
 /* .info-text-img img{
@@ -65,6 +66,16 @@
     text-align: center;
 }
 
+.info-box-text h5{
+    text-align: center;
+}
+
+.info-box-text p{
+    padding: 0 24px 0 24px;
+    text-align: justify;
+    font-size: larger;
+}
+
 .info-box-img{
     margin-bottom: 20px;
     width: 120px;
@@ -86,15 +97,42 @@
 .card {
     position: relative;
     padding: 9px;
+    height: 20rem;
     background-color: var(--color1);
     border-radius: 35px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-  }
-
-  .card-overlay {
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
+    z-index: 2;
+    overflow: hidden;
+    margin: 26px;
+}
+.info-box::before {
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-conic-gradient(var(--bg) 0.0000001%, var(--grey) 0.000104%) 60% 60%/600% 600%;
-    filter: opacity(10%) contrast(105%);
-  }
+    content: "";
+    top: 0;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: var(--color4);
+    transform: skew(33deg);
+    z-index: 1;
+}
+
+.info-box{
+    z-index: 2;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-overlay {
+position: absolute;
+inset: 0;
+pointer-events: none;
+background: repeating-conic-gradient(var(--bg) 0.0000001%, var(--grey) 0.000104%) 60% 60%/600% 600%;
+filter: opacity(10%) contrast(105%);
+}
+
+@media screen and (max-width: 450px){
+    .card{
+        height: auto!important;
+    }
+} 

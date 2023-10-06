@@ -121,7 +121,7 @@
     color: #001925;
   } */
 
-@media screen and (max-width: 450px)
+/* @media screen and (max-width: 450px)
 {
     .p-dialog {
         height: 100vh!important;
@@ -131,4 +131,4 @@
     .contact-form{
         display: inline;
     }
-} 
+}  */
