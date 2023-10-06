@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./adminLogin.css"
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 // Initialize Firebase
 
@@ -48,9 +49,12 @@ const AdminLogin = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="login-button">
-                        Login
-                    </button>
+                    <Link to="/admin/home">
+                        <button type="submit" className="login-button" style={{ width: "100%" }}>
+                            Login
+                        </button>
+                    </Link>
+
                 </div>
             </form>
         </div>

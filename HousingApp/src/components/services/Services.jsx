@@ -1,14 +1,8 @@
 import React,{useState} from "react"
 import img from "../images/services.jpg"
 import Back from "../common/Back"
-import Heading from "../common/Heading"
 import ServiceBox from "../services/serviceBox"
-import { classNames } from 'primereact/utils';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { InputNumber } from 'primereact/inputnumber';
-import { InputText } from 'primereact/inputtext';
-import { Dialog } from 'primereact/dialog';
-import { Button } from 'primereact/button';
+
 import "../../App.css"
 import "./services.css"
 // import useIntersectionObserver from "../../customHooks/useIntersectionObserver"

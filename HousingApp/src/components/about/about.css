@@ -16,6 +16,10 @@
 .about .heading h1{
   color: var(--color4);
 }
+
+.about-content p{
+  font-size: larger;
+}
 @media screen and (max-width: 768px) {
   .about .container {
     flex-direction: column;

@@ -231,6 +231,10 @@ img {
   }
 }
 
+.p-inputtext:enabled:focus{
+  border-color: var(--color4)!important;
+}
+
 @font-face {
   font-family: "LFutura";
   src: local("LFutura"),
