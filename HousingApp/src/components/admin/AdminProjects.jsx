@@ -432,10 +432,10 @@ export default function AdminProjects() {
                             {submitted && !project.bathrooms && <small className="p-error">Bathrooms is required.</small>}
                         </div>
                     </div>
-                    <div className='row mt-2'>
+                    {/* <div className='row mt-2'>
                         <input type="file" onChange={(event) => { setImageUpload(event.target.files[0]) }} />
                         <button onClick={uploadImage}> Upload Image</button>
-                    </div>
+                    </div> */}
                     {/* <div className="formgrid grid">
                         <div className="field col">
                             <label htmlFor="price" className="field-header">
