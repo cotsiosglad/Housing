@@ -32,7 +32,8 @@ footer p {
   color: var(--color1);
   margin: 20px 0;
 }
-.footer-info p{
+
+.footer-info p {
   font-family: cursive;
   color: var(--color1) !important;
   font-weight: bolder;
@@ -211,41 +212,41 @@ footer a {
   margin-bottom: 30px
 }
 
-footer .socialContainer{
+footer .socialContainer {
   border-radius: 0;
 }
 
-.App{
+.App {
   position: fixed;
   bottom: 0px;
   /* left: 1px; */
   right: 5px;
-  
+
 }
 
-.react-chatbot-kit-chat-container{
+.react-chatbot-kit-chat-container {
   scale: 0.9 0.8;
   transform: translateY(75px);
 }
 
-@media screen and (max-width: 450px){
+@media screen and (max-width: 450px) {
   footer {
-    text-align: center!important;
+    text-align: center !important;
   }
-  
-} 
+
+}
 
 /* .map-box {
   /* width: 315px; */
-  /* Set your desired width */
-  /* height: 300px; */
-  /* Set your desired height */
-  /* background-color: #f0f0f0; */
-  /* Set your desired background color */
-  /* border-radius: 10px; */
-  /* Add rounded corners if desired */
-  /* overflow: hidden; */
-  /* Hide any overflow content */
+/* Set your desired width */
+/* height: 300px; */
+/* Set your desired height */
+/* background-color: #f0f0f0; */
+/* Set your desired background color */
+/* border-radius: 10px; */
+/* Add rounded corners if desired */
+/* overflow: hidden; */
+/* Hide any overflow content */
 /* }  */
 
 /* .map-container {

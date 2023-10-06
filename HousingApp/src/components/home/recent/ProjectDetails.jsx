@@ -1,10 +1,10 @@
-import React,{ useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Header from '../../common/header/Header';
 import Footer from '../../common/footer/Footer';
 import "./projectDetails.css"
 import backgroundImg from "../../images/services.jpg";
 import Heading from '../../common/Heading';
-import { LiaMapMarkerSolid,LiaLayerGroupSolid,LiaBedSolid,LiaBathSolid,LiaBuilding,LiaBoxesSolid,LiaExclamationCircleSolid } from "react-icons/lia";
+import { LiaMapMarkerSolid, LiaLayerGroupSolid, LiaBedSolid, LiaBathSolid, LiaBuilding, LiaBoxesSolid, LiaExclamationCircleSolid } from "react-icons/lia";
 import FsLightbox from "fslightbox-react";
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
@@ -16,16 +16,16 @@ import ImageViewer from '../../common/ImageViewer';
 import ImageCarousel from '../../common/ImageCarousel';
 import { Galleria } from 'primereact/galleria';
 //theme
-import "primereact/resources/themes/lara-light-indigo/theme.css";     
-    
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+
 //core  
-import "primereact/resources/primereact.min.css";                                       
-        
+import "primereact/resources/primereact.min.css";
+
 
 
 const ProjectDetails = ({ match }) => {
   const [toggler, setToggler] = useState(false);
-  const [dialogFormVisible,setDialogFormVisible] = useState(false)
+  const [dialogFormVisible, setDialogFormVisible] = useState(false)
   const [selectedProject, setSelectedProject] = useState(null);
   const [itemImages, setItemImages] = useState([{
     itemImageSrc: '../images/1.png',
@@ -37,30 +37,30 @@ const ProjectDetails = ({ match }) => {
 
   const responsiveOptions = [
     {
-        breakpoint: '1500px',
-        numVisible: 5
+      breakpoint: '1500px',
+      numVisible: 5
     },
     {
-        breakpoint: '1024px',
-        numVisible: 3
+      breakpoint: '1024px',
+      numVisible: 3
     },
     {
-        breakpoint: '768px',
-        numVisible: 2
+      breakpoint: '768px',
+      numVisible: 2
     },
     {
-        breakpoint: '560px',
-        numVisible: 1
+      breakpoint: '560px',
+      numVisible: 1
     }
-];
+  ];
 
-const itemTemplate = (item) => {
-  return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
-}
+  const itemTemplate = (item) => {
+    return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
+  }
 
-const thumbnailTemplate = (item) => {
-  return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
-}
+  const thumbnailTemplate = (item) => {
+    return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
+  }
 
   // Extract the project ID from the URL parameter
   const projectId = match.params.id;
@@ -146,14 +146,14 @@ const thumbnailTemplate = (item) => {
   //       status: "Available"
   //     }
   //   ]
-    
+
   // }
 
   const projectData = {
-    id:1,
-    title:"Gardens",location:"Νήσου",region:"Λευκωσία",floors:"2",bedrooms:"4",bathrooms:"2",type:"Residential",apartments:"0",status:"Completed",
-    description:"Η Domus Alba παρουσιάζει το νέο συγκρότημα κατοικιών που βρίσκεται στην περιοχή Νήσου, της επαρχίας Λευκωσίας. Το έργο έξυπνα χωροθετημένο πολύ κοντά στον αυτοκινητόδρομο Λευκωσίας - Λάρνακας - Λεμεσού. Αποτελεί μια πολύ οικονομική και έξυπνη λύση λόγο της εύκολη πρόσβασης στον αυτοκινητόδρομο καθώς και στις κοντινές υπηρεσίες της περιοχής Ιδαλίου, Πέρα Χωρίου και Νήσου.Το έργο αποτελείται από 4 ανεξάρτητες κατοικίες με πολύ μεγάλη αυλή η κάθε μία για τις οικογενειακές σας στιγμές. Τα  ποιοτικά υλικά και οι άνετοι χώροι εσωτερικά και εξωτερικά των κατοικιών συνθέτουν την καλύτερη επιλογή σε σχέση τιμής και ποιότητας"
-    ,images:[{
+    id: 1,
+    title: "Gardens", location: "Νήσου", region: "Λευκωσία", floors: "2", bedrooms: "4", bathrooms: "2", type: "Residential", apartments: "0", status: "Completed",
+    description: "Η Domus Alba παρουσιάζει το νέο συγκρότημα κατοικιών που βρίσκεται στην περιοχή Νήσου, της επαρχίας Λευκωσίας. Το έργο έξυπνα χωροθετημένο πολύ κοντά στον αυτοκινητόδρομο Λευκωσίας - Λάρνακας - Λεμεσού. Αποτελεί μια πολύ οικονομική και έξυπνη λύση λόγο της εύκολη πρόσβασης στον αυτοκινητόδρομο καθώς και στις κοντινές υπηρεσίες της περιοχής Ιδαλίου, Πέρα Χωρίου και Νήσου.Το έργο αποτελείται από 4 ανεξάρτητες κατοικίες με πολύ μεγάλη αυλή η κάθε μία για τις οικογενειακές σας στιγμές. Τα  ποιοτικά υλικά και οι άνετοι χώροι εσωτερικά και εξωτερικά των κατοικιών συνθέτουν την καλύτερη επιλογή σε σχέση τιμής και ποιότητας"
+    , images: [{
       itemImageSrc: '../images/1.png',
       thumbnailImageSrc: '../images/1.png',
       alt: '1',
@@ -195,23 +195,23 @@ const thumbnailTemplate = (item) => {
       alt: 'ΟΡΟΦΟΣ1',
       title: 'ΟΡΟΦΟΣ1'
     }
-  ],
-    imagePaths:["https://i.imgur.com/fsyrScY.jpg","https://i.imgur.com/1fOq0pJ.jpeg","https://i.imgur.com/AqVIYir.jpeg"],
-    apartmentList:[
+    ],
+    imagePaths: ["https://i.imgur.com/fsyrScY.jpg", "https://i.imgur.com/1fOq0pJ.jpeg", "https://i.imgur.com/AqVIYir.jpeg"],
+    apartmentList: [
       {
-        id:1,
+        id: 1,
         flatNo: "102",
         beds: "2",
         area: "90 m2",
         verandas: "25 m2/15 m2",
         totalArea: "115 m2",
         status: "Available",
-        images:[{
+        images: [{
           itemImageSrc: 'https://i.imgur.com/fsyrScY.jpg',
           thumbnailImageSrc: 'https://i.imgur.com/fsyrScY.jpg',
           alt: 'Description for Image 1',
           title: 'Title 1'
-        },{
+        }, {
           itemImageSrc: 'https://i.imgur.com/1fOq0pJ.jpeg',
           thumbnailImageSrc: 'https://i.imgur.com/1fOq0pJ.jpeg',
           alt: 'Description for Image 2',
@@ -219,17 +219,17 @@ const thumbnailTemplate = (item) => {
         }]
       },
       {
-        id:2,
+        id: 2,
         flatNo: "103",
         beds: "1",
         area: "50 m2",
         verandas: "10 m2/5 m2",
         totalArea: "60 m2",
         status: "Available",
-        images:["https://i.imgur.com/fsyrScY.jpg","https://i.imgur.com/1fOq0pJ.jpeg","https://i.imgur.com/AqVIYir.jpeg"]
+        images: ["https://i.imgur.com/fsyrScY.jpg", "https://i.imgur.com/1fOq0pJ.jpeg", "https://i.imgur.com/AqVIYir.jpeg"]
       },
       {
-        id:3,
+        id: 3,
         flatNo: "104",
         beds: "4",
         area: "160 m2",
@@ -238,7 +238,7 @@ const thumbnailTemplate = (item) => {
         status: "Sold"
       },
       {
-        id:4,
+        id: 4,
         flatNo: "105",
         beds: "3",
         area: "120 m2",
@@ -247,7 +247,7 @@ const thumbnailTemplate = (item) => {
         status: "Available"
       },
       {
-        id:5,
+        id: 5,
         flatNo: "106",
         beds: "2",
         area: "80 m2",
@@ -256,7 +256,7 @@ const thumbnailTemplate = (item) => {
         status: "Available"
       }
     ]
-    
+
   }
 
   // const dialogFooterTemplate = () => {
@@ -265,9 +265,9 @@ const thumbnailTemplate = (item) => {
 
   const actionBodyTemplate = (rowData) => {
     return (
-        <>
-            <Button severity="secondary" icon="pi pi-comment" rounded  onClick={() => setDialogFormVisible(true)} />
-        </>
+      <>
+        <Button severity="secondary" icon="pi pi-comment" rounded onClick={() => setDialogFormVisible(true)} />
+      </>
     );
   };
 
@@ -276,120 +276,120 @@ const thumbnailTemplate = (item) => {
     setDialogFormVisible(newState);
   };
 
-  const onSelectItem = (item) =>{
+  const onSelectItem = (item) => {
     debugger;
     //setItemImages(item.images)
     //openImageViewer(item)
-     galleria.current.show()
+    galleria.current.show()
   }
-// const openImageViewer = (item) =>{
-//   return(<Galleria value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }} 
-//   circular fullScreen={true} showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />)
-// }
+  // const openImageViewer = (item) =>{
+  //   return(<Galleria value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }} 
+  //   circular fullScreen={true} showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />)
+  // }
   return (
     <>
-    <ScrollToTop />
-    <Galleria ref={galleria} value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }} 
+      <ScrollToTop />
+      <Galleria ref={galleria} value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
         circular fullScreen={true} showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
-    <Header/>
+      <Header />
       <div className='container'>
         {/* <div className='project-img' style={{ backgroundImage: `url(${backgroundImg})` }}>
           <img src={background} alt='' />
                       <span>kokos</span>
         </div> */}
         <div className="project-img">
-          <img src="../images/Gardens.jpg" alt=""/>
+          <img src="../images/Gardens.jpg" alt="" />
           <div className="project-img-text">{projectData.title}</div>
         </div>
         <div className='info-icon-box'>
-        <div className='row'>
-          <div className='col-md-3 d-flex'>
-            <div className='info-icon-svg'>
-              <LiaMapMarkerSolid />    
+          <div className='row'>
+            <div className='col-md-3 d-flex'>
+              <div className='info-icon-svg'>
+                <LiaMapMarkerSolid />
+              </div>
+              <div className='info-icon-content'>
+                <p className='info-icon-title'>LOCATION</p>
+                <p className='info-icon-description'>{projectData.location},{projectData.region}</p>
+              </div>
             </div>
-            <div className='info-icon-content'>
-              <p className='info-icon-title'>LOCATION</p>
-              <p className='info-icon-description'>{projectData.location},{projectData.region}</p>
+            <div className='col-md-3 d-flex'>
+              <div className='info-icon-svg'>
+                <LiaLayerGroupSolid />
+              </div>
+              <div className='info-icon-content'>
+                <p className='info-icon-title'>FLOORS</p>
+                <p className='info-icon-description'>{projectData.floors}</p>
+              </div>
             </div>
-          </div>
-          <div className='col-md-3 d-flex'>
-            <div className='info-icon-svg'>
-              <LiaLayerGroupSolid />    
+            <div className='col-md-3 d-flex'>
+              <div className='info-icon-svg'>
+                <LiaBedSolid />
+              </div>
+              <div className='info-icon-content'>
+                <p className='info-icon-title'>BEDROOMS</p>
+                <p className='info-icon-description'>{projectData.bedrooms}</p>
+              </div>
             </div>
-            <div className='info-icon-content'>
-              <p className='info-icon-title'>FLOORS</p>
-              <p className='info-icon-description'>{projectData.floors}</p>
-            </div>
-          </div>
-          <div className='col-md-3 d-flex'>
-            <div className='info-icon-svg'>
-              <LiaBedSolid />    
-            </div>
-            <div className='info-icon-content'>
-              <p className='info-icon-title'>BEDROOMS</p>
-              <p className='info-icon-description'>{projectData.bedrooms}</p>
-            </div>
-          </div>
-          <div className='col-md-3 d-flex'>
-            <div className='info-icon-svg'>
-              <LiaBathSolid />    
-            </div>
-            <div className='info-icon-content'>
-              <p className='info-icon-title'>BATHROOMS</p>
-              <p className='info-icon-description'>{projectData.bathrooms}</p>
-            </div>
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-md-3 d-flex'>
-            <div className='info-icon-svg'>
-              <LiaBuilding />    
-            </div>
-            <div className='info-icon-content'>
-              <p className='info-icon-title'>TYPE</p>
-              <p className='info-icon-description'> {projectData.type}</p>
+            <div className='col-md-3 d-flex'>
+              <div className='info-icon-svg'>
+                <LiaBathSolid />
+              </div>
+              <div className='info-icon-content'>
+                <p className='info-icon-title'>BATHROOMS</p>
+                <p className='info-icon-description'>{projectData.bathrooms}</p>
+              </div>
             </div>
           </div>
-          <div className='col-md-3 d-flex'>
-            <div className='info-icon-svg'>
-              <LiaBoxesSolid />    
+          <div className='row'>
+            <div className='col-md-3 d-flex'>
+              <div className='info-icon-svg'>
+                <LiaBuilding />
+              </div>
+              <div className='info-icon-content'>
+                <p className='info-icon-title'>TYPE</p>
+                <p className='info-icon-description'> {projectData.type}</p>
+              </div>
             </div>
-            <div className='info-icon-content'>
-              <p className='info-icon-title'>APARTMENTS</p>
-              <p className='info-icon-description'>{projectData.apartments}</p>
+            <div className='col-md-3 d-flex'>
+              <div className='info-icon-svg'>
+                <LiaBoxesSolid />
+              </div>
+              <div className='info-icon-content'>
+                <p className='info-icon-title'>APARTMENTS</p>
+                <p className='info-icon-description'>{projectData.apartments}</p>
+              </div>
             </div>
-          </div>
-          <div className='col-md-3 d-flex'>
-            <div className='info-icon-svg'>
-              <LiaExclamationCircleSolid />    
-            </div>
-            <div className='info-icon-content'>
-              <p className='info-icon-title'>STATUS</p>
-              <p className='info-icon-description'>{projectData.status}</p>
-            </div>
-          </div>
-        </div>
-        </div>
-        <div className='row'>
-          <div className='col-8'>
-          <div className='project-wrapper-box'>
-            <div className='project-wrapper-title'>
-              {/* <Heading title="OVERVIEW"/> */}
-            </div>
-            <div className='project-wrapper-content'>
-              <div className='project-content-text'>
-                <p>{projectData.description}</p>
+            <div className='col-md-3 d-flex'>
+              <div className='info-icon-svg'>
+                <LiaExclamationCircleSolid />
+              </div>
+              <div className='info-icon-content'>
+                <p className='info-icon-title'>STATUS</p>
+                <p className='info-icon-description'>{projectData.status}</p>
               </div>
             </div>
           </div>
         </div>
-        <div className='col-4'>
-          <div className='project-info-card'>
-            <img src='../images/Gardens-Br-1.jpg' alt=''></img>
+        <div className='row'>
+          <div className='col-8'>
+            <div className='project-wrapper-box'>
+              <div className='project-wrapper-title'>
+                {/* <Heading title="OVERVIEW"/> */}
+              </div>
+              <div className='project-wrapper-content'>
+                <div className='project-content-text'>
+                  <p>{projectData.description}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='col-4'>
+            <div className='project-info-card'>
+              <img src='../images/Gardens-Br-1.jpg' alt=''></img>
+            </div>
           </div>
         </div>
-      </div>
-        
+
         <div className='project-wrapper-box'>
           <div className='project-wrapper-title'>
             {/* <Heading title="IMAGES"/> */}
@@ -402,7 +402,7 @@ const thumbnailTemplate = (item) => {
             
             )} */}
             <div className='project-details-card'>
-              <ImageCarousel imageList={projectData.images}/>
+              <ImageCarousel imageList={projectData.images} />
             </div>
             {/* <button onClick={() => setToggler(!toggler)}>
               Open the lightbox.
@@ -423,10 +423,10 @@ const thumbnailTemplate = (item) => {
         </div>
         <div className='project-wrapper-box'>
           <div className='project-wrapper-title'>
-            <Heading title="AVAILABILITY"/>
+            <Heading title="AVAILABILITY" />
           </div>
           <div className='project-wrapper-content'>
-            <DataTable selectionMode="single" selection={selectedProject} metaKeySelection={false} onSelectionChange={(e) => onSelectItem(e.value)} dataKey="id" value={projectData.apartmentList} stripedRows  tableStyle={{ minWidth: '50rem' }}>
+            <DataTable selectionMode="single" selection={selectedProject} metaKeySelection={false} onSelectionChange={(e) => onSelectItem(e.value)} dataKey="id" value={projectData.apartmentList} stripedRows tableStyle={{ minWidth: '50rem' }}>
               <Column field="flatNo" header="Flat No."></Column>
               <Column field="beds" header="Beds"></Column>
               <Column field="area" header="Area"></Column>
@@ -440,11 +440,11 @@ const thumbnailTemplate = (item) => {
         <div className='row'>
           <div className='col-4 text-center align-self-center'>
             <button type='button' className='download-button'>
-                Download Brochure
+              Download Brochure
             </button>
           </div>
           <div className='col-8 text-center align-self-center'>
-            <video controls autoPlay={false} style={{height:"230px"}}>
+            <video controls autoPlay={false} style={{ height: "230px" }}>
               <source src="../images/GARDENS.mp4" type="video/mp4"  ></source>
               Your browser does not support the video tag.
             </video>
@@ -452,15 +452,15 @@ const thumbnailTemplate = (item) => {
 
         </div>
         <div className='row mt-4'>
-<div className='col-12'>
-<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1633.7355154704296!2d33.3861667!3d35.0199444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDAxJzExLjgiTiAzM8KwMjMnMTAuMiJF!5e0!3m2!1sen!2s!4v1696547889347!5m2!1sen!2s" style={{ border: "0" ,    width: "100%",    height: "304px"}} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+          <div className='col-12'>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1633.7355154704296!2d33.3861667!3d35.0199444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDAxJzExLjgiTiAzM8KwMjMnMTAuMiJF!5e0!3m2!1sen!2s!4v1696547889347!5m2!1sen!2s" style={{ border: "0", width: "100%", height: "304px" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
 
-</div>
+          </div>
         </div>
       </div>
-    <Footer/>
-    <DialogContactForm dialogVisibleStage={dialogFormVisible} updateDialogVisibleState={updateDialogProjectVisible}/>
-    {/* <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogFormVisible} style={{ width: '75vw' }} maximizable
+      <Footer />
+      <DialogContactForm dialogVisibleStage={dialogFormVisible} updateDialogVisibleState={updateDialogProjectVisible} />
+      {/* <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogFormVisible} style={{ width: '75vw' }} maximizable
                 modal contentStyle={{ height: '300px' }} onHide={() => setDialogFormVisible(false)} footer={dialogFooterTemplate}>
       </Dialog> */}
     </>
