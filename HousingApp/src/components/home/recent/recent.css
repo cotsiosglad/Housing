@@ -90,6 +90,10 @@
   margin: 6px;
 }
 
+.houses-grid-content{
+  backdrop-filter: blur(3px);
+}
+
 .houses-grid-item .houses-grid-content {
   padding: 0 15px;
   position: absolute;

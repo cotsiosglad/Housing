@@ -12,7 +12,7 @@ const About = () => {
       <section className='about' >
         {/* <Back name='About Us' title='About Us - Who We Are?' cover={img} /> */}
         <Back name='About Us' title='Σχετικά με εμάς - Ποιοί είμαστε;' cover={img} />
-        <div className='container mtop' >
+        <div className='about-content container mtop' >
           <div className='row'>
             <div className="col-md-6">
               <Heading title='Ποιοι Είμαστε' subtitle='' />
@@ -24,7 +24,7 @@ const About = () => {
               <img src='./who.jpg' alt='' />
             </div>
           </div>
-          <div className="row pt-2">
+          <div className="row pt-5">
             <div className="col-md-6" data-aos="fade-right" data-aos-delay="400" data-aos-duration="1000" data-aos-once="true">  
               <img src='./whyus.jpg' alt='' />
             </div>
@@ -38,7 +38,7 @@ const About = () => {
             </div>
             
           </div>
-          <div className="row pt-2">
+          <div className="row pt-5">
             <div className="col-md-6">
             <Heading title='Το Όραμα μας' subtitle='' />
               <p>

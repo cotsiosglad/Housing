@@ -36,39 +36,39 @@ function AdminMainPage() {
 
   const infoBlockElements = [
     {
-      item:"Projects",
-      subNote:"",
-      noOfItems:3,
-      notifications:0,
-      icon:"pi-building"
+      item: "Projects",
+      subNote: "",
+      noOfItems: 3,
+      notifications: 0,
+      icon: "pi-building"
     },
     {
-      item:"Services",
-      subNote:"",
-      noOfItems:3,
-      notifications:0,
-      icon:"pi-wallet"
+      item: "Services",
+      subNote: "",
+      noOfItems: 3,
+      notifications: 0,
+      icon: "pi-wallet"
     },
     {
-      item:"Users",
-      subNote:"",
-      noOfItems:2,
-      notifications:0,
-      icon:"pi pi-users"
+      item: "Users",
+      subNote: "",
+      noOfItems: 2,
+      notifications: 0,
+      icon: "pi pi-users"
     },
     {
-      item:"Messages",
-      subNote:"3 new messages",
-      noOfItems:2,
-      notifications:3,
-      icon:"pi-inbox"
+      item: "Messages",
+      subNote: "3 new messages",
+      noOfItems: 2,
+      notifications: 3,
+      icon: "pi-inbox"
     },
     {
-      item:"Interests",
-      subNote:"1 new interest",
-      noOfItems:7,
-      notifications:1,
-      icon:"pi-bell"
+      item: "Interests",
+      subNote: "1 new interest",
+      noOfItems: 7,
+      notifications: 1,
+      icon: "pi-bell"
     }
   ]
 
@@ -92,11 +92,11 @@ function AdminMainPage() {
   //   )
   // };
 
-    const InfoBlock = () =>{
-    return(
+  const InfoBlock = () => {
+    return (
       <div className="info-block row h-100 justify-content-center align-content-center">
-        {infoBlockElements.map((val,index)=>{
-          return(
+        {infoBlockElements.map((val, index) => {
+          return (
             // <div className="col-12 col-lg-2" key={index}>
             //   <div className="info-block-card text-center">
             //     <div className="info-block-content">
@@ -110,10 +110,10 @@ function AdminMainPage() {
               <div className="info-block-content">
                 <div className="info-block-icon">
                   <i className={`pi ${val.icon} p-overlay-badge`} style={{ fontSize: '2.5rem' }}></i>
-                  <Badge className={val.notifications>0?"":"d-none"} value={val.notifications}></Badge>
+                  <Badge className={val.notifications > 0 ? "" : "d-none"} value={val.notifications}></Badge>
                 </div>
                 <p className="info-block-items"> {val.item}
-                    <span>{val.noOfItems}</span>
+                  <span>{val.noOfItems}</span>
                 </p>
                 {/* <div className="social-media">
                   <Chip className={val.subNote?"":"d-none"} label={val.subNote} icon="pi pi-exclamation-circle" />
@@ -137,12 +137,12 @@ function AdminMainPage() {
   //           </span>
   //       </p>
   //       <div className="social-media">
-            
+
   //       </div>
   //     </div>
   //   )
   // }
-  
+
   const renderContent = () => {
     console.log(selectedMenuItem)
     switch (selectedMenuItem) {
@@ -151,10 +151,10 @@ function AdminMainPage() {
           // <div className="container h-100" id="homeLogo">
           //   <img src="../images/dalogo6.png" alt="Rotating Image" className="rotating-image" />
           // </div>
-          <InfoBlock/>
-      )
+          <InfoBlock />
+        )
       case "Projects":
-        return  <AdminProjects/>
+        return <AdminProjects />
       case "Users":
         return <div>Users</div>;;
       default:
@@ -164,24 +164,24 @@ function AdminMainPage() {
 
   return (
     <>
-    <div className="container-fluid h-100">
-    
-      <div className="row h-100 sidebar">
-        <nav className="col-md-2 bg-light ">
-          <Menubar model={menuItems} />
-        </nav>
-        <div className="col-md-10 col-lg-10 p-3 side-content">
-          {renderContent()}
-          <ScrollTop target="window" threshold={100} className="btn-secondary" icon="pi pi-arrow-up text-base" />
+      <div className="container-fluid h-100">
+
+        <div className="row h-100 sidebar">
+          <nav className="col-md-2 bg-light ">
+            <Menubar model={menuItems} />
+          </nav>
+          <div className="col-md-10 col-lg-10 p-3 side-content">
+            {renderContent()}
+            <ScrollTop target="window" threshold={100} className="btn-secondary" icon="pi pi-arrow-up text-base" />
+          </div>
+
         </div>
-        
+
+
       </div>
-      
-      
-    </div>
-    
+
     </>
-    
+
   );
 }
 ;

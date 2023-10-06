@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Header from '../../common/header/Header';
 import Footer from '../../common/footer/Footer';
 import "./projectDetails.css"
@@ -11,7 +11,10 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import ScrollToTop from '../../../customHelperComponents/ScrollToTop';
-
+import DialogContactForm from '../../common/DialogContactForm';
+import ImageViewer from '../../common/ImageViewer';
+import ImageCarousel from '../../common/ImageCarousel';
+import { Galleria } from 'primereact/galleria';
 //theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
@@ -23,31 +26,210 @@ import "primereact/resources/primereact.min.css";
 const ProjectDetails = ({ match }) => {
   const [toggler, setToggler] = useState(false);
   const [dialogFormVisible, setDialogFormVisible] = useState(false)
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [itemImages, setItemImages] = useState([{
+    itemImageSrc: '../images/1.png',
+    thumbnailImageSrc: '../images/1.png',
+    alt: '1',
+    title: 'Title 1'
+  }]);
+  const galleria = useRef(null);
+
+  const responsiveOptions = [
+    {
+      breakpoint: '1500px',
+      numVisible: 5
+    },
+    {
+      breakpoint: '1024px',
+      numVisible: 3
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 2
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 1
+    }
+  ];
+
+  const itemTemplate = (item) => {
+    return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
+  }
+
+  const thumbnailTemplate = (item) => {
+    return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
+  }
 
   // Extract the project ID from the URL parameter
   const projectId = match.params.id;
+  // const projectData = {
+  //   id:1,
+  //   title:"Initio",location:"Strovolos",region:"Nicosia",floors:"4",bedrooms:"2,3",bathrooms:"2",type:"Residential",apartments:"8",status:"Completed",
+  //   description:"We are thrilled to introduce our latest housing project, a testament to modern living and urban elegance. This meticulously designed development comprises four impeccably constructed floors, housing a total of eight luxurious apartments. Each apartment is thoughtfully designed to offer residents the utmost comfort and style, with options ranging from spacious two-bedroom layouts to more expansive three-bedroom residences. The project embodies a harmonious blend of contemporary architecture, premium materials, and attention to detail, ensuring a living experience that exceeds expectations. Situated in a prime location, this development offers not only a beautiful place to call home but also easy access to urban amenities, making it an ideal choice for those seeking a higher standard of living in a vibrant urban setting. Welcome to a new era of sophisticated and convenient living."
+  //   ,images:[{
+  //     itemImageSrc: 'https://i.imgur.com/fsyrScY.jpg',
+  //     thumbnailImageSrc: 'https://i.imgur.com/fsyrScY.jpg',
+  //     alt: 'Description for Image 1',
+  //     title: 'Title 1'
+  //   },
+  //   {
+  //     itemImageSrc: 'https://i.imgur.com/1fOq0pJ.jpeg',
+  //     thumbnailImageSrc: 'https://i.imgur.com/1fOq0pJ.jpeg',
+  //     alt: 'Description for Image 2',
+  //     title: 'Title 2'
+  //   },
+  //   {
+  //     itemImageSrc: 'https://i.imgur.com/AqVIYir.jpeg',
+  //     thumbnailImageSrc: 'https://i.imgur.com/AqVIYir.jpeg',
+  //     alt: 'Description for Image 3',
+  //     title: 'Title 3'
+  //   }],
+  //   imagePaths:["https://i.imgur.com/fsyrScY.jpg","https://i.imgur.com/1fOq0pJ.jpeg","https://i.imgur.com/AqVIYir.jpeg"],
+  //   apartmentList:[
+  //     {
+  //       id:1,
+  //       flatNo: "102",
+  //       beds: "2",
+  //       area: "90 m2",
+  //       verandas: "25 m2/15 m2",
+  //       totalArea: "115 m2",
+  //       status: "Available",
+  //       images:[{
+  //         itemImageSrc: 'https://i.imgur.com/fsyrScY.jpg',
+  //         thumbnailImageSrc: 'https://i.imgur.com/fsyrScY.jpg',
+  //         alt: 'Description for Image 1',
+  //         title: 'Title 1'
+  //       },{
+  //         itemImageSrc: 'https://i.imgur.com/1fOq0pJ.jpeg',
+  //         thumbnailImageSrc: 'https://i.imgur.com/1fOq0pJ.jpeg',
+  //         alt: 'Description for Image 2',
+  //         title: 'Title 2'
+  //       }]
+  //     },
+  //     {
+  //       id:2,
+  //       flatNo: "103",
+  //       beds: "1",
+  //       area: "50 m2",
+  //       verandas: "10 m2/5 m2",
+  //       totalArea: "60 m2",
+  //       status: "Available",
+  //       images:["https://i.imgur.com/fsyrScY.jpg","https://i.imgur.com/1fOq0pJ.jpeg","https://i.imgur.com/AqVIYir.jpeg"]
+  //     },
+  //     {
+  //       id:3,
+  //       flatNo: "104",
+  //       beds: "4",
+  //       area: "160 m2",
+  //       verandas: "35 m2/20 m2",
+  //       totalArea: "195 m2",
+  //       status: "Sold"
+  //     },
+  //     {
+  //       id:4,
+  //       flatNo: "105",
+  //       beds: "3",
+  //       area: "120 m2",
+  //       verandas: "30 m2/18 m2",
+  //       totalArea: "150 m2",
+  //       status: "Available"
+  //     },
+  //     {
+  //       id:5,
+  //       flatNo: "106",
+  //       beds: "2",
+  //       area: "80 m2",
+  //       verandas: "20 m2/12 m2",
+  //       totalArea: "100 m2",
+  //       status: "Available"
+  //     }
+  //   ]
+
+  // }
+
   const projectData = {
-    title: "Initio", location: "Strovolos", region: "Nicosia", floors: "4", bedrooms: "2,3", bathrooms: "2", type: "Residential", apartments: "8", status: "Completed",
-    description: "We are thrilled to introduce our latest housing project, a testament to modern living and urban elegance. This meticulously designed development comprises four impeccably constructed floors, housing a total of eight luxurious apartments. Each apartment is thoughtfully designed to offer residents the utmost comfort and style, with options ranging from spacious two-bedroom layouts to more expansive three-bedroom residences. The project embodies a harmonious blend of contemporary architecture, premium materials, and attention to detail, ensuring a living experience that exceeds expectations. Situated in a prime location, this development offers not only a beautiful place to call home but also easy access to urban amenities, making it an ideal choice for those seeking a higher standard of living in a vibrant urban setting. Welcome to a new era of sophisticated and convenient living."
-    , imagePaths: ["https://i.imgur.com/fsyrScY.jpg", "https://i.imgur.com/1fOq0pJ.jpeg", "https://i.imgur.com/AqVIYir.jpeg"]
-    , apartmentList: [
+    id: 1,
+    title: "Gardens", location: "Νήσου", region: "Λευκωσία", floors: "2", bedrooms: "4", bathrooms: "2", type: "Residential", apartments: "0", status: "Completed",
+    description: "Η Domus Alba παρουσιάζει το νέο συγκρότημα κατοικιών που βρίσκεται στην περιοχή Νήσου, της επαρχίας Λευκωσίας. Το έργο έξυπνα χωροθετημένο πολύ κοντά στον αυτοκινητόδρομο Λευκωσίας - Λάρνακας - Λεμεσού. Αποτελεί μια πολύ οικονομική και έξυπνη λύση λόγο της εύκολη πρόσβασης στον αυτοκινητόδρομο καθώς και στις κοντινές υπηρεσίες της περιοχής Ιδαλίου, Πέρα Χωρίου και Νήσου.Το έργο αποτελείται από 4 ανεξάρτητες κατοικίες με πολύ μεγάλη αυλή η κάθε μία για τις οικογενειακές σας στιγμές. Τα  ποιοτικά υλικά και οι άνετοι χώροι εσωτερικά και εξωτερικά των κατοικιών συνθέτουν την καλύτερη επιλογή σε σχέση τιμής και ποιότητας"
+    , images: [{
+      itemImageSrc: '../images/1.png',
+      thumbnailImageSrc: '../images/1.png',
+      alt: '1',
+      title: 'Title 1'
+    },
+    {
+      itemImageSrc: '../images/2.png',
+      thumbnailImageSrc: '../images/2.png',
+      alt: '2',
+      title: 'Title 2'
+    },
+    {
+      itemImageSrc: '../images/3.png',
+      thumbnailImageSrc: '../images/3.png',
+      alt: '3',
+      title: 'Title 3'
+    },
+    {
+      itemImageSrc: '../images/ΙΣΟΓΕΙΟ.png',
+      thumbnailImageSrc: '../images/ΙΣΟΓΕΙΟ.png',
+      alt: 'ΙΣΟΓΕΙΟ',
+      title: 'ΙΣΟΓΕΙΟ'
+    },
+    {
+      itemImageSrc: '../images/ΙΣΟΓΕΙΟ1.jpg',
+      thumbnailImageSrc: '../images/ΙΣΟΓΕΙΟ1.jpg',
+      alt: 'ΙΣΟΓΕΙΟ1',
+      title: 'ΙΣΟΓΕΙΟ1'
+    },
+    {
+      itemImageSrc: '../images/ΟΡΟΦΟΣ.png',
+      thumbnailImageSrc: '../images/ΟΡΟΦΟΣ.png',
+      alt: 'ΟΡΟΦΟΣ',
+      title: 'ΟΡΟΦΟΣ'
+    },
+    {
+      itemImageSrc: '../images/ΟΡΟΦΟΣ1.jpg',
+      thumbnailImageSrc: '../images/ΟΡΟΦΟΣ1.jpg',
+      alt: 'ΟΡΟΦΟΣ1',
+      title: 'ΟΡΟΦΟΣ1'
+    }
+    ],
+    imagePaths: ["https://i.imgur.com/fsyrScY.jpg", "https://i.imgur.com/1fOq0pJ.jpeg", "https://i.imgur.com/AqVIYir.jpeg"],
+    apartmentList: [
       {
+        id: 1,
         flatNo: "102",
         beds: "2",
         area: "90 m2",
         verandas: "25 m2/15 m2",
         totalArea: "115 m2",
-        status: "Available"
+        status: "Available",
+        images: [{
+          itemImageSrc: 'https://i.imgur.com/fsyrScY.jpg',
+          thumbnailImageSrc: 'https://i.imgur.com/fsyrScY.jpg',
+          alt: 'Description for Image 1',
+          title: 'Title 1'
+        }, {
+          itemImageSrc: 'https://i.imgur.com/1fOq0pJ.jpeg',
+          thumbnailImageSrc: 'https://i.imgur.com/1fOq0pJ.jpeg',
+          alt: 'Description for Image 2',
+          title: 'Title 2'
+        }]
       },
       {
+        id: 2,
         flatNo: "103",
         beds: "1",
         area: "50 m2",
         verandas: "10 m2/5 m2",
         totalArea: "60 m2",
-        status: "Available"
+        status: "Available",
+        images: ["https://i.imgur.com/fsyrScY.jpg", "https://i.imgur.com/1fOq0pJ.jpeg", "https://i.imgur.com/AqVIYir.jpeg"]
       },
       {
+        id: 3,
         flatNo: "104",
         beds: "4",
         area: "160 m2",
@@ -56,6 +238,7 @@ const ProjectDetails = ({ match }) => {
         status: "Sold"
       },
       {
+        id: 4,
         flatNo: "105",
         beds: "3",
         area: "120 m2",
@@ -64,6 +247,7 @@ const ProjectDetails = ({ match }) => {
         status: "Available"
       },
       {
+        id: 5,
         flatNo: "106",
         beds: "2",
         area: "80 m2",
@@ -75,21 +259,38 @@ const ProjectDetails = ({ match }) => {
 
   }
 
-  const dialogFooterTemplate = () => {
-    return <Button label="Ok" icon="pi pi-check" onClick={() => setDialogFormVisible(false)} />;
-  };
+  // const dialogFooterTemplate = () => {
+  //   return <Button label="Ok" icon="pi pi-check" onClick={() => setDialogFormVisible(false)} />;
+  // };
 
   const actionBodyTemplate = (rowData) => {
     return (
       <>
-        <Button label="Interested" icon="pi pi-external-link" onClick={() => setDialogFormVisible(true)} />
+        <Button severity="secondary" icon="pi pi-comment" rounded onClick={() => setDialogFormVisible(true)} />
       </>
     );
   };
 
+  const updateDialogProjectVisible = (newState) => {
+    console.log(newState)
+    setDialogFormVisible(newState);
+  };
+
+  const onSelectItem = (item) => {
+    debugger;
+    //setItemImages(item.images)
+    //openImageViewer(item)
+    galleria.current.show()
+  }
+  // const openImageViewer = (item) =>{
+  //   return(<Galleria value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }} 
+  //   circular fullScreen={true} showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />)
+  // }
   return (
     <>
       <ScrollToTop />
+      <Galleria ref={galleria} value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
+        circular fullScreen={true} showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
       <Header />
       <div className='container'>
         {/* <div className='project-img' style={{ backgroundImage: `url(${backgroundImg})` }}>
@@ -97,7 +298,7 @@ const ProjectDetails = ({ match }) => {
                       <span>kokos</span>
         </div> */}
         <div className="project-img">
-          <img src={backgroundImg} alt="" />
+          <img src="../images/Gardens.jpg" alt="" />
           <div className="project-img-text">{projectData.title}</div>
         </div>
         <div className='info-icon-box'>
@@ -131,11 +332,11 @@ const ProjectDetails = ({ match }) => {
             </div>
             <div className='col-md-3 d-flex'>
               <div className='info-icon-svg'>
-                <LiaExclamationCircleSolid />
+                <LiaBathSolid />
               </div>
               <div className='info-icon-content'>
-                <p className='info-icon-title'>STATUS</p>
-                <p className='info-icon-description'>{projectData.status}</p>
+                <p className='info-icon-title'>BATHROOMS</p>
+                <p className='info-icon-description'>{projectData.bathrooms}</p>
               </div>
             </div>
           </div>
@@ -160,47 +361,64 @@ const ProjectDetails = ({ match }) => {
             </div>
             <div className='col-md-3 d-flex'>
               <div className='info-icon-svg'>
-                <LiaBathSolid />
+                <LiaExclamationCircleSolid />
               </div>
               <div className='info-icon-content'>
-                <p className='info-icon-title'>BATHROOMS</p>
-                <p className='info-icon-description'>{projectData.bathrooms}</p>
+                <p className='info-icon-title'>STATUS</p>
+                <p className='info-icon-description'>{projectData.status}</p>
               </div>
             </div>
           </div>
         </div>
-        <div className='project-wrapper-box'>
-          <div className='project-wrapper-title'>
-            <Heading title="OVERVIEW" />
+        <div className='row'>
+          <div className='col-8'>
+            <div className='project-wrapper-box'>
+              <div className='project-wrapper-title'>
+                {/* <Heading title="OVERVIEW"/> */}
+              </div>
+              <div className='project-wrapper-content'>
+                <div className='project-content-text'>
+                  <p>{projectData.description}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className='project-wrapper-content'>
-            <p>{projectData.description}</p>
+          <div className='col-4'>
+            <div className='project-info-card'>
+              <img src='../images/Gardens-Br-1.jpg' alt=''></img>
+            </div>
           </div>
         </div>
+
         <div className='project-wrapper-box'>
           <div className='project-wrapper-title'>
-            <Heading title="IMAGES" />
+            {/* <Heading title="IMAGES"/> */}
           </div>
           <div className='project-wrapper-content'>
-            {projectData.imagePaths.map((val, index) => (
-              <img src={val} key={index} onClick={() => setToggler(!toggler)} />
+            {/* <ImageViewer imageList={projectData.images}/> */}
+            {/* {projectData.imagePaths.map((val,index)=>(
+              <img src={val} alt="" key={index} onClick={() => setToggler(!toggler)}/>
             )
-
-            )}
+            
+            )} */}
+            <div className='project-details-card'>
+              <ImageCarousel imageList={projectData.images} />
+            </div>
             {/* <button onClick={() => setToggler(!toggler)}>
               Open the lightbox.
             </button> */}
-            <FsLightbox
+            {/* <FsLightbox
               toggler={toggler}
               sources={projectData.imagePaths}
-            // sources={[
-            //   "https://i.imgur.com/fsyrScY.jpg",
-            //   "https://i.imgur.com/1fOq0pJ.jpeg",
-            //   "https://i.imgur.com/AqVIYir.jpeg"
-            //   // "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
-            //   // "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            // ]}
-            />
+              
+              // sources={[
+              //   "https://i.imgur.com/fsyrScY.jpg",
+              //   "https://i.imgur.com/1fOq0pJ.jpeg",
+              //   "https://i.imgur.com/AqVIYir.jpeg"
+              //   // "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
+              //   // "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+              // ]}
+            /> */}
           </div>
         </div>
         <div className='project-wrapper-box'>
@@ -208,7 +426,7 @@ const ProjectDetails = ({ match }) => {
             <Heading title="AVAILABILITY" />
           </div>
           <div className='project-wrapper-content'>
-            <DataTable value={projectData.apartmentList} stripedRows tableStyle={{ minWidth: '50rem' }}>
+            <DataTable selectionMode="single" selection={selectedProject} metaKeySelection={false} onSelectionChange={(e) => onSelectItem(e.value)} dataKey="id" value={projectData.apartmentList} stripedRows tableStyle={{ minWidth: '50rem' }}>
               <Column field="flatNo" header="Flat No."></Column>
               <Column field="beds" header="Beds"></Column>
               <Column field="area" header="Area"></Column>
@@ -219,18 +437,32 @@ const ProjectDetails = ({ match }) => {
             </DataTable>
           </div>
         </div>
+        <div className='row'>
+          <div className='col-4 text-center align-self-center'>
+            <button type='button' className='download-button'>
+              Download Brochure
+            </button>
+          </div>
+          <div className='col-8 text-center align-self-center'>
+            <video controls autoPlay={false} style={{ height: "230px" }}>
+              <source src="../images/GARDENS.mp4" type="video/mp4"  ></source>
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+        </div>
+        <div className='row mt-4'>
+          <div className='col-12'>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1633.7355154704296!2d33.3861667!3d35.0199444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDAxJzExLjgiTiAzM8KwMjMnMTAuMiJF!5e0!3m2!1sen!2s!4v1696547889347!5m2!1sen!2s" style={{ border: "0", width: "100%", height: "304px" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+
+          </div>
+        </div>
       </div>
       <Footer />
-
-      <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogFormVisible} style={{ width: '75vw' }} maximizable
-        modal contentStyle={{ height: '300px' }} onHide={() => setDialogFormVisible(false)} footer={dialogFooterTemplate}>
-        {/* <DataTable value={customers} scrollable scrollHeight="flex" tableStyle={{ minWidth: '50rem' }}>
-                <Column field="name" header="Name"></Column>
-                <Column field="country.name" header="Country"></Column>
-                <Column field="representative.name" header="Representative"></Column>
-                <Column field="company" header="Company"></Column>
-            </DataTable> */}
-      </Dialog>
+      <DialogContactForm dialogVisibleStage={dialogFormVisible} updateDialogVisibleState={updateDialogProjectVisible} />
+      {/* <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogFormVisible} style={{ width: '75vw' }} maximizable
+                modal contentStyle={{ height: '300px' }} onHide={() => setDialogFormVisible(false)} footer={dialogFooterTemplate}>
+      </Dialog> */}
     </>
   );
 };
