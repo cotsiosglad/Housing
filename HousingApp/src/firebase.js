@@ -184,8 +184,8 @@ export const GetStorageFolderFiles = async (folderPath) => {
             };
         });
 
-        const retList = await Promise.all(downloadPromises); // Wait for all downloads to complete
-
+        const retList = await Promise.all(downloadPromises); // Wait for all downloads to complete  
+        return retList;
         // This can be downloaded directly:
         // const xhr = new XMLHttpRequest();
         // xhr.responseType = 'blob';
