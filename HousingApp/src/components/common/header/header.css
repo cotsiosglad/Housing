@@ -11,7 +11,7 @@
   z-index: 1100;
   position: fixed;
   top: 0;
-  width: 100%; 
+  width: 100%;
 }
 
 #header .container {
@@ -43,9 +43,9 @@
 #logo img {
   margin: 26px auto 26px;
   display: block;
-  height: 6rem;
-  background-color: black;
-  padding: 26px 0px 26px 0px;
+  /* height: 6rem; */
+  background-color: rgba(0, 0, 0, 0.9);
+  /* padding: 26px 0px 26px 0px; */
 }
 
 .topicons {

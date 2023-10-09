@@ -3,9 +3,9 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom"
 // import { footer } from "../../data/Data"
 import { BsFillTelephoneFill, BsFacebook, BsFillPinMapFill } from 'react-icons/bs';
-import chatbotImage from "../footer/chatbot3.png"
+import chatbotImage from "../footer/helpertransparent.png"
 import { CiFacebook, CiTwitter, CiLinkedin, CiInstagram, CiPhone, CiMail, CiLocationOn } from 'react-icons/ci';
-import logoImg from "../images/dalogo.png"
+import logoImg from "../images/dafooter.png"
 import Chatbot from "react-chatbot-kit";
 import 'react-chatbot-kit/build/main.css';
 import config from "../../../components/chatbot/chatconfig";

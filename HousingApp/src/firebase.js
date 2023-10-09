@@ -3,13 +3,12 @@ import { getFirestore, doc, addDoc, setDoc, getDocs, collection, serverTimestamp
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage"
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_apiKey,
-    authDomain: "housing-app-628b7.firebaseapp.com",
-    projectId: "housing-app-628b7",
-    storageBucket: "housing-app-628b7.appspot.com",
-    messagingSenderId: "643342142602",
-    appId: "1:643342142602:web:dc7ddf841a0871d844b173",
-    measurementId: "G-FJ8F04D9BL"
-
+    authDomain: process.env.REACT_APP_authDomain,
+    projectId: process.env.REACT_APP_projectId,
+    storageBucket: process.env.REACT_APP_storageBucket,
+    messagingSenderId: process.env.REACT_APP_messagingSenderId,
+    appId: process.env.REACT_APP_appId,
+    measurementId: process.env.REACT_APP_measurementId
 };
 
 export const app = initializeApp(firebaseConfig);
@@ -185,7 +184,7 @@ export const GetStorageFolderFiles = async (folderPath) => {
         });
 
         const retList = await Promise.all(downloadPromises); // Wait for all downloads to complete
-
+        return retList;
         // This can be downloaded directly:
         // const xhr = new XMLHttpRequest();
         // xhr.responseType = 'blob';
