@@ -5,12 +5,12 @@ import { classNames } from 'primereact/utils';
 import './ImageViewer.css'
 // import { PhotoService } from './service/PhotoService';
 
-export default function ImageViewer({imageList}) {
+export default function ImageViewer({ imageList }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [showThumbnails, setShowThumbnails] = useState(false);
     const [isAutoPlayActive, setAutoPlayActive] = useState(true);
     const [isFullScreen, setFullScreen] = useState(false);
-    
+
     const galleria = useRef(null)
 
     const responsiveOptions = [
@@ -37,7 +37,7 @@ export default function ImageViewer({imageList}) {
         bindDocumentListeners();
 
         return () => unbindDocumentListeners();
-    },[]);
+    }, []);
 
     // useEffect(() => {
     //     setAutoPlayActive(galleria.current.isAutoPlayActive())
@@ -57,7 +57,7 @@ export default function ImageViewer({imageList}) {
     }
 
     const onFullScreenChange = () => {
-        setFullScreen(prevState => !prevState )
+        setFullScreen(prevState => !prevState)
     }
 
     const openFullScreen = () => {
@@ -170,7 +170,7 @@ export default function ImageViewer({imageList}) {
                 showThumbnails={showThumbnails} showItemNavigators
                 numVisible={5} circular autoPlay transitionInterval={3000} responsiveOptions={responsiveOptions}
                 item={itemTemplate} thumbnail={thumbnailTemplate} footer={footer}
-                 className={galleriaClassName} />
+                className={galleriaClassName} />
         </div>
     )
 }

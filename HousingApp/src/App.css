@@ -208,6 +208,15 @@ img {
   opacity: 0;
 } */
 
+.p-galleria-thumbnail-item-content img {
+  height: 120px;
+  width: 130px;
+}
+
+.p-galleria-thumbnail-item {
+  overflow: hidden !important;
+}
+
 @media screen and (max-width: 800px) {
 
   .grid4,
@@ -231,8 +240,8 @@ img {
   }
 }
 
-.p-inputtext:enabled:focus{
-  border-color: var(--color4)!important;
+.p-inputtext:enabled:focus {
+  border-color: var(--color4) !important;
 }
 
 @font-face {

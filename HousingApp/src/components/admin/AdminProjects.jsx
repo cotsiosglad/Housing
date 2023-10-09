@@ -18,7 +18,7 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import TextEditor from "./TextEditor"
 import "./adminLogin.css"
-import { writeDoc, getDocById, storage } from '../../firebase';
+import { WriteDoc, GetDocById, storage } from '../../firebase';
 import { ref, uploadBytes } from "firebase/storage"
 import { v4 } from "uuid";
 
@@ -117,9 +117,9 @@ export default function AdminProjects() {
 
                 try {
                     debugger;
-                    var aa = getDocById(1, "Projects");
-                    // writeDoc(_project,'Projects')
-                    // writeDoc(_projectDetails,'ProjectsDetails')
+                    var aa = GetDocById(1, "Projects");
+                    // WriteDoc(_project,'Projects')
+                    // WriteDoc(_projectDetails,'ProjectsDetails')
                     console.log(aa);
                 }
                 catch (e) {

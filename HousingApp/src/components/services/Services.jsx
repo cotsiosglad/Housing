@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React, { useState } from "react"
 import img from "../images/services.jpg"
 import Back from "../common/Back"
 import ServiceBox from "../services/serviceBox"
@@ -7,40 +7,40 @@ import "../../App.css"
 import "./services.css"
 // import useIntersectionObserver from "../../customHooks/useIntersectionObserver"
 import ScrollToTop from "../../customHelperComponents/ScrollToTop"; // Import the ScrollToTop component
-import DialogContactForm from "../common/DialogContactForm"
+import DialogContactForm from "../helper/dialogContactForm/DialogContactForm"
 
 
 
 const Services = () => {
-// useIntersectionObserver({
-// 	root: null,
-// 	rootMargin: '0px',
-// 	threshold: 0.4,
-// });~
+  // useIntersectionObserver({
+  // 	root: null,
+  // 	rootMargin: '0px',
+  // 	threshold: 0.4,
+  // });~
 
-const [dialogServiceVisible,setDialogServiceVisible] = useState(false)
+  const [dialogServiceVisible, setDialogServiceVisible] = useState(false)
 
-const updateDialogServiceVisible = (newState) => {
-  console.log(newState)
-  setDialogServiceVisible(newState);
-};
+  const updateDialogServiceVisible = (newState) => {
+    console.log(newState)
+    setDialogServiceVisible(newState);
+  };
 
 
 
   return (
     <>
-    <ScrollToTop />
+      <ScrollToTop />
       <div className='services mb'>
         <Back name='Services' title='Services -All Services' cover={img} />
         <div className='container mtop'>
           <div className="row d-flex justify-content-evenly">
-            <ServiceBox serviceButtonState={dialogServiceVisible} updateServiceButtonService={setDialogServiceVisible}/>
+            <ServiceBox serviceButtonState={dialogServiceVisible} updateServiceButtonService={setDialogServiceVisible} />
           </div>
         </div>
       </div>
-      <DialogContactForm dialogVisibleStage={dialogServiceVisible} updateDialogVisibleState={updateDialogServiceVisible}/>
+      <DialogContactForm dialogVisibleStage={dialogServiceVisible} updateDialogVisibleState={updateDialogServiceVisible} />
 
-{/* 
+      {/* 
       <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogServiceVisible} style={{  height:'448px',width: '75vw' }}
               modal  focusOnShow={true} keepInViewport={true}  contentStyle={{ height: '300px' }} onHide={() => setDialogServiceVisible(false)} footer={dialogFooterTemplate}>
         <div className="container-fluid contact-form">
