@@ -5,12 +5,12 @@ import { Carousel } from 'primereact/carousel';
 import { Tag } from 'primereact/tag';
 import FsLightbox from "fslightbox-react";
 
-export default function ResponsiveDemo({imageList}) {
+export default function ImageCarousel({ imageList }) {
     // const [toggler, setToggler] = useState(false);
     const [lightboxController, setLightboxController] = useState({
-		toggler: false,
-		slide: 1
-	});
+        toggler: false,
+        slide: 1
+    });
     // const [imageIndex, setImageIndex] = useState(0);
     const responsiveOptions = [
         {
@@ -45,21 +45,21 @@ export default function ResponsiveDemo({imageList}) {
     //             return null;
     //     }
     // };
-    
+
     // useEffect(() => {
     //     ProductService.getProductsSmall().then((data) => setProducts(data.slice(0, 9)));
     // }, []);
 
     function openLightboxOnSlide(number) {
-		setLightboxController({
-			toggler: !lightboxController.toggler,
-			slide: number
-		});
-	}
+        setLightboxController({
+            toggler: !lightboxController.toggler,
+            slide: number
+        });
+    }
 
-    const abc = (item)=>{
+    const abc = (item) => {
         debugger;
-        let itemIdx = imageList.indexOf(item)+1;
+        let itemIdx = imageList.indexOf(item) + 1;
         openLightboxOnSlide(itemIdx)
         console.log(itemIdx);
         // setImageIndex((itemIdx>0?itemIdx:0))
@@ -70,7 +70,7 @@ export default function ResponsiveDemo({imageList}) {
         return (
             <div className="m-2 text-center py-5 px-3">
                 <div className="mb-3">
-                    <img src={product.itemImageSrc} alt={product.alt} className="w-6 shadow-2" onClick={() => abc(product)}/>
+                    <img src={product.itemImageSrc} alt={product.alt} className="w-6 shadow-2" onClick={() => abc(product)} />
                 </div>
                 {/* <div>
                     <h4 className="mb-1">{product.name}</h4>
@@ -87,23 +87,22 @@ export default function ResponsiveDemo({imageList}) {
 
     return (
         <>
-  
-        <Carousel  value={imageList} autoplayInterval={5000} showIndicators={false} numScroll={1} numVisible={3} circular responsiveOptions={responsiveOptions} itemTemplate={productTemplate} />
 
-    
-        <FsLightbox
-        toggler={lightboxController.toggler}
-        sources={ imageList.map(s=>s.itemImageSrc)}
-        slide={lightboxController.slide}
-        // sources={[
-        //   "https://i.imgur.com/fsyrScY.jpg",
-        //   "https://i.imgur.com/1fOq0pJ.jpeg",
-        //   "https://i.imgur.com/AqVIYir.jpeg"
-        //   // "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
-        //   // "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-        // ]}
-        />
-      </>
+            <Carousel value={imageList} autoplayInterval={5000} showIndicators={false} numScroll={1} numVisible={3} circular responsiveOptions={responsiveOptions} itemTemplate={productTemplate} />
+
+
+            <FsLightbox
+                toggler={lightboxController.toggler}
+                sources={imageList.map(s => s.itemImageSrc)}
+                slide={lightboxController.slide}
+            // sources={[
+            //   "https://i.imgur.com/fsyrScY.jpg",
+            //   "https://i.imgur.com/1fOq0pJ.jpeg",
+            //   "https://i.imgur.com/AqVIYir.jpeg"
+            //   // "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
+            //   // "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+            // ]}
+            />
+        </>
     )
 }
-        

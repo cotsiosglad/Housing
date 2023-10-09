@@ -2,24 +2,27 @@ import React, { useState, useRef } from 'react';
 import Header from '../../common/header/Header';
 import Footer from '../../common/footer/Footer';
 import "./projectDetails.css"
-import backgroundImg from "../../images/services.jpg";
+//import backgroundImg from "../../images/services.jpg";
 import Heading from '../../common/Heading';
 import { LiaMapMarkerSolid, LiaLayerGroupSolid, LiaBedSolid, LiaBathSolid, LiaBuilding, LiaBoxesSolid, LiaExclamationCircleSolid } from "react-icons/lia";
-import FsLightbox from "fslightbox-react";
+//import FsLightbox from "fslightbox-react";
 import { DataTable } from 'primereact/datatable';
-import { Dialog } from 'primereact/dialog';
+//import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import ScrollToTop from '../../../customHelperComponents/ScrollToTop';
-import DialogContactForm from '../../common/DialogContactForm';
-import ImageViewer from '../../common/ImageViewer';
-import ImageCarousel from '../../common/ImageCarousel';
+import DialogContactForm from '../../helper/dialogContactForm/DialogContactForm';
+//import ImageViewer from '../../helper/imageViewer/ImageViewer';
+import ImageCarousel from '../../helper/imageCarousel/ImageCarousel';
 import { Galleria } from 'primereact/galleria';
+import { BlockUI } from 'primereact/blockui';
+import LoadingBar from '../../helper/loadingBar/LoadingBar';
 //theme
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 //core  
 import "primereact/resources/primereact.min.css";
+import { GetStorageFolderFiles } from '../../../firebase';
 
 
 
@@ -27,6 +30,7 @@ const ProjectDetails = ({ match }) => {
   const [toggler, setToggler] = useState(false);
   const [dialogFormVisible, setDialogFormVisible] = useState(false)
   const [selectedProject, setSelectedProject] = useState(null);
+  const [blocked, setBlocked] = useState(false);
   const [itemImages, setItemImages] = useState([{
     itemImageSrc: '../images/1.png',
     thumbnailImageSrc: '../images/1.png',
@@ -34,6 +38,7 @@ const ProjectDetails = ({ match }) => {
     title: 'Title 1'
   }]);
   const galleria = useRef(null);
+  const box = useRef(null);
 
   const responsiveOptions = [
     {
@@ -55,7 +60,7 @@ const ProjectDetails = ({ match }) => {
   ];
 
   const itemTemplate = (item) => {
-    return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block' }} />;
+    return <img src={item.itemImageSrc} alt={item.alt} style={{ width: '100%', display: 'block', height: '75vh' }} />;
   }
 
   const thumbnailTemplate = (item) => {
@@ -278,10 +283,27 @@ const ProjectDetails = ({ match }) => {
 
   const onSelectItem = (item) => {
     debugger;
+    setBlocked(true);
+    let list = GetStorageFolderFiles().then((result) => {
+      setItemImages(result);
+      // result.map((val, index) => (
+      //   imageList.push({
+      //     itemImageSrc: val,
+      //     thumbnailImageSrc: val,
+      //     alt: index,
+      //     title: `Title ${index}`
+      //   })
+      // ))
+      setBlocked(false);
+      galleria.current.show();
+    }
+    );
+
     //setItemImages(item.images)
     //openImageViewer(item)
-    galleria.current.show()
+
   }
+
   // const openImageViewer = (item) =>{
   //   return(<Galleria value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }} 
   //   circular fullScreen={true} showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />)
@@ -290,85 +312,95 @@ const ProjectDetails = ({ match }) => {
     <>
       <ScrollToTop />
       <Galleria ref={galleria} value={itemImages} responsiveOptions={responsiveOptions} numVisible={9} style={{ maxWidth: '50%' }}
-        circular fullScreen={true} showItemNavigators item={itemTemplate} thumbnail={thumbnailTemplate} />
+        circular fullScreen={true} showItemNavigators item={itemTemplate} showThumbnails={true} thumbnail={thumbnailTemplate} />
+      {/* <FsLightbox ref={box}
+        toggler={toggler}
+
+        sources={projectData.imagePaths}
+      /> */}
       <Header />
       <div className='container'>
         {/* <div className='project-img' style={{ backgroundImage: `url(${backgroundImg})` }}>
           <img src={background} alt='' />
                       <span>kokos</span>
         </div> */}
-        <div className="project-img">
-          <img src="../images/Gardens.jpg" alt="" />
-          <div className="project-img-text">{projectData.title}</div>
+        <div className=" row">
+          <div className='col-12 project-img'>
+            <img src="../images/Gardens.jpg" alt="" />
+            <div className="project-img-text">{projectData.title}</div>
+          </div>
         </div>
-        <div className='info-icon-box'>
-          <div className='row'>
-            <div className='col-md-3 d-flex'>
-              <div className='info-icon-svg'>
-                <LiaMapMarkerSolid />
+        <div className='row'>
+          <div className='col-12 info-icon-box'>
+            <div className='row'>
+              <div className='col-md-3 d-flex p-3'>
+                <div className='info-icon-svg'>
+                  <LiaMapMarkerSolid />
+                </div>
+                <div className='info-icon-content'>
+                  <p className='info-icon-title'>LOCATION</p>
+                  <p className='info-icon-description'>{projectData.location},{projectData.region}</p>
+                </div>
               </div>
-              <div className='info-icon-content'>
-                <p className='info-icon-title'>LOCATION</p>
-                <p className='info-icon-description'>{projectData.location},{projectData.region}</p>
+              <div className='col-md-3 d-flex p-3'>
+                <div className='info-icon-svg'>
+                  <LiaLayerGroupSolid />
+                </div>
+                <div className='info-icon-content'>
+                  <p className='info-icon-title'>FLOORS</p>
+                  <p className='info-icon-description'>{projectData.floors}</p>
+                </div>
+              </div>
+              <div className='col-md-3 d-flex p-3'>
+                <div className='info-icon-svg'>
+                  <LiaBedSolid />
+                </div>
+                <div className='info-icon-content'>
+                  <p className='info-icon-title'>BEDROOMS</p>
+                  <p className='info-icon-description'>{projectData.bedrooms}</p>
+                </div>
+              </div>
+              <div className='col-md-3 d-flex p-3'>
+                <div className='info-icon-svg'>
+                  <LiaBathSolid />
+                </div>
+                <div className='info-icon-content'>
+                  <p className='info-icon-title'>BATHROOMS</p>
+                  <p className='info-icon-description'>{projectData.bathrooms}</p>
+                </div>
               </div>
             </div>
-            <div className='col-md-3 d-flex'>
-              <div className='info-icon-svg'>
-                <LiaLayerGroupSolid />
+            <div className='row'>
+              <div className='col-md-3 d-flex p-3'>
+                <div className='info-icon-svg'>
+                  <LiaBuilding />
+                </div>
+                <div className='info-icon-content'>
+                  <p className='info-icon-title'>TYPE</p>
+                  <p className='info-icon-description'> {projectData.type}</p>
+                </div>
               </div>
-              <div className='info-icon-content'>
-                <p className='info-icon-title'>FLOORS</p>
-                <p className='info-icon-description'>{projectData.floors}</p>
+              <div className='col-md-3 d-flex p-3'>
+                <div className='info-icon-svg'>
+                  <LiaBoxesSolid />
+                </div>
+                <div className='info-icon-content'>
+                  <p className='info-icon-title'>APARTMENTS</p>
+                  <p className='info-icon-description'>{projectData.apartments}</p>
+                </div>
               </div>
-            </div>
-            <div className='col-md-3 d-flex'>
-              <div className='info-icon-svg'>
-                <LiaBedSolid />
-              </div>
-              <div className='info-icon-content'>
-                <p className='info-icon-title'>BEDROOMS</p>
-                <p className='info-icon-description'>{projectData.bedrooms}</p>
-              </div>
-            </div>
-            <div className='col-md-3 d-flex'>
-              <div className='info-icon-svg'>
-                <LiaBathSolid />
-              </div>
-              <div className='info-icon-content'>
-                <p className='info-icon-title'>BATHROOMS</p>
-                <p className='info-icon-description'>{projectData.bathrooms}</p>
+              <div className='col-md-3 d-flex p-3'>
+                <div className='info-icon-svg'>
+                  <LiaExclamationCircleSolid />
+                </div>
+                <div className='info-icon-content'>
+                  <p className='info-icon-title'>STATUS</p>
+                  <p className='info-icon-description'>{projectData.status}</p>
+                </div>
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-md-3 d-flex'>
-              <div className='info-icon-svg'>
-                <LiaBuilding />
-              </div>
-              <div className='info-icon-content'>
-                <p className='info-icon-title'>TYPE</p>
-                <p className='info-icon-description'> {projectData.type}</p>
-              </div>
-            </div>
-            <div className='col-md-3 d-flex'>
-              <div className='info-icon-svg'>
-                <LiaBoxesSolid />
-              </div>
-              <div className='info-icon-content'>
-                <p className='info-icon-title'>APARTMENTS</p>
-                <p className='info-icon-description'>{projectData.apartments}</p>
-              </div>
-            </div>
-            <div className='col-md-3 d-flex'>
-              <div className='info-icon-svg'>
-                <LiaExclamationCircleSolid />
-              </div>
-              <div className='info-icon-content'>
-                <p className='info-icon-title'>STATUS</p>
-                <p className='info-icon-description'>{projectData.status}</p>
-              </div>
-            </div>
-          </div>
+
         </div>
         <div className='row'>
           <div className='col-8'>
@@ -389,54 +421,62 @@ const ProjectDetails = ({ match }) => {
             </div>
           </div>
         </div>
-
-        <div className='project-wrapper-box'>
-          <div className='project-wrapper-title'>
-            {/* <Heading title="IMAGES"/> */}
-          </div>
-          <div className='project-wrapper-content'>
-            {/* <ImageViewer imageList={projectData.images}/> */}
-            {/* {projectData.imagePaths.map((val,index)=>(
-              <img src={val} alt="" key={index} onClick={() => setToggler(!toggler)}/>
-            )
-            
-            )} */}
-            <div className='project-details-card'>
-              <ImageCarousel imageList={projectData.images} />
+        <div className='row'>
+          <div className='col-12 project-wrapper-box'>
+            <div className='project-wrapper-title'>
+              {/* <Heading title="IMAGES"/> */}
             </div>
-            {/* <button onClick={() => setToggler(!toggler)}>
-              Open the lightbox.
-            </button> */}
-            {/* <FsLightbox
-              toggler={toggler}
-              sources={projectData.imagePaths}
+            <div className='project-wrapper-content'>
+              {/* <ImageViewer imageList={projectData.images}/> */}
+              {/* {projectData.imagePaths.map((val,index)=>(
+                <img src={val} alt="" key={index} onClick={() => setToggler(!toggler)}/>
+              )
               
-              // sources={[
-              //   "https://i.imgur.com/fsyrScY.jpg",
-              //   "https://i.imgur.com/1fOq0pJ.jpeg",
-              //   "https://i.imgur.com/AqVIYir.jpeg"
-              //   // "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
-              //   // "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-              // ]}
-            /> */}
+              )} */}
+              <div className='project-details-card'>
+                <ImageCarousel imageList={projectData.images} />
+                {/* <ImageViewer imageList={projectData.images} /> */}
+              </div>
+              {/* <button onClick={() => setToggler(!toggler)}>
+                Open the lightbox.
+              </button> */}
+              {/* <FsLightbox
+                toggler={toggler}
+                sources={projectData.imagePaths}
+                
+                // sources={[
+                //   "https://i.imgur.com/fsyrScY.jpg",
+                //   "https://i.imgur.com/1fOq0pJ.jpeg",
+                //   "https://i.imgur.com/AqVIYir.jpeg"
+                //   // "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
+                //   // "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                // ]}
+              /> */}
+            </div>
           </div>
         </div>
-        <div className='project-wrapper-box'>
-          <div className='project-wrapper-title'>
-            <Heading title="AVAILABILITY" />
-          </div>
-          <div className='project-wrapper-content'>
-            <DataTable selectionMode="single" selection={selectedProject} metaKeySelection={false} onSelectionChange={(e) => onSelectItem(e.value)} dataKey="id" value={projectData.apartmentList} stripedRows tableStyle={{ minWidth: '50rem' }}>
-              <Column field="flatNo" header="Flat No."></Column>
-              <Column field="beds" header="Beds"></Column>
-              <Column field="area" header="Area"></Column>
-              <Column field="verandas" header="Verandas"></Column>
-              <Column field="totalArea" header="Total Area"></Column>
-              <Column field="status" header="Status"></Column>
-              <Column header="Actions" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }} alignFrozen="right" frozen={true}></Column>
-            </DataTable>
-          </div>
+        <div className='row'>
+          <BlockUI blocked={blocked}>
+            <LoadingBar isVisible={blocked} />
+            <div className='col-12 project-wrapper-box'>
+              <div className='project-wrapper-title'>
+                <Heading title="AVAILABILITY" />
+              </div>
+              <div className='project-wrapper-content'>
+                <DataTable selectionMode="single" selection={selectedProject} metaKeySelection={false} onSelectionChange={(e) => onSelectItem(e.value)} dataKey="id" value={projectData.apartmentList} stripedRows tableStyle={{ minWidth: '50rem' }}>
+                  <Column field="flatNo" header="Flat No."></Column>
+                  <Column field="beds" header="Beds"></Column>
+                  <Column field="area" header="Area"></Column>
+                  <Column field="verandas" header="Verandas"></Column>
+                  <Column field="totalArea" header="Total Area"></Column>
+                  <Column field="status" header="Status"></Column>
+                  <Column header="Actions" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }} alignFrozen="right" frozen={true}></Column>
+                </DataTable>
+              </div>
+            </div>
+          </BlockUI>
         </div>
+
         <div className='row'>
           <div className='col-4 text-center align-self-center'>
             <button type='button' className='download-button'>

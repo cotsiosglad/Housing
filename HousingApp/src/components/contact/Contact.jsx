@@ -30,7 +30,7 @@ const Contact = () => {
             <div className="col-6 leftline">
               <div className="contact-info h-100">
                 <strong>Domus Alba</strong>
-                <p class="adresss">Archiepiskopou Leontiou 23, 2407, Engomi, Nicosia, Cyprus</p>
+                <p className="adresss">Archiepiskopou Leontiou 23, 2407, Engomi, Nicosia, Cyprus</p>
                 <p>Mon - Fri 09:00 - 18:00</p>
                 <div >
                   <CiPhone />
