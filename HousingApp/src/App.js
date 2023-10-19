@@ -1,7 +1,7 @@
 import "./App.css"
 //import "./fonts/LFutura.ttf"
 import Pages from "./components/pages/Pages"
-import { useEffect, useRef } from "react"
+import { StrictMode, useEffect, useRef, useState } from "react"
 // Import the functions you need from the SDKs you need
 //import { initializeApp } from "firebase/app";
 // import firebaseConfig from "./components/firebaseConfig/firebaseconfig";
@@ -15,8 +15,12 @@ import ActionProvider from "./components/chatbot/chatActionProvider";
 import useIntersectionObserver from './customHooks/useIntersectionObserver'; // Import the custom hook
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-// import { initializeApp } from 'firebase/app'
+// import { app } from "./firebase.js";
+import { initializeApp } from 'firebase/app'
 // import { getFirestore, doc, setDoc, getDocs, collection, serverTimestamp } from "firebase/firestore"
+import axios from "axios";
+import { WriteDoc } from "./firebase";
+import { Timestamp, serverTimestamp } from "firebase/firestore";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyD-4YcVKrl3j55I2jTGb_3WEZkeyIrQgOw",
@@ -29,7 +33,7 @@ const firebaseConfig = {
 
 };
 
-// const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 // const db = getFirestore(app);
 // //firebase.firestore().collection('restaurants').doc(id).get();
 // //firebase.firestore().collection('restaurants').add(data);
@@ -71,6 +75,32 @@ const firebaseConfig = {
 // }
 const inputs = { title: "Nikolas", path: "the image/path" }
 const readDoc = { id: "650291541", collection: "images" }
+// const setUserData = 
+// {
+// 	IP : '',
+// 	City: '',
+// 	CountryName: ''
+// }
+// axios.get('https://geolocation-db.com/json/')
+// 	.then(function (response) {
+// 	const responseData = response.data; // Assuming response.data is an object
+// 	setUserData({
+// 		IP: responseData.IPv4,
+// 		City: responseData.city,
+// 		CountryName: responseData.country_name
+// 	});
+// 	console.log
+// 	})
+// 	.catch(function (error) {
+// 	console.error(error);
+// 	});
+
+// axios.get('https://geolocation-db.com/json/')
+// .then(function (response){
+// 	console.log(response.data.IPv4)
+// 	console.log(response.data.city)
+// 	console.log(response.data.country_name)
+// })
 //const time = serverTimestamp();
 //Firestore.writeDoc(inputs)
 //Firestore.readDocs(readDoc)
@@ -95,6 +125,16 @@ const readDoc = { id: "650291541", collection: "images" }
 
 
 function App() {
+
+	const [userData, setUserData] = useState({
+		IP : '',
+		City: '',
+		CountryName: ''
+	});
+	  
+	// console.log(userData.City)
+	// console.log(userData.IP)
+	//WriteDoc(userData, usersInfo)
 	// // const targetRef = useRef(null);
 	// const options = {
 	// 	root: null, // Use the viewport as the root
@@ -174,14 +214,69 @@ function App() {
 		rootMargin: '0px',
 		threshold: 0.4,
 	};
+	let triggerPromise = false
 	// Use the custom hook in your component
 	//useIntersectionObserver(options); 
-
 	useEffect(() => {
+		let model = {
+			IP: "",
+			City: "",
+			CountryName: "",
+			//Date: Timestamp
+		}
 		AOS.init();
+		const result = axios.get('https://geolocation-db.com/json/');
+		Promise.all([result]).then((response) => {
+		// debugger
+		const responseData = response[0].data;
+		
+		if (!triggerPromise)
+		{
+			model = {
+				IP: responseData.IPv4,
+				City: responseData.city,
+				CountryName: responseData.country_name,
+				DayTime: serverTimestamp()
+			}
+			triggerPromise = true
+			console.log(model)
+			//Uncomment below to insert user's IP in Firebase
+			//WriteDoc(model, "VisitorsInfo")
+		}
+		
+		// setUserData({
+		//   IP: responseData.IPv4,
+		//   City: responseData.city,
+		//   CountryName: responseData.country_name
+		// });
+		
+		})
+		.catch(function (error) {
+		console.error(error);
+		});
+
+		//   .then(function (response) {
+		// 	const responseData = response.data;
+		// 	model = {
+		// 		IP: responseData.IPv4,
+		// 		City: responseData.city,
+		// 		CountryName: responseData.country_name
+		// 	}
+		// 	console.log(model)
+		// 	// setUserData({
+		// 	//   IP: responseData.IPv4,
+		// 	//   City: responseData.city,
+		// 	//   CountryName: responseData.country_name
+		// 	// });
+			
+		//   })
+		//   .catch(function (error) {
+		// 	console.error(error);
+		//   });
+		  //console.log(model)
 	}, [])
 
-	return <Pages />
+	return <><StrictMode><Pages /></StrictMode></>
 }
 
 export default App

@@ -118,7 +118,9 @@
     opacity: 1;
     transform: translate(-50%, -130%);
   }
-
+  .info-block{
+    margin-top: 12rem;
+  }
   @media screen and (max-width: 450px){
     .info-block{
         display: flex;
@@ -133,4 +135,12 @@
         position: relative;
         top:0;
     }
-} 
+}
+
+.chartCard {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2rem;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+  width:499px
+}

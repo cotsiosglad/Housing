@@ -1,6 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore, doc, addDoc, setDoc, getDocs, collection, serverTimestamp, query, where } from "firebase/firestore"
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage"
+// import { signInWithEmailAndPassword, signOut, getAuth } from "firebase/auth";
+import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_apiKey,
     authDomain: process.env.REACT_APP_authDomain,
@@ -10,8 +12,8 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_appId,
     measurementId: process.env.REACT_APP_measurementId
 };
-
 export const app = initializeApp(firebaseConfig);
+export const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const WriteDoc = async (writeData, collectionName) => {
@@ -200,3 +202,32 @@ export const GetStorageFolderFiles = async (folderPath) => {
         return null;
     }
 };
+
+// export const AuthenticateUser = async (email,password) => {
+//     try {
+//         const auth = getAuth(app);
+//         // const user = await signInWithEmailAndPassword(
+//         //     auth,
+//         //     email,
+//         //     password
+//         //   );
+
+//         await signInWithEmailAndPassword(auth, email, password)
+//         .then((userCredential) => {
+//             // Signed in 
+//             debugger;
+//             const user = userCredential.user;
+//             // ...
+//         })
+//         .catch((error) => {
+//             const errorCode = error.code;
+//             const errorMessage = error.message;
+//         });
+
+//     } catch (e) {
+//         console.log(e);
+//         WriteDoc(e, "ErrorLog");
+//         return null;
+//     }
+// };
+

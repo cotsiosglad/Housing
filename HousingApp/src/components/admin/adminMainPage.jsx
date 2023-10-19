@@ -10,6 +10,7 @@ import "./adminMainPage.css"
 import projects from "../data/Data";
 import users from "../data/Data";
 import AdminProjects from "./AdminProjects"
+import { Chart } from 'primereact/chart';
 
 function AdminMainPage() {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Home");
@@ -33,6 +34,60 @@ function AdminMainPage() {
     // Add more menu items as needed
   ];
 
+  const data = {
+    labels: ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
+    datasets: [
+        {
+            label: 'Daily Visitors',
+            data: [40, 60, 46, 55, 37, 50, 30],
+            backgroundColor: [
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+              ],
+              borderColor: [
+                'rgb(255, 159, 64)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+              ],
+              borderWidth: 2
+        }
+    ]
+};
+const dataMonth = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  datasets: [
+      {
+          label: 'Daily Visitors',
+          data: [40, 60, 46, 55, 37, 50, 30, 22, 11, 23, 45, 53],
+          backgroundColor: [
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+            ],
+            borderWidth: 2
+      }
+  ]
+};
+
+const options = {
+    scales: {
+        y: {
+            beginAtZero: true
+        }
+    }
+};
 
   const infoBlockElements = [
     {
@@ -94,6 +149,7 @@ function AdminMainPage() {
 
   const InfoBlock = () => {
     return (
+      <div className = "container">
       <div className="info-block row h-100 justify-content-center align-content-center">
         {infoBlockElements.map((val, index) => {
           return (
@@ -122,6 +178,15 @@ function AdminMainPage() {
             </div>
           )
         })}
+      </div>
+      <div className="row mt-5 justify-content-center align-content-center">
+        <div className="col-6 chartCard">
+          <Chart type="bar" data={data} options={options} />
+        </div>
+        <div className="col-6 chartCard">
+          <Chart type="bar" data={dataMonth} options={options} />
+        </div>
+      </div>
       </div>
     )
   };
@@ -173,8 +238,8 @@ function AdminMainPage() {
           <div className="col-md-10 col-lg-10 p-3 side-content">
             {renderContent()}
             <ScrollTop target="window" threshold={100} className="btn-secondary" icon="pi pi-arrow-up text-base" />
+            
           </div>
-
         </div>
 
 
