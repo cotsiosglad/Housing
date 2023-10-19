@@ -330,7 +330,7 @@ const ProjectDetails = ({ match }) => {
             <div className="project-img-text">{projectData.title}</div>
           </div>
         </div>
-        <div className='row'>
+        <div>
           <div className='col-12 info-icon-box'>
             <div className='row'>
               <div className='col-md-3 d-flex p-3'>
@@ -402,7 +402,7 @@ const ProjectDetails = ({ match }) => {
           </div>
 
         </div>
-        <div className='row'>
+        <div className='row mt-4'>
           <div className='col-8'>
             <div className='project-wrapper-box'>
               <div className='project-wrapper-title'>
@@ -422,7 +422,7 @@ const ProjectDetails = ({ match }) => {
           </div>
         </div>
         <div className='row'>
-          <div className='col-12 project-wrapper-box'>
+          <div className='col-12'>
             <div className='project-wrapper-title'>
               {/* <Heading title="IMAGES"/> */}
             </div>
@@ -458,7 +458,7 @@ const ProjectDetails = ({ match }) => {
         <div className='row'>
           <BlockUI blocked={blocked}>
             <LoadingBar isVisible={blocked} />
-            <div className='col-12 project-wrapper-box'>
+            <div className='col-12'>
               <div className='project-wrapper-title'>
                 <Heading title="AVAILABILITY" />
               </div>
@@ -477,7 +477,7 @@ const ProjectDetails = ({ match }) => {
           </BlockUI>
         </div>
 
-        <div className='row'>
+        <div className='row mt-4'>
           <div className='col-4 text-center align-self-center'>
             <button type='button' className='download-button'>
               Download Brochure

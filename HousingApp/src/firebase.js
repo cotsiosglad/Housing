@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, addDoc, setDoc, getDocs, collection, serverTimestamp, query, where } from "firebase/firestore"
+import { getFirestore, doc, addDoc, setDoc, getDocs, getDoc, collection, serverTimestamp, query, where } from "firebase/firestore"
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage"
 // import { signInWithEmailAndPassword, signOut, getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
@@ -27,7 +27,7 @@ export const WriteDoc = async (writeData, collectionName) => {
             //const ref = doc(db, "Projects", writeData.id)
 
             const colRef = collection(db, collectionName);
-            await addDoc(colRef, writeData);
+            return await addDoc(colRef, writeData);
 
             // await here
             //await setDoc(ref);
@@ -38,9 +38,15 @@ export const WriteDoc = async (writeData, collectionName) => {
 
     }
     catch (e) {
-        console.log(e);
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
         //write error
-        WriteDoc(e, "ErrorLog");
+        await WriteDoc(errorModel, "ErrorLog");
     }
 }
 
@@ -73,22 +79,59 @@ export const GetDocById = async (findId, collectionName, idPropertyName = null) 
     }
 }
 
+export const GetDocByRefId = async (collectionName, refId) => {
+
+    try {
+        //const ref = collection(db, "images")
+        if (refId && collectionName) {
+            const docRef = doc(db, collectionName, refId);
+            const docSnap = await getDoc(docRef);
+            let retList = ({ id: docSnap.id, data: docSnap.data() });
+            retList.data.id = retList.id;
+            return retList;
+
+        }
+
+    }
+    catch (e) {
+        console.log(e);
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
+        //write error
+        await WriteDoc(errorModel, "ErrorLog");
+        return null;
+    }
+}
+
 export const GetAllDocs = async (collectionName) => {
 
     try {
         //const ref = collection(db, "images")
         if (collectionName) {
 
-            const colRef = await collection(db, collectionName).get();
-
-            return colRef.docs.map(doc => doc.data());
+            const colRef = await getDocs(collection(db, collectionName));
+            let retList = colRef.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+            retList.map(m => m.data.id = m.id);
+            return retList
         }
 
     }
     catch (e) {
         console.log(e);
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
         //write error
-        WriteDoc(e, "ErrorLog");
+        await WriteDoc(errorModel, "ErrorLog");
         return null;
     }
 }
@@ -185,7 +228,7 @@ export const GetStorageFolderFiles = async (folderPath) => {
             };
         });
 
-        const retList = await Promise.all(downloadPromises); // Wait for all downloads to complete
+        const retList = await Promise.all(downloadPromises); // Wait for all downloads to complete  
         return retList;
         // This can be downloaded directly:
         // const xhr = new XMLHttpRequest();

@@ -73,46 +73,52 @@ export const featured = [
 
 export const projects = [
   {
-    id:1,
-    title:"Gardens",
-    image:"",
-    location:"Strovolos",
-    region:"Nicosia",
-    floors:"4",
-    bedrooms:"2,3",
-    bathrooms:"2",
-    type:"Residential",
-    apartments:"8",
-    status:"Completed",
-    availability:"Available"
+    id: 1,
+    refName: "gardens",
+    sortNumber: 1,
+    title: "Gardens",
+    image: "",
+    location: "Strovolos",
+    region: "Nicosia",
+    floors: "4",
+    bedrooms: "2,3",
+    bathrooms: "2",
+    type: "Residential",
+    apartments: "8",
+    status: "Completed",
+    availability: "Available"
   },
   {
-    id:2,
-    title:"Initio 2",
-    image:"",
-    location:"Egkomi",
-    region:"Nicosia",
-    floors:"3",
-    bedrooms:"3",
-    bathrooms:"2",
-    type:"Residential",
-    apartments:"4",
-    status:"Under Construction",
-    availability:"Sold"
+    id: 2,
+    refName: "gardens",
+    sortNumber: 1,
+    title: "Initio 2",
+    image: "",
+    location: "Egkomi",
+    region: "Nicosia",
+    floors: "3",
+    bedrooms: "3",
+    bathrooms: "2",
+    type: "Residential",
+    apartments: "4",
+    status: "Under Construction",
+    availability: "Sold"
   },
   {
-    id:3,
-    title:"Initio 3",
-    image:"",
-    location:"Tseri",
-    region:"Nicosia",
-    floors:"2",
-    bedrooms:"1",
-    bathrooms:"2",
-    type:"Residential",
-    apartments:"2",
-    status:"Planned",
-    availability:"Partial Availability"
+    id: 3,
+    refName: "gardens",
+    sortNumber: 1,
+    title: "Initio 3",
+    image: "",
+    location: "Tseri",
+    region: "Nicosia",
+    floors: "2",
+    bedrooms: "1",
+    bathrooms: "2",
+    type: "Residential",
+    apartments: "2",
+    status: "Planned",
+    availability: "Partial Availability"
   },
   // {
   //   id:4,
@@ -248,53 +254,66 @@ export const projects = [
   // }
 
 ]
-export const projectDetails=
+
+export const projectDetails =
 {
-    id:1,
-    description:"We are thrilled to introduce our latest housing project, a testament to modern living and urban elegance. This meticulously designed development comprises four impeccably constructed floors, housing a total of eight luxurious apartments. Each apartment is thoughtfully designed to offer residents the utmost comfort and style, with options ranging from spacious two-bedroom layouts to more expansive three-bedroom residences. The project embodies a harmonious blend of contemporary architecture, premium materials, and attention to detail, ensuring a living experience that exceeds expectations. Situated in a prime location, this development offers not only a beautiful place to call home but also easy access to urban amenities, making it an ideal choice for those seeking a higher standard of living in a vibrant urban setting. Welcome to a new era of sophisticated and convenient living."
-    ,imagePaths:["https://i.imgur.com/fsyrScY.jpg","https://i.imgur.com/1fOq0pJ.jpeg","https://i.imgur.com/AqVIYir.jpeg"]
-    ,apartmentList:[
-      {
-        flatNo: "102",
-        beds: "2",
-        area: "90 m2",
-        verandas: "25 m2/15 m2",
-        totalArea: "115 m2",
-        status: "Available"
-      },
-      {
-        flatNo: "103",
-        beds: "1",
-        area: "50 m2",
-        verandas: "10 m2/5 m2",
-        totalArea: "60 m2",
-        status: "Available"
-      },
-      {
-        flatNo: "104",
-        beds: "4",
-        area: "160 m2",
-        verandas: "35 m2/20 m2",
-        totalArea: "195 m2",
-        status: "Sold"
-      },
-      {
-        flatNo: "105",
-        beds: "3",
-        area: "120 m2",
-        verandas: "30 m2/18 m2",
-        totalArea: "150 m2",
-        status: "Available"
-      },
-      {
-        flatNo: "106",
-        beds: "2",
-        area: "80 m2",
-        verandas: "20 m2/12 m2",
-        totalArea: "100 m2",
-        status: "Available"
-      }
-    ]
+  id: 1,
+  refName: "gardens",
+  sortNumber: 1,
+  description: "We are thrilled to introduce our latest housing project, a testament to modern living and urban elegance. This meticulously designed development comprises four impeccably constructed floors, housing a total of eight luxurious apartments. Each apartment is thoughtfully designed to offer residents the utmost comfort and style, with options ranging from spacious two-bedroom layouts to more expansive three-bedroom residences. The project embodies a harmonious blend of contemporary architecture, premium materials, and attention to detail, ensuring a living experience that exceeds expectations. Situated in a prime location, this development offers not only a beautiful place to call home but also easy access to urban amenities, making it an ideal choice for those seeking a higher standard of living in a vibrant urban setting. Welcome to a new era of sophisticated and convenient living."
+  , imagePaths: ["https://i.imgur.com/fsyrScY.jpg", "https://i.imgur.com/1fOq0pJ.jpeg", "https://i.imgur.com/AqVIYir.jpeg"]
+  , apartmentList: [
+    {
+      projectId: 1,
+      id: 1,
+      flatNo: "102",
+      beds: "2",
+      area: "90 m2",
+      verandas: "25 m2/15 m2",
+      totalArea: "115 m2",
+      status: "Available"
+    },
+    {
+      projectId: 1,
+      id: 2,
+      flatNo: "103",
+      beds: "1",
+      area: "50 m2",
+      verandas: "10 m2/5 m2",
+      totalArea: "60 m2",
+      status: "Available"
+    },
+    {
+      projectId: 1,
+      id: 3,
+      flatNo: "104",
+      beds: "4",
+      area: "160 m2",
+      verandas: "35 m2/20 m2",
+      totalArea: "195 m2",
+      status: "Sold"
+    },
+    {
+      projectId: 1,
+      id: 4,
+      flatNo: "105",
+      beds: "3",
+      area: "120 m2",
+      verandas: "30 m2/18 m2",
+      totalArea: "150 m2",
+      status: "Available"
+    },
+    {
+      projectId: 1,
+      id: 5,
+      flatNo: "106",
+      beds: "2",
+      area: "80 m2",
+      verandas: "20 m2/12 m2",
+      totalArea: "100 m2",
+      status: "Available"
+    }
+  ]
 }
 
 
@@ -584,7 +603,7 @@ export const price = [
 
 export const services = [
   {
-    id:1,
+    id: 1,
     title: "Αγορά Κατοικιών, ∆ιαμερισμάτων,Ολόκληρων Έργων",
     titleType: "Αγορά ιδιοκτησίας",
     image: "../images/hero/h2.png",
@@ -604,7 +623,7 @@ export const services = [
     ]
   },
   {
-    id:2,
+    id: 2,
     title: "Ενοίκιο",
     titleType: "Ενοίκιο",
     image: "../images/hero/h3.png",
