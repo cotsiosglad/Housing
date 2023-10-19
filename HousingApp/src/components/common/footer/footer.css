@@ -243,10 +243,10 @@ footer .socialContainer {
 
 }
 
-.react-chatbot-kit-chat-container {
+/* .react-chatbot-kit-chat-container {
   scale: 0.9 0.8;
   transform: translateY(75px);
-}
+} */
 
 @media screen and (max-width: 450px) {
   footer {

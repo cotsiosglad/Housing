@@ -1,15 +1,14 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, addDoc, setDoc, getDocs, collection, serverTimestamp, query, where } from "firebase/firestore"
+import { getFirestore, doc, addDoc, setDoc, getDocs, getDoc, collection, serverTimestamp, query, where } from "firebase/firestore"
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage"
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_apiKey,
-    authDomain: "housing-app-628b7.firebaseapp.com",
-    projectId: "housing-app-628b7",
-    storageBucket: "housing-app-628b7.appspot.com",
-    messagingSenderId: "643342142602",
-    appId: "1:643342142602:web:dc7ddf841a0871d844b173",
-    measurementId: "G-FJ8F04D9BL"
-
+    authDomain: process.env.REACT_APP_authDomain,
+    projectId: process.env.REACT_APP_projectId,
+    storageBucket: process.env.REACT_APP_storageBucket,
+    messagingSenderId: process.env.REACT_APP_messagingSenderId,
+    appId: process.env.REACT_APP_appId,
+    measurementId: process.env.REACT_APP_measurementId
 };
 
 export const app = initializeApp(firebaseConfig);
@@ -26,7 +25,7 @@ export const WriteDoc = async (writeData, collectionName) => {
             //const ref = doc(db, "Projects", writeData.id)
 
             const colRef = collection(db, collectionName);
-            await addDoc(colRef, writeData);
+            return await addDoc(colRef, writeData);
 
             // await here
             //await setDoc(ref);
@@ -37,9 +36,15 @@ export const WriteDoc = async (writeData, collectionName) => {
 
     }
     catch (e) {
-        console.log(e);
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
         //write error
-        WriteDoc(e, "ErrorLog");
+        await WriteDoc(errorModel, "ErrorLog");
     }
 }
 
@@ -72,22 +77,59 @@ export const GetDocById = async (findId, collectionName, idPropertyName = null) 
     }
 }
 
+export const GetDocByRefId = async (collectionName, refId) => {
+
+    try {
+        //const ref = collection(db, "images")
+        if (refId && collectionName) {
+            const docRef = doc(db, collectionName, refId);
+            const docSnap = await getDoc(docRef);
+            let retList = ({ id: docSnap.id, data: docSnap.data() });
+            retList.data.id = retList.id;
+            return retList;
+
+        }
+
+    }
+    catch (e) {
+        console.log(e);
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
+        //write error
+        await WriteDoc(errorModel, "ErrorLog");
+        return null;
+    }
+}
+
 export const GetAllDocs = async (collectionName) => {
 
     try {
         //const ref = collection(db, "images")
         if (collectionName) {
 
-            const colRef = await collection(db, collectionName).get();
-
-            return colRef.docs.map(doc => doc.data());
+            const colRef = await getDocs(collection(db, collectionName));
+            let retList = colRef.docs.map(doc => ({ id: doc.id, data: doc.data() }));
+            retList.map(m => m.data.id = m.id);
+            return retList
         }
 
     }
     catch (e) {
         console.log(e);
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
         //write error
-        WriteDoc(e, "ErrorLog");
+        await WriteDoc(errorModel, "ErrorLog");
         return null;
     }
 }

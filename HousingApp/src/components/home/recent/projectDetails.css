@@ -84,18 +84,33 @@
 /* .p-carousel-items-content{
   height: 200px;
 } */
+
+.p-carousel-next,
+.p-carousel-prev {
+  background: rgba(0, 0, 0, 0.9) !important;
+}
+
+.p-carousel-next,
+.p-carousel-prev :hover {
+  background: rgba(0, 0, 0, 0.9) !important;
+}
+
+.p-carousel-next svg,
+.p-carousel-prev svg {
+  color: var(--color1) !important;
+}
+
 .project-wrapper-content img {
   width: 280px;
   height: 250px;
   margin: 0px 5px 0px 5px;
 }
 
-.project-details-card {
+/* .project-details-card {
   padding: 9px;
   background-color: var(--color4);
-  /* border-radius: 35px; */
-  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset; */
-}
+} 
+*/
 
 /* Change background color of the entire DataTable */
 /* .p-datatable {
