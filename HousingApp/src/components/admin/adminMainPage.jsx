@@ -93,7 +93,7 @@ function AdminMainPage() {
       console.log(error);
     })
   }
-
+  console.log("Test Commit")
   // function isDateInCurrentWeek(targetDate) {
   //   // Get the current date
   //   const currentDate = new Date();
