@@ -141,8 +141,6 @@ function App() {
 	// 	rootMargin: '0px', // Margin around the root, in pixels
 	// 	threshold: 0.4, // The ratio of the target's visibility to trigger the callback
 	//   };
-
-
 	//   useEffect(() => {
 	// 	const options = {
 	// 		root: null, // Use the viewport as the root
@@ -229,17 +227,19 @@ function App() {
 		Promise.all([result]).then((response) => {
 		// debugger
 		const responseData = response[0].data;
-		
+		const today = new Date()
+		const dayandtime= today.toString()
+		//console.log(dayandtime)
 		if (!triggerPromise)
 		{
 			model = {
 				IP: responseData.IPv4,
 				City: responseData.city,
 				CountryName: responseData.country_name,
-				DayTime: serverTimestamp()
+				DayTime: dayandtime
 			}
 			triggerPromise = true
-			console.log(model)
+			//console.log(model)
 			//Uncomment below to insert user's IP in Firebase
 			//WriteDoc(model, "VisitorsInfo")
 		}
