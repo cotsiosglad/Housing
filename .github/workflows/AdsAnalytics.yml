@@ -19,13 +19,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Set CI to false
+      run: echo "export CI=false" >> $GITHUB_ENV
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: ./HousingApp/package-lock.json
+
     - run: npm ci
       working-directory: ./HousingApp
+
     - run: npm run build
       working-directory: ./HousingApp
