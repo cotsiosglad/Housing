@@ -1,6 +1,6 @@
 import React from "react"
 import Header from "../common/header/Header"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
 import Home from "../home/Home"
 import Footer from "../common/footer/Footer"
 import About from "../about/About"
@@ -11,9 +11,13 @@ import Contact from "../contact/Contact"
 import AdminLogin from "../admin/AdminLogin"
 import AdminMainPage from "../admin/AdminMainPage"
 import ProjectDetails from "../home/recent/ProjectDetails"
-
-
+import { auth, GetAuthUser } from "../../firebase"
+import UserAuthorization from "../helper/UserAuthorization"
 // Layout component with Header and Footer
+const someUser = GetAuthUser();
+
+
+debugger;
 const DefaultLayout = ({ children }) => (
   <>
     <Header />
@@ -22,6 +26,8 @@ const DefaultLayout = ({ children }) => (
   </>
 );
 
+// debugger;
+const { currentUser } = auth;
 // Layout component for AdminLogin without Header and Footer
 const AdminLoginLayout = ({ children }) => <>{children}</>;
 
@@ -55,8 +61,13 @@ const Pages = () => {
           <Route exact path="/contact" render={() => <DefaultLayout><Contact /></DefaultLayout>} />
 
           {/* Route for AdminLogin with AdminLoginLayout */}
-          <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
-          <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} />
+          
+          {/* <Route exact path="/admin/home" render={() => someUser ? <AdminLoginLayout><AdminMainPage /></AdminLoginLayout> : <Redirect to='/admin' /> } /> */}
+          <UserAuthorization>
+            <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} />
+            <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
+          </UserAuthorization>
+          {/* <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} /> */}
           {/* <Route path="/projects/:id">
             <DefaultLayout>
               <ProjectDetails />

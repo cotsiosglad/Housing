@@ -12,16 +12,23 @@ import users from "../data/Data";
 import AdminProjects from "./AdminProjects"
 import { Chart } from 'primereact/chart';
 import { GetAllDocs } from "../../firebase";
-
+import { getAuth, signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 let NicosiaUsers,LarnacaUsers,PaphosUsers,LimassolUsers,NicosiaDay;
 let triggerPromise = false
 let userArray = [];
 let days = [];
+let totalVisitors = [];
+let VisitorsDayTime = [];
+let WeeklyVisitors = 0
 function AdminMainPage() {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Home");
   const [users, setUsers] = useState([]);
-  let totalVisitors = [];
-
+  // const auth = getAuth(app)
+  console.log(auth)
+  // if (auth.currentUser == null){
+  //   window.location.href= '/admin/'
+  // }
   const GetDocs = async () => {
     await GetAllDocs("VisitorsInfo") 
     .then (visitors => {
@@ -93,33 +100,54 @@ function AdminMainPage() {
       console.log(error);
     })
   }
-  console.log("Test Commit")
-  // function isDateInCurrentWeek(targetDate) {
-  //   // Get the current date
-  //   const currentDate = new Date();
-  
-  //   // Calculate the start of the current week (Sunday)
-  //   const startOfWeek = new Date(currentDate);
-  //   startOfWeek.setHours(0, 0, 0, 0);
-  //   startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
-  
-  //   // Calculate the end of the current week (7 days later)
-  //   const endOfWeek = new Date(startOfWeek);
-  //   endOfWeek.setDate(startOfWeek.getDate() + 7);
-  
-  //   // Convert the target date to a Date object (if it's not already)
-  //   if (!(targetDate instanceof Date)) {
-  //     targetDate = new Date(targetDate);
-  //   }
-  
-  //   // Compare the target date with the start and end of the current week
-  //   return targetDate >= startOfWeek && targetDate <= endOfWeek;
-  // }
-  
-  // // Test the function with your date
-  // const yourDate = new Date("Fri Oct 20 2023 19:48:50 GMT+0300 (Eastern European Summer Time)");
-  // const result = isDateInCurrentWeek(yourDate);
 
+  function isDateInCurrentWeek(targetDate) {
+    // Get the current date
+    const currentDate = new Date();
+  
+    // Calculate the start of the current week (Sunday)
+    const startOfWeek = new Date(currentDate);
+    startOfWeek.setHours(0, 0, 0, 0);
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+  
+    // Calculate the end of the current week (7 days later)
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 7);
+  
+    // Convert the target date to a Date object (if it's not already)
+    if (!(targetDate instanceof Date)) {
+      targetDate = new Date(targetDate);
+    }
+  
+    // Compare the target date with the start and end of the current week
+    return targetDate >= startOfWeek && targetDate <= endOfWeek;
+  }
+  // Add a for loop that scans all visitors's dates , check if date is in current week, if its true then add to the object, if false don't
+  //console.log(totalVisitors)
+  let counter = 0;
+  for (let i = 0; i < totalVisitors.length; i++){
+    VisitorsDayTime = totalVisitors[i].data.Date
+    //console.log(VisitorsDayTime)
+    let yourDate = new Date(VisitorsDayTime);
+    let result = isDateInCurrentWeek(yourDate);
+    //console.log(result)
+    if (result == true){
+       //console.log("in current week")
+       counter ++;
+       
+       
+    }
+    else {
+      //console.log("not in current week")
+    }
+    
+  }
+  console.log("Total counter :"+ counter)
+  // Test the function with your date
+
+  //debugger;
+  
+  // console.log(result)
   const menuItems = [
     {
       label: "Home",
@@ -136,6 +164,13 @@ function AdminMainPage() {
       icon: "pi pi-users",
       command: () => setSelectedMenuItem("Users"),
     },
+    {
+      label: "Sign Out",
+      icon: "pi pi-users",
+      command: () => {signOut(auth).then(
+        window.location.href= '/admin'
+      )}
+    },
     // Add more menu items as needed
   ];
   
@@ -143,7 +178,7 @@ function AdminMainPage() {
     labels: [days[0], days[1], days[2], days[3], days[4], days[5], days[6]],
     datasets: [
         {
-            label: 'Daily Visitors',
+            label: 'Weekly Visitors',
             data: [40, 60, 46, 55, 37, 50, 30],
             backgroundColor: [
                 'rgba(255, 159, 64, 0.2)',

@@ -2,8 +2,7 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
 name: Node.js CI
-env:
-  branchName: AdsAnalytics
+
 on:
   push:
     branches: [ "AdsAnalytics" ]
@@ -12,7 +11,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      branchName: AdsAnalytics
     strategy:
       matrix:
         node-version: [18.x]
@@ -36,5 +36,6 @@ jobs:
 
     - uses: actions/upload-artifact@v3
       with:
-        name: "$branchName-${{ github.run_id }}"
+        name: "${{ env.branchName }}-${{ github.run_id }}"
         path: ./HousingApp/build
+        retention-days: 7

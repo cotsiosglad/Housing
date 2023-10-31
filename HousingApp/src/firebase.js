@@ -3,6 +3,7 @@ import { getFirestore, doc, addDoc, setDoc, getDocs, getDoc, collection, serverT
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage"
 // import { signInWithEmailAndPassword, signOut, getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_apiKey,
     authDomain: process.env.REACT_APP_authDomain,
@@ -14,8 +15,45 @@ const firebaseConfig = {
 };
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
+export const auth =  getAuth(app)
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+
+export const GetAuthUser = () => {
+
+    try {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        // debugger;
+        // await onAuthStateChanged(auth, (user) => {
+        if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const uid = user.uid;
+        
+        return true
+        // ...
+        } else {
+        // User is signed out
+        // ...
+        return false
+        
+        };
+
+    }
+    catch (e) {
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
+        //write error
+        WriteDoc(errorModel, "ErrorLog");
+    }
+}
+
 export const WriteDoc = async (writeData, collectionName) => {
     // /const taskQuery = query(collection(db, "customers"), where("uid", "==", user.uid))
 
