@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom";
 import { list } from "../../data/Data"
-import { BsBuildingFill,BsFillLayersFill,BsFillPinMapFill } from 'react-icons/bs';
+import { BsBuildingFill, BsFillLayersFill, BsFillPinMapFill } from 'react-icons/bs';
 import background from "../../images/services.jpg";
 
 // const RecentCard = () => {
@@ -43,42 +43,42 @@ const RecentCard = () => {
   return (
     <>
       {/* <div className='content grid3 mtop'> */}
-        {list.map((val, index) => {
-          const { cover, category, location, name, price, type } = val
-          return (
-            // <div className="row">
-              <div className="col-md-4" key={val.id}>
-                <Link to={`/projects/${val.id}`}>
-                <div className='box shadow houses-grid-item'>
-                
-                  {/* <div className='houses-grid-img' style={{ backgroundImage: `url(${background})` }}> */}
-                  <div className='houses-grid-img' style={{ backgroundImage: `url(${val.cover})` }}>
-                    {/* <img src={cover} alt='' /> */}
-                    
-                  </div>
-                  <div className="houses-grid-content">
-                    <span>Completed</span>
-                    <h4>{val.name}</h4>
-                  </div>
-                  <div className="rentals-grid-tabs">
-                    <span className="rentals-grid-tab">
-                      <BsFillPinMapFill /> Nicosia                                        
-                    </span>
-                    <span className="rentals-grid-tab">
-                      <BsBuildingFill /> Residential                                        
-                    </span>
-                    <span className="rentals-grid-tab">
-                      <BsFillLayersFill /> 6 storeys                                        
-                    </span>
-                  </div>
+      {list.map((val, index) => {
+        const { cover, category, location, name, price, type } = val
+        return (
+          // <div className="row">
+          <div className="col-md-4" key={val.id}>
+            <Link to={`/projects/${val.refName}`}>
+              <div className='box shadow houses-grid-item'>
+
+                {/* <div className='houses-grid-img' style={{ backgroundImage: `url(${background})` }}> */}
+                <div className='houses-grid-img' style={{ backgroundImage: `url(${val.cover})` }}>
+                  {/* <img src={cover} alt='' /> */}
+
                 </div>
-                </Link>
+                <div className="houses-grid-content">
+                  <span>Completed</span>
+                  <h4>{val.name}</h4>
+                </div>
+                <div className="rentals-grid-tabs">
+                  <span className="rentals-grid-tab">
+                    <BsFillPinMapFill /> Nicosia
+                  </span>
+                  <span className="rentals-grid-tab">
+                    <BsBuildingFill /> Residential
+                  </span>
+                  <span className="rentals-grid-tab">
+                    <BsFillLayersFill /> 6 storeys
+                  </span>
+                </div>
               </div>
-            //</div>
-            
-            
-          )
-        })}
+            </Link>
+          </div>
+          //</div>
+
+
+        )
+      })}
       {/* </div> */}
     </>
   )

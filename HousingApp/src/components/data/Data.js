@@ -334,6 +334,7 @@ export const list = [
     id: 1,
     cover: "../images/1.png",
     name: "Gardens",
+    refName: "ab",
     location: "Νήσου,Λευκωσία",
     category: "For Sale",
     price: "$3,700",
