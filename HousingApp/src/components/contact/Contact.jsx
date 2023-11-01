@@ -6,7 +6,8 @@ import ScrollToTop from "../../customHelperComponents/ScrollToTop"
 import { CiFacebook, CiTwitter, CiLinkedin, CiInstagram, CiPhone, CiMail, CiLocationOn } from 'react-icons/ci';
 import SocialMediaBar from "../common/header/SocialMediaBar"
 import { Link } from "react-router-dom/cjs/react-router-dom.min"
-import { BsFacebook } from 'react-icons/bs';
+import { BsFacebook, BsTwitter, BsLinkedin,BsInstagram } from 'react-icons/bs';
+import { FaViber, FaWhatsappSquare } from 'react-icons/fa';
 const Contact = () => {
   return (
     <>
@@ -47,7 +48,14 @@ const Contact = () => {
                 </div>
                 <br></br>
                 <br></br>
-                <div className="svgfacebook"><Link to="https://www.facebook.com/domusalbacy/"><BsFacebook></BsFacebook></Link></div>
+                <div className="alignItems">
+                  <div className="svgfacebook"><Link to="https://www.facebook.com/domusalbacy/"><BsFacebook></BsFacebook></Link></div>
+                  <div className="svgfacebook"><Link to="https://www.facebook.com/domusalbacy/"><FaViber></FaViber></Link></div>
+                  <div className="svgfacebook"><Link to="https://www.facebook.com/domusalbacy/"><BsTwitter></BsTwitter></Link></div>
+                  <div className="svgfacebook"><Link to="https://www.facebook.com/domusalbacy/"><FaWhatsappSquare></FaWhatsappSquare></Link></div>
+                  <div className="svgfacebook"><Link to="https://www.facebook.com/domusalbacy/"><BsLinkedin></BsLinkedin></Link></div>
+                  <div className="svgfacebook"><Link to="https://www.facebook.com/domusalbacy/"><BsInstagram></BsInstagram></Link></div>
+                </div>
               </div>
             </div>
           </div>

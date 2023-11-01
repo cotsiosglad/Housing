@@ -57,6 +57,10 @@
   padding: 50px;
 }
 
+.alignItems {
+  display: flex;
+  justify-content: space-between;
+}
 /* .leftline {
   margin-top: 60px;
   border-left: 1px solid #000000;
