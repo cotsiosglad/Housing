@@ -34,17 +34,17 @@
 
 #logo a {
   display: block;
-  width: 132px;
+  width: 127px;
   position: absolute;
   left: 0px;
-  background-color: var(--black);
+  /* background-color: var(--color5); */
 }
 
 #logo img {
-  margin: 26px auto 26px;
+  /* margin: 17px auto 26px; */
   display: block;
   /* height: 6rem; */
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.8);
   /* padding: 26px 0px 26px 0px; */
 }
 
@@ -209,7 +209,7 @@
     left: 18px;
     border: 0px solid darkred;
     cursor: pointer;
-    z-index: 1;
+    z-index: 1001;
   }
 
   .show-mobile {

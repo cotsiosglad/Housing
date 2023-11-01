@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, addDoc, setDoc, getDocs, getDoc, collection, serverTimestamp, query, where } from "firebase/firestore"
-import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage"
+import { getFirestore, doc, addDoc, setDoc, getDocs, getDoc, updateDoc, collection, serverTimestamp, query, where } from "firebase/firestore"
+import { getStorage, ref, listAll, getDownloadURL, deleteObject } from "firebase/storage"
 // import { signInWithEmailAndPassword, signOut, getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -88,6 +88,36 @@ export const WriteDoc = async (writeData, collectionName) => {
     }
 }
 
+export const UpdateDoc = async (writeData, findId, collectionName, idPropertyName = null) => {
+    try {
+        if (writeData && collectionName) {
+            //get id reference
+            const refId = await GetDocRefId(findId, collectionName, idPropertyName);
+            if (refId) {
+                // const docRef = db.collection(collectionName).doc(refId); // Replace with your collection and document ID
+                const docRef = doc(db, collectionName, refId); // Replace with your collection and document ID
+                const update = await setDoc(docRef, writeData);
+                return true;
+            }
+
+        }
+
+        return null
+
+    }
+    catch (e) {
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
+        //write error
+        await WriteDoc(errorModel, "ErrorLog");
+    }
+}
+
 
 export const GetDocById = async (findId, collectionName, idPropertyName = null) => {
 
@@ -103,7 +133,7 @@ export const GetDocById = async (findId, collectionName, idPropertyName = null) 
                 //console.log(doc.data())
                 retValue.push(doc.data());
             });
-            console.log(retValue);
+            //console.log(retValue);
             return retValue;
 
         }
@@ -111,8 +141,44 @@ export const GetDocById = async (findId, collectionName, idPropertyName = null) 
     }
     catch (e) {
         console.log(e);
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
         //write error
-        WriteDoc(e, "ErrorLog");
+        await WriteDoc(errorModel, "ErrorLog");
+        return null;
+    }
+}
+
+export const GetDocRefId = async (findId, collectionName, idPropertyName = null) => {
+
+    try {
+        if (findId && collectionName) {
+            const colRef = collection(db, collectionName);
+            const taskQuery = await query(colRef, where((idPropertyName ? idPropertyName : "id"), "==", findId));
+            const querySnapshot = await getDocs(taskQuery);
+            const retValue = querySnapshot.docs[0].id;
+            //console.log(retValue);
+            return retValue;
+
+        }
+
+    }
+    catch (e) {
+        console.log(e);
+        const errorModel = {
+            code: e?.code ? e.code.toString() : null,
+            name: e?.name ? e.name.toString() : null,
+            stack: e?.stack ? e.stack.toString() : null,
+            message: e?.message ? e?.message.toString() : null,
+            timestamp: serverTimestamp()
+        }
+        //write error
+        await WriteDoc(errorModel, "ErrorLog");
         return null;
     }
 }
@@ -154,31 +220,39 @@ export const GetAllDocs = async (collectionName) => {
 
             const colRef = await getDocs(collection(db, collectionName));
             let retList = colRef.docs.map(doc => ({ id: doc.id, data: doc.data() }));
-            retList.map(m => m.data.id = m.id);
+            // retList.map(m => m.data.id = m.id);
             return retList
         }
 
     }
     catch (e) {
-        console.log(e);
+        WriteError(e);
+        return null;
+    }
+}
+
+export const WriteError = async (error) => {
+
+    if (error) {
         const errorModel = {
-            code: e?.code ? e.code.toString() : null,
-            name: e?.name ? e.name.toString() : null,
-            stack: e?.stack ? e.stack.toString() : null,
-            message: e?.message ? e?.message.toString() : null,
+            code: error?.code ? error.code.toString() : null,
+            name: error?.name ? error.name.toString() : null,
+            stack: error?.stack ? error.stack.toString() : null,
+            message: error?.message ? error?.message.toString() : null,
             timestamp: serverTimestamp()
         }
         //write error
         await WriteDoc(errorModel, "ErrorLog");
-        return null;
     }
+
+    return null;
 }
 
 export const GetStorageFolderList = async (folderPath, pageToken) => {
 
     try {
         //const ref = collection(db, "images")
-        folderPath = "images/projects/abc";
+        // folderPath = "images/projects/abc";
         const listRef = ref(storage, folderPath);
         const getItemList = await listAll(listRef);
 
@@ -253,20 +327,20 @@ export const GetStorageFolderList = async (folderPath, pageToken) => {
 
 export const GetStorageFolderFiles = async (folderPath) => {
     try {
-        folderPath = "images/projects/abc";
+        //folderPath = "images/projects/abc";
         const result = await GetStorageFolderList(folderPath);
 
         const downloadPromises = result.map(async (item) => {
             const downloadUrl = await getDownloadURL(ref(storage, item.fullPath));
             {/*Galleria component of prime react use the below model so we need to return the url like this*/ }
             return {
-                itemImageSrc: downloadUrl,
-                thumbnailImageSrc: downloadUrl,
-                alt: ''
+                fileUrl: downloadUrl,
+                fileName: item.fileName,
             };
         });
 
         const retList = await Promise.all(downloadPromises); // Wait for all downloads to complete  
+        debugger
         return retList;
         // This can be downloaded directly:
         // const xhr = new XMLHttpRequest();
@@ -284,6 +358,64 @@ export const GetStorageFolderFiles = async (folderPath) => {
     }
 };
 
+export const DeleteStorageFolderFiles = async (folderPath) => {
+    try {
+        //folderPath = "images/projects/abc";
+        const result = await GetStorageFolderList(folderPath);
+
+        const deletePromises = result.map(async (item) => {
+            await deleteObject(ref(storage, item.fullPath));
+        });
+
+        const retList = await Promise.all(deletePromises); // Wait for all downloads to complete  
+        return true;
+        // This can be downloaded directly:
+        // const xhr = new XMLHttpRequest();
+        // xhr.responseType = 'blob';
+        // xhr.onload = (event) => {
+        //     const blob = xhr.response;
+        // };
+        // xhr.open('GET', url);
+        // xhr.send();
+        // return retList;
+    } catch (e) {
+        console.log(e);
+        WriteDoc(e, "ErrorLog");
+        return null;
+    }
+};
+
+export const DeleteFileIfNotExist = async (folderPath, fileNameList) => {
+    try {
+        //folderPath = "images/projects/abc";
+        const result = await GetStorageFolderList(folderPath);
+
+        const deletePromises = result.map(async (item) => {
+            if (!fileNameList.includes(item.fileName)) {
+                await deleteObject(ref(storage, item.fullPath));
+            }
+        });
+
+        const retList = await Promise.all(deletePromises); // Wait for all downloads to complete  
+        return true;
+        // This can be downloaded directly:
+        // const xhr = new XMLHttpRequest();
+        // xhr.responseType = 'blob';
+        // xhr.onload = (event) => {
+        //     const blob = xhr.response;
+        // };
+        // xhr.open('GET', url);
+        // xhr.send();
+        // return retList;
+    } catch (e) {
+        console.log(e);
+        WriteDoc(e, "ErrorLog");
+        return null;
+    }
+};
+
+
+
 // export const AuthenticateUser = async (email,password) => {
 //     try {
 //         const auth = getAuth(app);
@@ -295,7 +427,7 @@ export const GetStorageFolderFiles = async (folderPath) => {
 
 //         await signInWithEmailAndPassword(auth, email, password)
 //         .then((userCredential) => {
-//             // Signed in 
+//             // Signed in
 //             debugger;
 //             const user = userCredential.user;
 //             // ...

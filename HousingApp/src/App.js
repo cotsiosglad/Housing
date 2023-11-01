@@ -127,11 +127,11 @@ const readDoc = { id: "650291541", collection: "images" }
 function App() {
 
 	const [userData, setUserData] = useState({
-		IP : '',
+		IP: '',
 		City: '',
 		CountryName: ''
 	});
-	  
+
 	// console.log(userData.City)
 	// console.log(userData.IP)
 	//WriteDoc(userData, usersInfo)
@@ -225,6 +225,7 @@ function App() {
 		AOS.init();
 		const result = axios.get('https://geolocation-db.com/json/');
 		Promise.all([result]).then((response) => {
+<<<<<<< HEAD
 		// debugger
 		const responseData = response[0].data;
 		const today = new Date()
@@ -250,10 +251,34 @@ function App() {
 		//   CountryName: responseData.country_name
 		// });
 		
+=======
+			// debugger
+			const responseData = response[0].data;
+
+			if (!triggerPromise) {
+				model = {
+					IP: responseData.IPv4,
+					City: responseData.city,
+					CountryName: responseData.country_name,
+					DayTime: serverTimestamp()
+				}
+				triggerPromise = true
+				//console.log(model)
+				//Uncomment below to insert user's IP in Firebase
+				//WriteDoc(model, "VisitorsInfo")
+			}
+
+			// setUserData({
+			//   IP: responseData.IPv4,
+			//   City: responseData.city,
+			//   CountryName: responseData.country_name
+			// });
+
+>>>>>>> main
 		})
-		.catch(function (error) {
-		console.error(error);
-		});
+			.catch(function (error) {
+				console.error(error);
+			});
 
 		//   .then(function (response) {
 		// 	const responseData = response.data;
@@ -268,12 +293,12 @@ function App() {
 		// 	//   City: responseData.city,
 		// 	//   CountryName: responseData.country_name
 		// 	// });
-			
+
 		//   })
 		//   .catch(function (error) {
 		// 	console.error(error);
 		//   });
-		  //console.log(model)
+		//console.log(model)
 	}, [])
 
 	return <><StrictMode><Pages /></StrictMode></>

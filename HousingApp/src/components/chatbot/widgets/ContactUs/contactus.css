@@ -15,17 +15,27 @@
 
 .contact-bot svg {
     color: rgb(6, 46, 155);
-    font-size: xx-large;
+    font-size: x-large;
+    margin-right: 5px ;
 }
 
 .contact-bot a {
-    font-size: 20px;
-    color: black;
+    padding: 8px 15px;
+    border: 2px solid #2898ec;
+    border-radius: 10px;
+    color: #2898ec;
+    font-size: 0.9rem;
+    margin: 3px;
 }
 
+.contact-bot a:hover {
+    background-color: #427c72;
+    cursor: pointer;
+    transform: scale(1.1);
+}
 
 /* CSS */
-.button-18 {
+/* .button-18 {
     align-items: center;
     background-color: #0A66C2;
     border: 0;
@@ -69,4 +79,4 @@
     cursor: not-allowed;
     background: rgba(0, 0, 0, .08);
     color: rgba(0, 0, 0, .3);
-}
+} */

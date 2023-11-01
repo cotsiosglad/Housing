@@ -5,7 +5,7 @@ import { DataTable } from 'primereact/datatable';
 import { Panel } from 'primereact/panel';
 import { Column } from 'primereact/column';
 // import { ProductService } from './service/ProductService';
-import { projects as projectList, projectDetails as projectDetailsModel } from '../data/Data'
+// import { projects as projectList, projectDetails as projectDetailsModel } from '../data/Data'
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
@@ -13,7 +13,7 @@ import { FileUpload } from 'primereact/fileupload';
 import { Image } from 'primereact/image';
 import { Rating } from 'primereact/rating';
 import { Toolbar } from 'primereact/toolbar';
-import { InputTextarea } from 'primereact/inputtextarea';
+import { BlockUI } from 'primereact/blockui';
 import { RadioButton } from 'primereact/radiobutton';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
@@ -21,10 +21,13 @@ import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
 import TextEditor from "./TextEditor"
 import "./adminLogin.css"
-import { WriteDoc, GetDocById, storage, GetAllDocs, GetDocByRefId } from '../../firebase';
-import { ref, uploadBytes } from "firebase/storage"
+import { WriteDoc, GetDocById, storage, GetAllDocs, UpdateDoc, WriteError, GetStorageFolderFiles, DeleteFileIfNotExist } from '../../firebase';
+import { ref, uploadBytes, uploadString, getDownloadURL } from "firebase/storage"
+import { ConvertPathToGalleriaModel, ConvertFileToBase64 } from '../helper/CommonFunctions';
 import { v4 } from "uuid";
 import ProjectDetailsPreview from './ProjectDetailsPreview';
+import LoadingBar from '../helper/loadingBar/LoadingBar';
+// import { wait } from '@testing-library/user-event/dist/utils';
 
 export default function AdminProjects() {
     let emptyProject = {
@@ -64,8 +67,9 @@ export default function AdminProjects() {
     const projectStatuses = ["Completed", "Under Construction", "Planned"];
 
     const [projects, setProjects] = useState(null);
-    const [projectDetails, setProjectDetails] = useState(emptyProjectDetails);
+    // const [projectDetails, setProjectDetails] = useState(emptyProjectDetails);
     const [projectDialog, setProjectDialog] = useState(false);
+    const [apartmentFilesDialog, setApartmentFilesDialog] = useState(false);
     const [previewProjectDialog, setPreviewProjectDialog] = useState(false);
     const [deleteProjectDialog, setDeleteProjectDialog] = useState(false);
     const [deleteProjectsDialog, setDeleteProjectsDialog] = useState(false);
@@ -81,6 +85,8 @@ export default function AdminProjects() {
     const [projectSideImage, setProjectSideImage] = useState([]);
     const [projectMainImage, setProjectMainImage] = useState([]);
     const [apartmentUploadedFiles, setApartmentUploadedFiles] = useState([]);
+    const [selectedApartmentFiles, setSelectedApartmentFiles] = useState([]);
+    const [blocker, setBlocker] = useState(false);
 
     const uploadImage = () => {
         if (imageUpload == null) return;
@@ -97,11 +103,12 @@ export default function AdminProjects() {
 
         //add firebase api here
         //ProductService.getProducts().then((data) => setProjects(data));
-        debugger;
+
         //var aa = GetDocByRefId("Projects", "Jt2Prr7DhQb5NmosVi0n").then((data) => console.log(data));
         GetAllDocs("Projects").then((data) => (
             // console.log(data),
             setProjects(data.map(m => m.data))));
+
     }, []);
 
     const formatCurrency = (value) => {
@@ -117,12 +124,26 @@ export default function AdminProjects() {
         setProject(emptyProject);
         setSubmitted(false);
         setProjectDialog(true);
-        setProjectDetails(emptyProjectDetails);
+        setTextEditorValue("");
+        setProjectImages([])
+        setProjectDocuments([]);
+        setProjectSideImage([]);
+        setProjectMainImage([]);
+        setApartmentUploadedFiles([]);
+        setProjectApartmentList([]);
+        //setProjectDetails(emptyProjectDetails);
     };
 
     const hideDialog = () => {
         setSubmitted(false);
         setProjectDialog(false);
+        setTextEditorValue("");
+        setApartmentUploadedFiles([]);
+        setProjectImages([]);
+        setProjectMainImage([]);
+        setProjectSideImage([]);
+        setProjectDocuments([]);
+        setProjectApartmentList([]);
     };
 
     const hideDeleteProjectDialog = () => {
@@ -134,7 +155,7 @@ export default function AdminProjects() {
     };
 
     const projecPreview = () => {
-        debugger;
+
         // let _projects = [...projects];
         // let _project = { ...project, description: textEditorValue };
         // setProject(_project);
@@ -146,23 +167,27 @@ export default function AdminProjects() {
         setPreviewProjectDialog(!previewProjectDialog);
     };
 
-    const handleFileChange = (e, folderName, typeOfUpload) => {
-        debugger;
+
+    const handleFileChange = (e, folderName, typeOfUpload, flatNo = null) => {
+
         //const files = e.files;
         let _files = [];
-
+        let preventUpload = false;
         if (typeOfUpload) {
             switch (typeOfUpload) {
                 case "PROJECT_IMAGES":
                     _files = projectImages;
                     break;
                 case "PROJECT_SIDE_IMAGE":
+                    preventUpload = projectSideImage.length == 1;
                     _files = projectSideImage;
                     break;
                 case "PROJECT_MAIN_IMAGE":
+                    preventUpload = projectMainImage.length == 1;
                     _files = projectMainImage;
                     break;
                 case "PROJECT_DOCUMENTS":
+                    preventUpload = projectDocuments.length == 1;
                     _files = projectDocuments;
                     break;
                 case "APARTMENT_IMAGES":
@@ -171,9 +196,16 @@ export default function AdminProjects() {
                 default:
                     break;
             }
+            if (preventUpload) {
+                toast.current.show({ severity: 'error', summary: 'Upload Error', detail: 'You can upload only 1 file', life: 3000 });
+                e.options.clear();
+                return false;
+            }
 
             // const tempFiles = { files: Array.from(files), destinationFolder: folderName }
-            const tempFiles = { files: e.files, destinationFolder: folderName }
+            // const tempFiles = { files: e.files, destinationFolder: folderName }
+            const tempFiles = { files: e.files.map(m => ConvertPathToGalleriaModel(m.objectURL, m.name)), flat: flatNo ? flatNo : "", destinationFolder: folderName }
+
             //const newFiles = Array.from(tempFiles);
             _files.push(tempFiles);
             _files = Array.from(_files);
@@ -207,47 +239,131 @@ export default function AdminProjects() {
 
     };
 
+    const checkIfRefExists = async (ref, id) => {
+        const retList = await Promise.all(await GetDocById(ref, "Projects", "refName"));
+        if (id > 0) {
+            return retList.filter(w => w.id != id).length > 0;
+        }
+        else {
+            return retList.length > 0;
+        }
+
+    }
+
     const saveFilesToCloud = async (filesUploaded) => {
-        debugger;
         let projectRef = project.refName;
 
         if (filesUploaded.length > 0 && projectRef) {
             for (const item of filesUploaded) {
                 let path = item.destinationFolder ? "projects/" + projectRef + "/" + item.destinationFolder : projectRef;
                 if (item.files.length > 0) {
+                    //delete all files from current path
+                    //await DeleteStorageFolderFiles(path).then((res) => {
                     for (const file of item.files) {
-                        const imageRef = ref(storage, `${path}/${v4() + "_" + file.name}`)
-                        // const imageRef = ref(storage, `images/projects/${path}/${v4() + "_" + file.name}`)
-                        await uploadBytes(imageRef, file);
+                        const filePath = file.itemImageSrc.indexOf("blob") < 0 ? `${path}/${file.alt}` : `${path}/${v4() + "_" + file.alt}`;
+                        const imageRef = ref(storage, filePath)
+                        //check if path exists
+                        await getDownloadURL(imageRef).then((url) => {
+                            debugger;
+                            //the file exists do nothing
+                            //const filePath = file.itemImageSrc.indexOf("blob") < 0 ? `${path}/${file.alt}` : `${path}/${v4() + "_" + file.alt}`;
+                            //const imageRef = ref(storage, filePath)
+                            // const imageRef = ref(storage, `images/projects/${path}/${v4() + "_" + file.name}`)
+
+
+                        }).catch((error) => {
+                            debugger;
+                            ConvertFileToBase64(file.itemImageSrc).then((base64String) => {
+                                debugger;
+                                uploadString(imageRef, base64String, 'data_url')
+                                //uploadBytes(imageRef, retFile);
+                            });
+                        })
+
+
+
+                        // await DeleteStorageFolderFiles(path).then((res) => {
+                        //     debugger;
+
+                        //     //const filePath = file.itemImageSrc.indexOf("blob") < 0 ? `${path}/${file.alt}` : `${path}/${v4() + "_" + file.alt}`;
+                        //     //const imageRef = ref(storage, filePath)
+                        //     // const imageRef = ref(storage, `images/projects/${path}/${v4() + "_" + file.name}`)
+                        //     ConvertFileToBase64(file.itemImageSrc).then((base64String) => {
+                        //         debugger;
+                        //         uploadString(imageRef, base64String, 'data_url')
+                        //         //uploadBytes(imageRef, retFile);
+                        //     });
+
+                        // })
                     }
+                    debugger;
+                    const filenames = item.files.map(m => m.files.map(w => w.alt)).flat();
+                    await DeleteFileIfNotExist(path, filenames);
                 }
+                //  );
 
             }
+
         }
-    };
+    }
 
     const uploadOptions = { icon: 'pi pi-upload', iconOnly: true, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined p-button-icon-only p-button-sm' };
 
-    const saveProject = () => {
+    const saveProject = async () => {
         setSubmitted(true);
+        setBlocker(true);
         console.log(textEditorValue)
-        if (project.title.trim() && textEditorValue && textEditorValue != "<p><br></p>") {
-            let completed = "PEND";
-            let _projects = [...projects];
-            let _project = { ...project, description: textEditorValue };
-            // let _projectDetails = { ...projectDetails, description: textEditorValue };
-            let _apartmentList = [...projectApartmentList,];
-            let _apartments = ({ projectId: _project.id, apartments: _apartmentList });
-            // _apartmentList.map(s => s.projectId = _project.id);
-            // console.log(_projectDetails);
-            console.log(_apartments);
 
-            if (project.id) {
-                //const index = findIndexById(project.id);
+        try {
+            if (project.title.trim() && textEditorValue && textEditorValue != "<p><br></p>") {
+                let completed = "PEND";
+                let _projects = [...projects];
+                let _project = { ...project, description: textEditorValue };
 
-                try {
-                    debugger;
+                if (await checkIfRefExists(project.refName, project.id)) {
+                    toast.current.show({ severity: 'error', summary: 'Reference should be unique', detail: `Reference ${project.refName} already exists for another project`, life: 3000 });
+                    _project = { ...project, refName: "" };
+                    setProject(_project)
+                    setBlocker(false);
+                    return false
+                }
+                // let _projectDetails = { ...projectDetails, description: textEditorValue };
+                let _apartmentList = [...projectApartmentList,];
+                let _apartments = ({ projectId: _project.id, apartments: _apartmentList });
+                // _apartmentList.map(s => s.projectId = _project.id);
+                // console.log(_projectDetails);
+                console.log(_apartments);
+                const idx = _projects.findIndex(w => w.id == project.id);
+                if (project.id) {
+                    //const index = findIndexById(project.id);
+
                     //UPDATE PROJECT
+
+                    UpdateDoc(_project, _project.id, 'Projects').then((response) => {
+                        UpdateDoc(_apartments, _project.id, 'ProjectApartments', "projectId").then((response) => {
+
+                            saveFilesToCloud(projectImages).then(setProjectImages([]));
+                            saveFilesToCloud(projectDocuments).then(setProjectDocuments([]));
+                            saveFilesToCloud(projectSideImage).then(setProjectSideImage([]));
+                            saveFilesToCloud(projectMainImage).then(setProjectMainImage([]));
+                            saveFilesToCloud(apartmentUploadedFiles).then(setApartmentUploadedFiles([]));
+
+                            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Submitted', life: 3000 });
+                            completed = "OK";
+                            _projects[idx] = _project;
+                            _projects = Array.from(_projects);
+                            setProjects(_projects);
+                            setProjectDialog(false)
+                            setProject(emptyProject);
+                            //setProjectDetails(emptyProjectDetails);
+                            setProjectApartmentList([]);
+                            setApartmentUploadedFiles([]);
+                            setTextEditorValue('')
+                            setBlocker(false);
+                        })
+
+                    })
+
                     //var aa = GetDocById(1, "Projects");
                     // WriteDoc(_project, 'Projects').then((docRef) => {
                     //     _apartments.projectId = docRef.id
@@ -257,55 +373,61 @@ export default function AdminProjects() {
                     //     })
                     // }
                     // )
+                } else {
+                    //_project.id = createId();
+                    //_project.image = 'project-placeholder.svg';
+                    //_projects.push(_project);
+                    //NEW PROJECT
+
+                    //var aa = GetDocById(1, "Projects");
+                    const projectCurrId = Date.now();
+                    _project = { ..._project, id: projectCurrId }
+                    WriteDoc(_project, 'Projects').then((docRef) => {
+                        _apartments.projectId = projectCurrId
+                        WriteDoc(_apartments, 'ProjectApartments').then((docRef) => {
+                            //saveFilesToCloud();
+                            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Submitted', life: 3000 });
+                            completed = "OK";
+
+                            saveFilesToCloud(projectImages).then(setProjectImages([]));
+                            saveFilesToCloud(projectDocuments).then(setProjectDocuments([]));
+                            saveFilesToCloud(projectSideImage).then(setProjectSideImage([]));
+                            saveFilesToCloud(projectMainImage).then(setProjectMainImage([]));
+                            saveFilesToCloud(apartmentUploadedFiles).then(setApartmentUploadedFiles([]));
+
+                            _projects.push(_project);
+                            _projects = Array.from(_projects);
+                            setProjects(_projects);
+                            setProjectDialog(false)
+                            setProject(emptyProject);
+                            //setProjectDetails(emptyProjectDetails);
+                            setProjectApartmentList([]);
+                            setApartmentUploadedFiles([]);
+                            setTextEditorValue('')
+                            setBlocker(false);
+                        })
+                    }
+                    )
 
                 }
-                catch (e) {
-                    console.log(e);
-                    toast.current.show({ severity: 'error', summary: 'Error on saving', detail: 'Project failed to save', life: 3000 });
-                }
-            } else {
-                //_project.id = createId();
-                //_project.image = 'project-placeholder.svg';
-                //_projects.push(_project);
-                //NEW PROJECT
-                debugger;
-                //var aa = GetDocById(1, "Projects");
-                WriteDoc(_project, 'Projects').then((docRef) => {
-                    _apartments.projectId = docRef.id
-                    WriteDoc(_apartments, 'ProjectApartments').then((docRef) => {
-                        saveFilesToCloud();
-                        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Submitted', life: 3000 });
-                        completed = "OK";
-
-                        saveFilesToCloud([projectImages]).then(setProjectImages([]));
-                        saveFilesToCloud([projectDocuments]).then(setProjectDocuments([]));
-                        saveFilesToCloud([projectSideImage]).then(setProjectSideImage([]));
-                        saveFilesToCloud([apartmentUploadedFiles]).then(setApartmentUploadedFiles([]));
-
-                        setProjects(_projects);
-                        setProjectDialog(false)
-                        setProject(emptyProject);
-                        setProjectDetails(emptyProjectDetails);
-                        setProjectApartmentList(emptyProjectApartment);
-                        setTextEditorValue('')
-                    })
-                }
-                )
+                // if (completed === "OK") {
+                //     setProjects(_projects);
+                //     setProjectDialog(false)
+                //     setProject(emptyProject);
+                //     setProjectDetails(emptyProjectDetails);
+                //     setProjectApartmentList(emptyProjectApartment);
+                //     setTextEditorValue('')
+                // }
 
             }
-            // if (completed === "OK") {
-            //     setProjects(_projects);
-            //     setProjectDialog(false)
-            //     setProject(emptyProject);
-            //     setProjectDetails(emptyProjectDetails);
-            //     setProjectApartmentList(emptyProjectApartment);
-            //     setTextEditorValue('')
-            // }
-
+        } catch (error) {
+            WriteError(error);
+            toast.current.show({ severity: 'error', summary: 'Error on saving', detail: 'Project failed to save', life: 3000 });
+            setBlocker(false);
         }
     };
 
-    const editProject = (row) => {
+    const editProject = async (row) => {
 
         setProject({ ...row });
         //firebase api to get the project details by project id
@@ -313,8 +435,134 @@ export default function AdminProjects() {
         // console.log({ project });
         // console.log({ projectDetails });
         setTextEditorValue(row.description)
-        GetDocById(row.id, "ProjectApartments", "projectId").then((data) => {
-            setProjectApartmentList(data[0].apartments)
+        await GetDocById(row.id, "ProjectApartments", "projectId").then(async (data) => {
+            setProjectApartmentList(data[0].apartments);
+            //get uploaded files for each apartment
+            await data[0].apartments.map(async (item) => {
+                let path = "projects/" + row.refName + "/apartments/" + item.flatNo
+                await GetStorageFolderFiles(path).then((fileData) => {
+                    const _currFile = {
+                        files: fileData.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
+                        flat: item.flatNo,
+                        destinationFolder: "apartments/" + item.flatNo
+                    }
+                    if (_currFile.files.length > 0) {
+                        const _apartmentFiles = [...apartmentUploadedFiles];
+                        _apartmentFiles.push(_currFile);
+                        setApartmentUploadedFiles(_apartmentFiles)
+                    }
+
+                });
+                // fileList.push({
+                //     files: currFiles.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
+                //     flat: item.flatNo
+                // });
+
+
+            });
+            //get uploaded project images
+            await data[0].apartments.map(async (item) => {
+                let path = "projects/" + row.refName + "/projectImages";
+                await GetStorageFolderFiles(path).then((fileData) => {
+                    const _currFile = {
+                        files: fileData.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
+                        flat: "",
+                        destinationFolder: "projectImages"
+                    }
+                    if (_currFile.files.length > 0) {
+                        const _files = [...projectImages];
+                        _files.push(_currFile);
+                        setProjectImages(_files)
+                    }
+                });
+            });
+
+            //get uploaded project main image
+            await data[0].apartments.map(async (item) => {
+                let path = "projects/" + row.refName + "/mainImage";
+                await GetStorageFolderFiles(path).then((fileData) => {
+                    const _currFile = {
+                        files: fileData.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
+                        flat: "",
+                        destinationFolder: "mainImage"
+                    }
+                    if (_currFile.files.length > 0) {
+                        const _files = [...projectMainImage];
+                        _files.push(_currFile);
+                        setProjectMainImage(_files)
+                    }
+                });
+            });
+            //get uploaded project side image
+            await data[0].apartments.map(async (item) => {
+                let path = "projects/" + row.refName + "/sideImage";
+                await GetStorageFolderFiles(path).then((fileData) => {
+                    const _currFile = {
+                        files: fileData.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
+                        flat: "",
+                        destinationFolder: "sideImage"
+                    }
+                    if (_currFile.files.length > 0) {
+                        const _files = [...projectSideImage];
+                        _files.push(_currFile);
+                        setProjectSideImage(_files)
+                    }
+
+                });
+            });
+
+            //get uploaded project main image
+            await data[0].apartments.map(async (item) => {
+                let path = "projects/" + row.refName + "/mainImage";
+                await GetStorageFolderFiles(path).then((fileData) => {
+                    const _currFile = {
+                        files: fileData.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
+                        flat: "",
+                        destinationFolder: "mainImage"
+                    }
+                    if (_currFile.files.length > 0) {
+                        const _files = [...projectMainImage];
+                        _files.push(_currFile);
+                        setProjectMainImage(_files)
+                    }
+                });
+            });
+
+            //get uploaded project documents
+            await data[0].apartments.map(async (item) => {
+                let path = "projects/" + row.refName + "/documents";
+                await GetStorageFolderFiles(path).then((fileData) => {
+                    const _currFile = {
+                        files: fileData.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
+                        flat: "",
+                        destinationFolder: "documents"
+                    }
+                    if (_currFile.files.length > 0) {
+                        const _files = [...projectDocuments];
+                        _files.push(_currFile);
+                        setProjectDocuments(_files)
+                    }
+                });
+            });
+
+            //console.log(fileList);
+            //setApartmentUploadedFiles(fileList)
+
+            //     for(let i=0;i<data[0].apartments;i++){
+            //         let path = "/projects/apartments/"+data[0].apartments[i].flatNo
+            // GetStorageFolderFiles(path).then((res)=>{
+            //     let apartmentFiles = [];
+            //     itemImageSrc
+            //     if(files.length>0){
+            //         
+            //         const tempFiles = { files: e.files, destinationFolder: folderName }
+            //         //const newFiles = Array.from(tempFiles);
+            //         _files.push(tempFiles);
+            //         _files = Array.from(_files);
+            //     }
+            // });
+
+            //     }
         });
         // console.log({ projectDetailsModel });
         // console.log({ projectApartmentList });
@@ -368,14 +616,14 @@ export default function AdminProjects() {
         setDeleteProjectsDialog(true);
     };
 
-    const deleteSelectedProducts = () => {
-        let _projects = projects.filter((val) => !selectedProjects.includes(val));
+    // const deleteSelectedProducts = () => {
+    //     let _projects = projects.filter((val) => !selectedProjects.includes(val));
 
-        setProjects(_projects);
-        setDeleteProjectsDialog(false);
-        setSelectedProjects(null);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'projects Deleted', life: 3000 });
-    };
+    //     setProjects(_projects);
+    //     setDeleteProjectsDialog(false);
+    //     setSelectedProjects(null);
+    //     toast.current.show({ severity: 'success', summary: 'Successful', detail: 'projects Deleted', life: 3000 });
+    // };
 
     const onProjectStatusChange = (value) => {
         let _project = { ...project };
@@ -497,16 +745,16 @@ export default function AdminProjects() {
             <Button label="Yes" size='small' icon="pi pi-check" severity="danger" onClick={deleteProject} />
         </React.Fragment>
     );
-    const deleteProjectsDialogFooter = (
-        <React.Fragment>
-            <Button label="No" size='small' icon="pi pi-times" outlined onClick={hideDeleteProjectsDialog} />
-            <Button label="Yes" size='small' icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
-        </React.Fragment>
-    );
+    // const deleteProjectsDialogFooter = (
+    //     <React.Fragment>
+    //         <Button label="No" size='small' icon="pi pi-times" outlined onClick={hideDeleteProjectsDialog} />
+    //         <Button label="Yes" size='small' icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
+    //     </React.Fragment>
+    // );
 
     const onRowEditComplete = (e) => {
-        debugger;
-        let squareMeterColumns = ["area", "totalArea", "verandas"]
+
+        let squareMeterColumns = ["area", "verandas","coveredVerandas","internalArea","storage"]
         let _projectApartments = [...projectApartmentList];
         let { newData, index } = e;
         squareMeterColumns.map((val) => {
@@ -515,6 +763,21 @@ export default function AdminProjects() {
         _projectApartments[index] = newData;
 
         setProjectApartmentList(_projectApartments);
+        e.originalEvent.currentTarget.closest("td").nextElementSibling.style.opacity = ""
+        e.originalEvent.currentTarget.closest("td").nextElementSibling.style.pointerEvents = ""
+
+    };
+
+    const onRowEditStart = (e) => {
+
+        e.originalEvent.currentTarget.closest("td").nextElementSibling.style.opacity = "0.6"
+        e.originalEvent.currentTarget.closest("td").nextElementSibling.style.pointerEvents = "none"
+    };
+
+    const onRowEditCancel = (e) => {
+
+        e.originalEvent.currentTarget.closest("td").nextElementSibling.style.opacity = ""
+        e.originalEvent.currentTarget.closest("td").nextElementSibling.style.pointerEvents = ""
     };
 
     const textEditor = (options) => {
@@ -568,12 +831,20 @@ export default function AdminProjects() {
             <Button label="Add" size='small' icon="pi pi-plus" outlined onClick={addNewRow} />
         </div>
     );
+    const showApartmentFiles = async (rowData) => {
 
+        let _apartmentFiles = apartmentUploadedFiles.filter(w => w.flat == rowData.flatNo || (w.destinationFolder && w.destinationFolder.includes(rowData.flatNo)));
+        if (_apartmentFiles && _apartmentFiles.length > 0) {
+            setSelectedApartmentFiles(_apartmentFiles)
+            setApartmentFilesDialog(true);
+        }
+    }
     const apratmentActionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
                 {/* <Button icon="pi pi-upload" size='small' rounded outlined className="mr-2" onClick={() => (addNewRow())} /> */}
-                <FileUpload mode="basic" multiple name="projectDocs" customUpload chooseOptions={uploadOptions} accept="image/*,application/pdf" maxFileSize={1000000} uploadHandler={(e) => handleFileChange(e, `apartments/${rowData.flatNo}`, "APARTMENT_IMAGES")} auto chooseLabel="Project Documents" />
+                <Button icon="pi pi-window-maximize" size='small' rounded outlined severity="danger" onClick={() => showApartmentFiles(rowData)} />
+                <FileUpload mode="basic" multiple name="projectDocs" customUpload chooseOptions={uploadOptions} accept="image/*" maxFileSize={1000000} uploadHandler={(e) => handleFileChange(e, `apartments/${rowData.flatNo}`, "APARTMENT_IMAGES", rowData.flatNo)} auto />
                 <Button icon="pi pi-trash" size='small' rounded outlined severity="danger" onClick={() => deleteApartment(rowData)} />
             </React.Fragment>
         );
@@ -581,11 +852,13 @@ export default function AdminProjects() {
 
     const deleteApartment = (apartment) => {
         let _projectApartments = [...projectApartmentList];
+        if (window.confirm("Are you sure you want to delete apartment " + apartment.flatNo + "?")) {
+            _projectApartments = _projectApartments.filter((p) => p.id !== apartment.id);
 
-        _projectApartments = _projectApartments.filter((p) => p.id !== apartment.id);
+            toast.current.show({ severity: 'success', summary: 'Apartment Deleted', detail: `Flat:${apartment.flatNo}`, life: 3000 });
+            setProjectApartmentList(_projectApartments);
+        }
 
-        toast.current.show({ severity: 'success', summary: 'Apartment Deleted', detail: `Flat:${apartment.flatNo}`, life: 3000 });
-        setProjectApartmentList(_projectApartments);
     };
 
     // const priceBodyTemplate = (rowData) => {
@@ -593,7 +866,7 @@ export default function AdminProjects() {
     // };
 
     const validApartmentRow = (e) => {
-        let fieldsToValid = ["area", "beds", "flatNo", "totalArea", "verandas"]
+        let fieldsToValid = ["area", "beds", "flatNo", "totalArea", "verandas","coveredVerandas","internalArea","storage"]
 
         const validation = fieldsToValid.map((item) => {
             if (!e[item]) {
@@ -607,7 +880,7 @@ export default function AdminProjects() {
     const handleDeleteFile = (index, typeOfUpload) => {
 
         // Create a copy of the uploadedFiles array and remove the file at the specified index
-        debugger;
+
         let _files = [];
         let _object = [];
         switch (typeOfUpload) {
@@ -628,7 +901,7 @@ export default function AdminProjects() {
                 _files = Object.values(projectDocuments.map(m => m.files)).flat();
                 break;
             case "APARTMENT_IMAGES":
-                _object = apartmentUploadedFiles;
+                _object = apartmentUploadedFiles
                 _files = Object.values(apartmentUploadedFiles.map(m => m.files)).flat();
                 break;
             default:
@@ -636,16 +909,17 @@ export default function AdminProjects() {
         }
         const selectedFile = _files[index];
         const foundFile = _object.find((item) => {
-            return item.files.some((fileItem) => fileItem.objectURL === selectedFile.objectURL);
+            return item.files.some((fileItem) => fileItem.itemImageSrc === selectedFile.itemImageSrc);
         });
 
-        const updatedFiles = foundFile.files.filter((fileItem) => fileItem.objectURL !== selectedFile.objectURL);
-        const updatedUploadedFiles = _object.map((file) =>
+        const updatedFiles = foundFile.files.filter((fileItem) => fileItem.itemImageSrc !== selectedFile.itemImageSrc);
+        let updatedUploadedFiles = _object.map((file) =>
             file === foundFile ? { ...file, files: updatedFiles } : file
         );
 
+        updatedUploadedFiles = updatedUploadedFiles.filter(w => w.files.length > 0);
+
         if (window.confirm("Are you sure you want to delete this file")) {
-            _files.splice(index, 1);
 
             switch (typeOfUpload) {
                 case "PROJECT_IMAGES":
@@ -679,11 +953,11 @@ export default function AdminProjects() {
 
                 {/* <DataTable ref={dt} value={projects} size='small' selection={selectedProjects} onSelectionChange={(e) => setSelectedProjects(e.value)} */}
                 <DataTable ref={dt} value={projects} size='small'
-                    dataKey="refName" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                    dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                     paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} projects" globalFilter={globalFilter} header={header} scrollable >
                     {/* <Column selectionMode="multiple" exportable={false}></Column> */}
-                    {/* <Column field="id" header="ID" sortable style={{ minWidth: '5rem' }} hidden></Column> */}
+                    <Column field="id" header="ID" hidden></Column>
                     <Column field="description" hidden></Column>
                     <Column field="title" header="Title" sortable style={{ minWidth: '12rem' }}></Column>
                     <Column field="sortNumber" header="Priority" sortable style={{ minWidth: '12rem' }}></Column>
@@ -706,185 +980,186 @@ export default function AdminProjects() {
 
             <Dialog visible={projectDialog} maximized style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Project Details" modal className="p-fluid" footer={projectDialogFooter} onHide={hideDialog}>
                 {project.image && <img src={`https://primefaces.org/cdn/primereact/images/project/${project.image}`} alt={project.image} className="project-image block m-auto pb-3" />}
-
-                <div className='container-fluid'>
-                    <div className='row'>
-                        <div className='col-md-6'>
-                            <label htmlFor="title" className="field-header">
-                                Title
-                            </label>
-                            <InputText id="title" value={project.title} onChange={(e) => onInputChange(e, 'title')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.title })} />
-                            {submitted && !project.title && <small className="p-error">Title is required.</small>}
-                        </div>
-                        <div className='col-md-3'>
-                            <label htmlFor="refName" className="field-header">
-                                Reference
-                            </label>
-                            <InputText id="refName" keyfilter="alphanum" value={project.refName} onChange={(e) => onInputChange(e, 'refName')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.refName })} />
-                            {submitted && !project.refName && <small className="p-error">Reference is required.</small>}
-                        </div>
-                        <div className='col-md-3'>
-                            <label htmlFor="sortNumber" className="field-header">
-                                Priority
-                            </label>
-                            <InputNumber id="sortNumber" value={project.sortNumber} onValueChange={(e) => onInputNumberChange(e, 'sortNumber')} required autoFocus useGrouping={false} className={classNames({ 'p-invalid': submitted && !project.sortNumber })} />
-                            {submitted && !project.sortNumber && <small className="p-error">Priority is required.</small>}
-                        </div>
-                    </div>
-                    <div className='row mt-2'>
-                        <div className='col-md-12'>
-                            <label htmlFor="description" className="field-header">
-                                Description
-                            </label>
-                            {/* <InputTextarea id="description" value={projectDetails.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} /> */}
-                            <>
-                                <TextEditor textEditorState={textEditorValue} updateTextEditorState={updateTextEditorValue} className={classNames({ 'p-invalid': submitted && (textEditorValue == "<p><br></p>" || !textEditorValue) })} />
-                                {/* <HtmlTextEditor textEditorState={textEditorValue} updateTextEditorState={updateTextEditorValue} className={classNames({ 'p-invalid': submitted && (textEditorValue=="<p><br></p>" || !textEditorValue) })}/> */}
-
-                                {submitted && (textEditorValue == "<p><br></p>" || !textEditorValue) && <small className="p-error">Description is required.</small>}
-                            </>
-                        </div>
-
-                    </div>
-                    <div className='row mt-2'>
-                        <div className='col-md-12'>
-                            <label className=" field-header">Status</label>
-                            <div className="flex flex-wrap">
-                                <div className="flex align-items-center" style={{ gap: "20px" }}>
-                                    {projectStatuses.map((item, index) => {
-                                        return (
-                                            <div key={index} className='pr-4 mr-4'>
-                                                <RadioButton inputId={index} name={item} value={item} onChange={(e) => onProjectStatusChange(e.value)} checked={project.status === item} />
-                                                <label htmlFor={index} className="ml-2 pr-4" style={{ color: "var(--color4)" }}>{item}</label>
-                                            </div>
-                                        )
-
-                                    })}
-
-                                </div>
+                <BlockUI blocked={blocker}>
+                    <LoadingBar isVisible={blocker} />
+                    <div className='container-fluid'>
+                        <div className='row'>
+                            <div className='col-md-6'>
+                                <label htmlFor="title" className="field-header">
+                                    Title
+                                </label>
+                                <InputText id="title" value={project.title} onChange={(e) => onInputChange(e, 'title')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.title })} />
+                                {submitted && !project.title && <small className="p-error">Title is required.</small>}
+                            </div>
+                            <div className='col-md-3'>
+                                <label htmlFor="refName" className="field-header">
+                                    Reference
+                                </label>
+                                <InputText id="refName" keyfilter="alphanum" value={project.refName} onChange={(e) => onInputChange(e, 'refName')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.refName })} />
+                                {submitted && !project.refName && <small className="p-error">Reference is required.</small>}
+                            </div>
+                            <div className='col-md-3'>
+                                <label htmlFor="sortNumber" className="field-header">
+                                    Priority
+                                </label>
+                                <InputNumber id="sortNumber" value={project.sortNumber} onValueChange={(e) => onInputNumberChange(e, 'sortNumber')} required autoFocus useGrouping={false} className={classNames({ 'p-invalid': submitted && !project.sortNumber })} />
+                                {submitted && !project.sortNumber && <small className="p-error">Priority is required.</small>}
                             </div>
                         </div>
+                        <div className='row mt-2'>
+                            <div className='col-md-12'>
+                                <label htmlFor="description" className="field-header">
+                                    Description
+                                </label>
+                                {/* <InputTextarea id="description" value={projectDetails.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} /> */}
+                                <>
+                                    <TextEditor textEditorState={textEditorValue} updateTextEditorState={updateTextEditorValue} className={classNames({ 'p-invalid': submitted && (textEditorValue == "<p><br></p>" || !textEditorValue) })} />
+                                    {/* <HtmlTextEditor textEditorState={textEditorValue} updateTextEditorState={updateTextEditorValue} className={classNames({ 'p-invalid': submitted && (textEditorValue=="<p><br></p>" || !textEditorValue) })}/> */}
 
-                    </div>
-                    <div className='row mt-2'>
-                        <div className='col-md-3'>
-                            <label htmlFor="location" className="field-header">
-                                Location
-                            </label>
-                            <InputText id="location" value={project.location} onChange={(e) => onInputChange(e, 'location')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.location })} />
-                            {submitted && !project.location && <small className="p-error">Location is required.</small>}
+                                    {submitted && (textEditorValue == "<p><br></p>" || !textEditorValue) && <small className="p-error">Description is required.</small>}
+                                </>
+                            </div>
+
                         </div>
-                        <div className='col-md-3'>
-                            <label htmlFor="region" className="field-header">
-                                Region
-                            </label>
-                            <InputText id="region" value={project.region} onChange={(e) => onInputChange(e, 'region')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.region })} />
-                            {submitted && !project.region && <small className="p-error">Region is required.</small>}
+                        <div className='row mt-2'>
+                            <div className='col-md-12'>
+                                <label className=" field-header">Status</label>
+                                <div className="flex flex-wrap">
+                                    <div className="flex align-items-center" style={{ gap: "20px" }}>
+                                        {projectStatuses.map((item, index) => {
+                                            return (
+                                                <div key={index} className='pr-4 mr-4'>
+                                                    <RadioButton inputId={index} name={item} value={item} onChange={(e) => onProjectStatusChange(e.value)} checked={project.status === item} />
+                                                    <label htmlFor={index} className="ml-2 pr-4" style={{ color: "var(--color4)" }}>{item}</label>
+                                                </div>
+                                            )
+
+                                        })}
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div className='col-md-3'>
-                            <label htmlFor="floors" className="field-header">
-                                Floors
-                            </label>
-                            <InputNumber id="floors" value={project.floors} onValueChange={(e) => onInputNumberChange(e, 'floors')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.floors })} />
-                            {submitted && !project.floors && <small className="p-error">Floors is required.</small>}
+                        <div className='row mt-2'>
+                            <div className='col-md-3'>
+                                <label htmlFor="location" className="field-header">
+                                    Location
+                                </label>
+                                <InputText id="location" value={project.location} onChange={(e) => onInputChange(e, 'location')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.location })} />
+                                {submitted && !project.location && <small className="p-error">Location is required.</small>}
+                            </div>
+                            <div className='col-md-3'>
+                                <label htmlFor="region" className="field-header">
+                                    Region
+                                </label>
+                                <InputText id="region" value={project.region} onChange={(e) => onInputChange(e, 'region')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.region })} />
+                                {submitted && !project.region && <small className="p-error">Region is required.</small>}
+                            </div>
+                            <div className='col-md-3'>
+                                <label htmlFor="floors" className="field-header">
+                                    Floors
+                                </label>
+                                <InputNumber id="floors" value={project.floors} onValueChange={(e) => onInputNumberChange(e, 'floors')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.floors })} />
+                                {submitted && !project.floors && <small className="p-error">Floors is required.</small>}
+                            </div>
+                            <div className='col-md-3'>
+                                <label htmlFor="bedrooms" className="field-header">
+                                    Bedrooms
+                                </label>
+                                <InputText id="bedrooms" value={project.bedrooms} onChange={(e) => onInputChange(e, 'bedrooms')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.bedrooms })} />
+                                {submitted && !project.bedrooms && <small className="p-error">Bedrooms is required.</small>}
+                            </div>
+                            <div className='col-md-3'>
+                                <label htmlFor="bathrooms" className="field-header">
+                                    Bathrooms
+                                </label>
+                                <InputNumber id="bathrooms" value={project.bathrooms} onValueChange={(e) => onInputNumberChange(e, 'bathrooms')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.bathrooms })} />
+                                {submitted && !project.bathrooms && <small className="p-error">Bathrooms is required.</small>}
+                            </div>
                         </div>
-                        <div className='col-md-3'>
-                            <label htmlFor="bedrooms" className="field-header">
-                                Bedrooms
-                            </label>
-                            <InputText id="bedrooms" value={project.bedrooms} onChange={(e) => onInputChange(e, 'bedrooms')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.bedrooms })} />
-                            {submitted && !project.bedrooms && <small className="p-error">Bedrooms is required.</small>}
-                        </div>
-                        <div className='col-md-3'>
-                            <label htmlFor="bathrooms" className="field-header">
-                                Bathrooms
-                            </label>
-                            <InputNumber id="bathrooms" value={project.bathrooms} onValueChange={(e) => onInputNumberChange(e, 'bathrooms')} required autoFocus className={classNames({ 'p-invalid': submitted && !project.bathrooms })} />
-                            {submitted && !project.bathrooms && <small className="p-error">Bathrooms is required.</small>}
-                        </div>
-                    </div>
-                    {/* <div className='row mt-2'>
+                        {/* <div className='row mt-2'>
                         <input type="file" onChange={(event) => { setImageUpload(event.target.files[0]) }} />
                         <button onClick={uploadImage}> Upload Image</button>
                     </div> */}
-                    <div className='row mt-2'>
-                        <div className='col-3 text-center'>
-                            <FileUpload mode="basic" chooseOptions={{ icon: 'pi pi-upload' }} multiple name="projectImages" customUpload uploadHandler={(e) => handleFileChange(e, 'projects', "PROJECT_IMAGES")} accept="image/*" maxFileSize={1000000} auto chooseLabel="Project Images" />
+                        <div className='row mt-2'>
+                            <div className='col-3 text-center'>
+                                <FileUpload mode="basic" chooseOptions={{ icon: 'pi pi-upload' }} multiple name="projectImages" customUpload uploadHandler={(e) => handleFileChange(e, 'projectImages', "PROJECT_IMAGES")} accept="image/*" maxFileSize={1000000} auto chooseLabel="Project Images" />
 
-                            <div className='row upload-list'>
-                                {projectImages && Object.values(projectImages.map(m => m.files)).flat().map((upFile, index) => {
-                                    debugger;
-                                    return (
-                                        <div className="col-3 d-grid" key={index}>
-                                            <Image src={upFile.objectURL} alt={upFile.name} width="250" height='250' preview />
-                                            <div>
-                                                <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => handleDeleteFile(index, "PROJECT_IMAGES")} />
+                                <div className='row upload-list'>
+                                    {projectImages && Object.values(projectImages.map(m => m.files)).flat().map((upFile, index) => {
 
-                                            </div>
-                                            {/* <button onClick={() => handleDeleteFile(index)}>Delete</button> */}
-                                        </div>
-                                    )
-                                })
-                                }
-                            </div>
-
-                        </div>
-                        <div className='col-3 text-center'>
-                            <FileUpload mode="basic" multiple customUpload chooseOptions={{ icon: 'pi pi-upload' }} name="projectDocs" accept="application/pdf" maxFileSize={1000000} uploadHandler={(e) => handleFileChange(e, 'documents', "PROJECT_DOCUMENTS")} auto chooseLabel="Project Documents" />
-                            <div className='row upload-list'>
-                                <ul>
-                                    {projectDocuments && Object.values(projectDocuments.map(m => m.files)).flat().map((upFile, index) => {
                                         return (
-                                            <li key={index}>
-                                                <strong>File:</strong> {upFile.name}
-                                                <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => handleDeleteFile(index, "PROJECT_DOCUMENTS")} />
-                                            </li>
+                                            <div className="col-3 d-grid" key={index}>
+                                                <Image src={upFile.itemImageSrc} alt={upFile.alt} width="250" height='250' preview />
+                                                <div>
+                                                    <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => handleDeleteFile(index, "PROJECT_IMAGES")} />
+
+                                                </div>
+                                                {/* <button onClick={() => handleDeleteFile(index)}>Delete</button> */}
+                                            </div>
                                         )
-                                    })}
-                                </ul>
+                                    })
+                                    }
+                                </div>
 
                             </div>
-                        </div>
-                        <div className='col-3 text-center'>
-                            <FileUpload mode="basic" chooseOptions={{ icon: 'pi pi-upload' }} customUpload name="projectSideImage" accept="image/*" maxFileSize={1000000} uploadHandler={(e) => handleFileChange(e, 'sideImage', "PROJECT_SIDE_IMAGE")} auto chooseLabel="Project Side Image" />
-                            <div className='row upload-list'>
-                                {projectSideImage && Object.values(projectSideImage.map(m => m.files)).flat().map((upFile, index) => {
-                                    debugger;
-                                    return (
-                                        <div className="col-3 d-grid" key={index}>
-                                            <Image src={upFile.objectURL} alt={upFile.name} width="250" height='250' preview />
-                                            <div>
-                                                <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => handleDeleteFile(index, "PROJECT_SIDE_IMAGE")} />
+                            <div className='col-3 text-center'>
+                                <FileUpload mode="basic" customUpload chooseOptions={{ icon: 'pi pi-upload' }} name="projectDocs" accept="application/pdf" maxFileSize={1000000} uploadHandler={(e) => handleFileChange(e, 'documents', "PROJECT_DOCUMENTS")} auto chooseLabel="Project Brochure" />
+                                <div className='row upload-list'>
+                                    <ul>
+                                        {projectDocuments && Object.values(projectDocuments.map(m => m.files)).flat().map((upFile, index) => {
+                                            return (
+                                                <li key={index} className='d-flex'>
+                                                    <strong>File:</strong> {upFile.alt}
+                                                    <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => handleDeleteFile(index, "PROJECT_DOCUMENTS")} />
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
 
+                                </div>
+                            </div>
+                            <div className='col-3 text-center'>
+                                <FileUpload mode="basic" chooseOptions={{ icon: 'pi pi-upload' }} customUpload name="projectSideImage" accept="image/*" maxFileSize={1000000} uploadHandler={(e) => handleFileChange(e, 'sideImage', "PROJECT_SIDE_IMAGE")} auto chooseLabel="Project Side Image" />
+                                <div className='row upload-list'>
+                                    {projectSideImage && Object.values(projectSideImage.map(m => m.files)).flat().map((upFile, index) => {
+
+                                        return (
+                                            <div className="col-3 d-grid" key={index}>
+                                                <Image src={upFile.itemImageSrc} alt={upFile.alt} width="250" height='250' preview />
+                                                <div>
+                                                    <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => handleDeleteFile(index, "PROJECT_SIDE_IMAGE")} />
+
+                                                </div>
+                                                {/* <button onClick={() => handleDeleteFile(index)}>Delete</button> */}
                                             </div>
-                                            {/* <button onClick={() => handleDeleteFile(index)}>Delete</button> */}
-                                        </div>
-                                    )
-                                })
-                                }
+                                        )
+                                    })
+                                    }
+                                </div>
                             </div>
-                        </div>
-                        <div className='col-3'>
-                            <FileUpload mode="basic" chooseOptions={{ icon: 'pi pi-upload' }} customUpload name="projectMainImage" accept="image/*" maxFileSize={1000000} uploadHandler={(e) => handleFileChange(e, 'mainImage', "PROJECT_MAIN_IMAGE")} auto chooseLabel="Project Main Image" />
-                            <div className='row upload-list'>
-                                {projectMainImage && Object.values(projectMainImage.map(m => m.files)).flat().map((upFile, index) => {
-                                    debugger;
-                                    return (
-                                        <div className="col-3 d-grid" key={index}>
-                                            <Image src={upFile.objectURL} alt={upFile.name} width="250" height='250' preview />
-                                            <div>
-                                                <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => handleDeleteFile(index, "PROJECT_MAIN_IMAGE")} />
+                            <div className='col-3'>
+                                <FileUpload mode="basic" chooseOptions={{ icon: 'pi pi-upload' }} customUpload name="projectMainImage" accept="image/*" maxFileSize={1000000} uploadHandler={(e) => handleFileChange(e, 'mainImage', "PROJECT_MAIN_IMAGE")} auto chooseLabel="Project Main Image" />
+                                <div className='row upload-list'>
+                                    {projectMainImage && Object.values(projectMainImage.map(m => m.files)).flat().map((upFile, index) => {
 
+                                        return (
+                                            <div className="col-3 d-grid" key={index}>
+                                                <Image src={upFile.itemImageSrc} alt={upFile.alt} width="250" height='250' preview />
+                                                <div>
+                                                    <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => handleDeleteFile(index, "PROJECT_MAIN_IMAGE")} />
+
+                                                </div>
+                                                {/* <button onClick={() => handleDeleteFile(index)}>Delete</button> */}
                                             </div>
-                                            {/* <button onClick={() => handleDeleteFile(index)}>Delete</button> */}
-                                        </div>
-                                    )
-                                })
-                                }
+                                        )
+                                    })
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {/* <div className="formgrid grid">
+                        {/* <div className="formgrid grid">
                         <div className="field col">
                             <label htmlFor="price" className="field-header">
                                 Price
@@ -898,24 +1173,29 @@ export default function AdminProjects() {
                             <InputNumber id="quantity" value={project.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} />
                         </div>
                     </div> */}
-                    <div className='mt-2'>
-                        <Panel header="Apartment List" toggleable onClick={(e) => { if (e.target.className == "p-panel-header") { document.querySelector("button.p-panel-toggler").click(); } }}>
-                            <DataTable header={apartmenListHeader} value={projectApartmentList} editMode="row" dataKey="flatNo" onRowEditComplete={onRowEditComplete} tableStyle={{ minWidth: '50rem' }} rowEditValidator={validApartmentRow} >
-                                {/* <Column field="id" header="Id" style={{ width: '10%' }}></Column> */}
-                                <Column field="flatNo" header="Flat No" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
-                                <Column field="beds" header="Beds" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
-                                <Column field="area" header="Area" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
-                                <Column field="verandas" header="Verandas" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
-                                <Column field="totalArea" header="Total Area" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
-                                <Column field="status" header="Status" body={(e) => { return (<Tag value={e.status} severity={getSeverity(e.status)}></Tag>) }} editor={(options) => statusEditor(options)} style={{ width: '20%' }}></Column>
-                                {/* <Column field="price" header="Price" body={priceBodyTemplate} editor={(options) => priceEditor(options)} style={{ width: '20%' }}></Column> */}
-                                <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
+                        <div className='mt-2'>
+                            <Panel header="Apartment List" toggleable onClick={(e) => { if (e.target.className == "p-panel-header") { document.querySelector("button.p-panel-toggler").click(); } }}>
+                                <DataTable header={apartmenListHeader} value={projectApartmentList} editMode="row" dataKey="flatNo" onRowEditCancel={onRowEditCancel} onRowEditInit={onRowEditStart} onRowEditComplete={onRowEditComplete} tableStyle={{ minWidth: '50rem' }} rowEditValidator={validApartmentRow} >
+                                    {/* <Column field="id" header="Id" style={{ width: '10%' }}></Column> */}
+                                    <Column field="flatNo" header="Flat No" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
+                                    <Column field="beds" header="Beds" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
+                                    <Column field="baths" header="Baths" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
+                                    
+                                    <Column field="internalArea" header="Covered Area" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
+                                    <Column field="coveredVerandas" header="Covered Verandas" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
+                                    <Column field="verandas" header="Verandas" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
+                                    <Column field="storage" header="Storage" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
+                                    <Column field="area" header="Area" editor={(options) => textEditor(options)} style={{ width: '12%' }}></Column>
+                                    <Column field="status" header="Status" body={(e) => { return (<Tag value={e.status} severity={getSeverity(e.status)}></Tag>) }} editor={(options) => statusEditor(options)} style={{ width: '20%' }}></Column>
+                                    {/* <Column field="price" header="Price" body={priceBodyTemplate} editor={(options) => priceEditor(options)} style={{ width: '20%' }}></Column> */}
+                                    <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
 
-                                <Column header="Actions" body={apratmentActionBodyTemplate} exportable={false} style={{ minWidth: '10rem', display: 'inline-flex' }} alignFrozen="right" frozen={true}></Column>
-                            </DataTable>
-                        </Panel>
+                                    <Column header="Actions" body={apratmentActionBodyTemplate} exportable={false} style={{ minWidth: '10rem', display: 'inline-flex' }} alignFrozen="right" frozen={true}></Column>
+                                </DataTable>
+                            </Panel>
+                        </div>
                     </div>
-                </div>
+                </BlockUI>
 
             </Dialog>
 
@@ -930,15 +1210,36 @@ export default function AdminProjects() {
                 </div>
             </Dialog>
 
-            <Dialog visible={deleteProjectsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProjectsDialogFooter} onHide={hideDeleteProjectsDialog}>
+            {/* <Dialog visible={deleteProjectsDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProjectsDialogFooter} onHide={hideDeleteProjectsDialog}>
                 <div className="confirmation-content">
                     <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '1.5rem' }} />
                     {project && <span>Are you sure you want to delete the selected projects?</span>}
                 </div>
-            </Dialog>
+            </Dialog> */}
 
             <Dialog visible={previewProjectDialog} maximized style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Preview" modal onHide={() => { setPreviewProjectDialog(false) }}>
                 <ProjectDetailsPreview project={project} projectMainImage={projectMainImage} proejctDescription={textEditorValue} apartmentList={projectApartmentList} projectDocuments={projectDocuments} projectImages={projectImages} projectSideImage={projectSideImage} />
+            </Dialog>
+
+            <Dialog visible={apartmentFilesDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Apartment Files" modal onHide={() => { setApartmentFilesDialog(false) }}>
+                <div className='container-fluid'>
+                    <div className='row col-12 upload-list'>
+                        {selectedApartmentFiles && Object.values(selectedApartmentFiles.map(m => m.files)).flat().map((upFile, index) => {
+                            debugger
+                            return (
+                                <div className="col-3 d-grid" key={index}>
+                                    <Image src={upFile.itemImageSrc} alt={upFile.alt} width="250" height='250' preview />
+                                    <div>
+                                        <Button icon="pi pi-times" size="small" rounded text severity="danger" aria-label="Cancel" onClick={() => { handleDeleteFile(index, "APARTMENT_IMAGES"); setApartmentFilesDialog(false); }} />
+
+                                    </div>
+                                    {/* <button onClick={() => handleDeleteFile(index)}>Delete</button> */}
+                                </div>
+                            )
+                        })
+                        }
+                    </div>
+                </div>
             </Dialog>
         </>
     );
