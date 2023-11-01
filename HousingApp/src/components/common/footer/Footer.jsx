@@ -102,7 +102,7 @@ const Footer = () => {
         <div className='container'>
           <div className="row pt-4">
             <div className="col-12 col-md-2 col-lg-4 d-flex justify-content-center flex-column">
-              <div className='logo'>
+              <div className='logoFooter'>
                 <Link to="/">
                   <img src={logoImg} alt='' />
                 </Link>

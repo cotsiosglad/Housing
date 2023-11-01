@@ -90,6 +90,10 @@ button li {
   width: 100px;
 }
 
+.logoFooter {
+  align-self: center;
+  width: 70%;
+}
 
 .chatBot {
   /* width: 100px;
