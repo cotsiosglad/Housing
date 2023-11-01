@@ -6,12 +6,12 @@ const ContactUs = () => {
     return (
         <>
             <div className="contact-bot">
-                <span><a href='https://www.facebook.com/domusalbacy/'><BsFacebook /> Our Facebook Page</a></span>
+                <span><a href='https://www.facebook.com/domusalbacy/'><BsFacebook className="pr-2"/> Our Facebook Page</a></span>
                 {/* <button className="button-18"> <a href='https://www.facebook.com/domusalbacy/'>Facebook</a></button> */}
                 <br></br>
                 <br></br>
                 <Link to="/contact">
-                    <button className="button-18">Contact Page</button>
+                    Contact Page
                 </Link>
                 <br></br>
                 <br></br>
