@@ -119,13 +119,13 @@ const Footer = () => {
             <div className="col-12 col-md-8 col-lg-8">
               <div className="row">
                 <div className="col-12 col-md-6 col-lg-6">
-                  <h5 className="pt-4">Services</h5>
+                  <h5 className="pt-4">ΥΠΗΡΕΣΙΕΣ</h5>
                   {services.sort().reverse().slice(0, 3).map((items, index) => (
                     <div key={index}><Link to="/services">{items.titleType}</Link></div>
                   ))}
                 </div>
                 <div className="col-12 col-md-6 col-lg-6">
-                  <h5 className="pt-4">Projects</h5>
+                  <h5 className="pt-4">ΕΡΓΑ</h5>
                   {projects.sort().reverse().slice(0, 3).map((items, index) => (
                     <div key={index}><Link to={`/projects/${items.id}`}>{items.title}</Link></div>
                   ))}
@@ -133,7 +133,7 @@ const Footer = () => {
               </div>
               <div className="row pt-4">
                 <div className="col-12 col-md-6 col-lg-6 align-self-center">
-                  <h5>Contact</h5>
+                  <h5>ΕΠΙΚΟΙΝΩΝΙΑ</h5>
                   <div >
                     <CiPhone />
                     <a>+357 97729606</a>
