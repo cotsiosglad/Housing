@@ -25,15 +25,34 @@ export default function ImageCarousel({ imageList }) {
     const thumbnailTemplate = (item) => {
         return <img src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
     }
+    // const responsiveOptions = [
+    //     {
+    //         breakpoint: '1480px',
+    //         numVisible: 3,
+    //         numScroll: 1
+    //     },
+    //     {
+    //         breakpoint: '991px',
+    //         numVisible: 1,
+    //         numScroll: 1
+    //     },
+    //     {
+    //         breakpoint: '200px',
+    //         numVisible: 1,
+    //         numScroll: 1
+    //     }
+    // ];
+
+    //http://react-responsive-carousel.js.org/storybook/?path=/story/01-basic--vertical
     const responsiveOptions = [
         {
-            breakpoint: '1480px',
-            numVisible: 3,
+            breakpoint: '1199px',
+            numVisible: 1,
             numScroll: 1
         },
         {
             breakpoint: '991px',
-            numVisible: 1,
+            numVisible: 2,
             numScroll: 1
         },
         {

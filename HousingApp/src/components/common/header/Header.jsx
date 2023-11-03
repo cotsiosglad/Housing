@@ -12,8 +12,10 @@ import MobileMenu from "./MobileMenu"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mobMenuColor, setMobMenuColor] = useState("#1A1A1A");
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    setMobMenuColor((prev) => prev=="#f2f2f2"?"#1A1A1A":"#f2f2f2");
   };
   //  const [navList, setNavList] = useState(false)
 
@@ -164,38 +166,6 @@ const Header = () => {
     <>
       <div id="header" >
         <div className="container">
-          <div id="svgmenu" className="show-mobile" onClick={toggleMenu}>
-            <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50.5 99.1" style={{ background: "green" }} xmlSpace="preserve">
-              <g className="maing">
-                <g id="hide" style={{ opacity: 1 }}>
-                  <g id="Group_332_5_" transform="translate(25.666) rotate(90)">
-                    <path id="Path_319_5_" className="st0" d="M58.6-9.7l8.9,8.9c0.6,0.6,0.6,1.6,0,2.2l-8.9,8.9"></path>
-                  </g>
-                </g>
-                <g style={{ opacity: 0 }}>
-                  <path className="st1" d="M15.3,58.6l8.9,5.9c0.6,0.4,1.6,0.4,2.2,0l8.9-5.9"></path>
-                </g>
-                <g style={{ opacity: 0 }}>
-                  <path className="st2" d="M15.3,58.8l8.9,3c0.6,0.2,1.6,0.2,2.2,0l8.9-3"></path>
-                </g>
-                <g style={{ opacity: 0 }}>
-                  <path className="st3" d="M15.3,58.9h8.9c0.6,0,1.6,0,2.2,0h8.9"></path>
-                </g>
-                <g style={{ opacity: 0 }}>
-                  <path className="st4" d="M15.3,58.1l8.9-3c0.6-0.2,1.6-0.2,2.2,0l8.9,3"></path>
-                </g>
-                <g style={{ opacity: 0 }}>
-                  <path className="st5" d="M15.3,58.2l8.9-5.9c0.6-0.4,1.6-0.4,2.2,0l8.9,5.9"></path>
-                </g>
-                <g style={{ opacity: 0 }}>
-                  <g id="Group_332_4_" transform="translate(25.666) rotate(90)">
-                    <path id="Path_319_4_" className="st6" d="M58.3,10.3l-8.9-8.9c-0.6-0.6-0.6-1.6,0-2.2l8.9-8.9"></path>
-                  </g>
-                </g>
-              </g>
-            </svg>
-          </div>
-          <MobileMenu isOpen={isMenuOpen} onClose={toggleMenu} />
           <div id="logo" data-aos="fade-in" data-aos-delay="100" data-aos-duration="3000" data-aos-offset="0">
             <a href="/">
               <img src={logoImg} alt="Logo" />
@@ -220,6 +190,15 @@ const Header = () => {
             </nav>
           </div>
         </div>
+      </div>
+      <div className="mob container show-mobile">
+      <div id="svgmenu" className="show-mobile" onClick={toggleMenu}>
+      <svg fill={mobMenuColor} xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 72 72" width="64px" height="64px"><path d="M56 48c2.209 0 4 1.791 4 4 0 2.209-1.791 4-4 4-1.202 0-38.798 0-40 0-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4C17.202 48 54.798 48 56 48zM56 32c2.209 0 4 1.791 4 4 0 2.209-1.791 4-4 4-1.202 0-38.798 0-40 0-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4C17.202 32 54.798 32 56 32zM56 16c2.209 0 4 1.791 4 4 0 2.209-1.791 4-4 4-1.202 0-38.798 0-40 0-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4C17.202 16 54.798 16 56 16z"/></svg>
+          </div>
+          <div className="mob-bar-logo text-center">
+          <img src="../images/dalogo2.png" title="dalogo2.png"></img>
+          </div>
+      <MobileMenu isOpen={isMenuOpen} onClose={toggleMenu} />
       </div>
       <div className="nav-holder show-mobile">
         <nav className="nav">

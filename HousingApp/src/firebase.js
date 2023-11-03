@@ -302,7 +302,7 @@ export const GetStorageFolderFiles = async (folderPath) => {
         });
 
         const retList = await Promise.all(downloadPromises); // Wait for all downloads to complete  
-        debugger
+        // debugger
         return retList;
         // This can be downloaded directly:
         // const xhr = new XMLHttpRequest();

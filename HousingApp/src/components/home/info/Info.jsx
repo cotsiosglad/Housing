@@ -5,6 +5,7 @@ import "./info.css"
 import { homeDescription } from "../../data/Data"
 import image from "../../images/vision-fotor-bg-remover-20230903171531.png"
 import Heading from "../../common/Heading"
+import { isMobile } from "react-device-detect"
 import { FaMedapps, FaRulerCombined, FaHandshake, FaLaptopHouse, FaPoll } from "react-icons/fa";
 
 // Innovative Cyprus real estate development
@@ -42,7 +43,7 @@ export default () => {
                             <img className="img-fluid w-100" src="/images/info-img.png" />
                         </div>
                     </div>
-                    <div className="col-lg-6 info-text" data-aos="fade-up" data-aos-delay="600" data-aos-once="true">
+                    <div className="col-lg-6 info-text" data-aos={isMobile?"fade-in":"fade-up"} data-aos-delay="600" data-aos-once="true">
                         <p>H <b>Domus Alba</b> είναι μία νέα εταιρεία που έρχεται να επαναπροσδιορίσει
                             το τι σημαίνει αγορά ακινήτου, κατοικίας ή διαμερίσματος:
                             σημαίνει επένδυση.
@@ -78,7 +79,7 @@ export default () => {
                     </div>
                 </div> */}
                 <div className="row mt-4">
-                    <div className="info-box col-12 col-md-6 col-lg-6 d" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" data-aos-once="true">
+                    <div className="info-box col-12 col-md-6 col-lg-6 d" data-aos={isMobile?"fade-in":"fade-right"} data-aos-delay="800" data-aos-duration="1000" data-aos-once="true">
                         <div className="card d-flex align-items-center flex-column" >
                             <div className="info-box-img">
                                 <FaMedapps />
@@ -89,7 +90,7 @@ export default () => {
                             </div>
                         </div>
                     </div>
-                    <div className="info-box col-12 col-md-6 col-lg-6 d" data-aos="fade-left" data-aos-delay="800" data-aos-duration="1000" data-aos-once="true">
+                    <div className="info-box col-12 col-md-6 col-lg-6 d" data-aos={isMobile?"fade-in":"fade-left"} data-aos-delay="800" data-aos-duration="1000" data-aos-once="true">
                         <div className="card -flex align-items-center flex-column" >
                             <div className="info-box-img">
                                 <FaLaptopHouse />
@@ -103,7 +104,7 @@ export default () => {
 
                 </div>
                 <div className="row mt-4">
-                    <div className="info-box col-12 col-md-6 col-lg-6" data-aos="fade-right" data-aos-delay="800" data-aos-duration="1000" data-aos-offset="300" data-aos-once="true">
+                    <div className="info-box col-12 col-md-6 col-lg-6" data-aos={isMobile?"fade-in":"fade-right"} data-aos-delay="800" data-aos-duration="1000" data-aos-offset="300" data-aos-once="true">
                         <div className="card d-flex align-items-center flex-column">
                             <div className="info-box-img">
                                 <FaHandshake />
@@ -114,7 +115,7 @@ export default () => {
                             </div>
                         </div>
                     </div>
-                    <div className="info-box col-12 col-md-6 col-lg-6" data-aos="fade-left" data-aos-delay="800" data-aos-duration="1000" data-aos-offset="300" data-aos-once="true">
+                    <div className="info-box col-12 col-md-6 col-lg-6" data-aos={isMobile?"fade-in":"fade-left"} data-aos-delay="700" data-aos-duration="1000" data-aos-offset="300" data-aos-once="true">
                         <div className="card d-flex align-items-center flex-column" >
                             <div className="info-box-img">
                                 <FaPoll />

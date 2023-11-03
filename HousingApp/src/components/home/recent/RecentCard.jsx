@@ -1,8 +1,10 @@
-import React from "react"
+import {React,useEffect,useState} from "react"
 import { Link } from "react-router-dom";
 import { list } from "../../data/Data"
 import { BsBuildingFill, BsFillLayersFill, BsFillPinMapFill } from 'react-icons/bs';
+import {GetAllDocs,GetStorageFolderFiles} from '../../../firebase';
 import background from "../../images/services.jpg";
+import {ConvertPathToGalleriaModel} from '../../helper/CommonFunctions'
 
 // const RecentCard = () => {
 //   return (
@@ -40,10 +42,51 @@ import background from "../../images/services.jpg";
 // }
 
 const RecentCard = () => {
+const [projects,setProjects] = useState([])
+const [projectsMainImage,setProjectMainImage] = useState([])
+  useEffect(() => {
+
+    //add firebase api here
+    //ProductService.getProducts().then((data) => setProjects(data));
+
+    //var aa = GetDocByRefId("Projects", "Jt2Prr7DhQb5NmosVi0n").then((data) => console.log(data));
+    GetAllDocs("Projects").then((data) => {
+// console.log(data),
+
+
+// const list = data.map(m => m.data).map((proejct,index)=>{
+//   const path = "projects/" + proejct.refName + "/mainImage";
+
+//   return (GetStorageFolderFiles(path).then((proejct) => {
+//     const _currFile = {
+//       files: proejct.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
+//       flat: "",
+//       destinationFolder: "mainImage"
+//     }
+//     if (_currFile.files.length > 0) {
+//       return _currFile
+//     }
+//     else{return []}
+//   }))
+  
+// })
+setProjects(data.map(m => m.data))
+console.log(list);
+
+    }
+        
+        
+        
+        );
+
+        
+        
+
+}, []);
   return (
     <>
       {/* <div className='content grid3 mtop'> */}
-      {list.map((val, index) => {
+      {projects.map((val, index) => {
         const { cover, category, location, name, price, type } = val
         return (
           // <div className="row">
@@ -51,24 +94,25 @@ const RecentCard = () => {
             <Link to={`/projects/${val.refName}`}>
               <div className='box shadow houses-grid-item'>
 
-                {/* <div className='houses-grid-img' style={{ backgroundImage: `url(${background})` }}> */}
-                <div className='houses-grid-img' style={{ backgroundImage: `url(${val.cover})` }}>
+                <div className='houses-grid-img' style={{ backgroundImage: `url(../images/1.png)` }}>
+                {/* <div className='houses-grid-img' style={{ backgroundImage: `url(${val.cover})` }}> */}
                   {/* <img src={cover} alt='' /> */}
 
                 </div>
                 <div className="houses-grid-content">
-                  <span>Completed</span>
-                  <h4>{val.name}</h4>
+                  <span>{val.status}</span>
+                  <h4>{val.title}</h4>
                 </div>
                 <div className="rentals-grid-tabs">
                   <span className="rentals-grid-tab">
-                    <BsFillPinMapFill /> Nicosia
+                    <BsFillPinMapFill /> {val.region}
                   </span>
                   <span className="rentals-grid-tab">
                     <BsBuildingFill /> Residential
                   </span>
-                  <span className="rentals-grid-tab">
-                    <BsFillLayersFill /> 6 storeys
+
+                  <span className={`rentals-grid-tab ${val.apartments?'':'d-none'}`}>
+                    <BsFillLayersFill /> {val.apartments} Apartments
                   </span>
                 </div>
               </div>

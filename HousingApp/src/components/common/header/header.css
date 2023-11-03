@@ -196,6 +196,10 @@
   .nav>ul:not( :hover)>li.active>a {
     background-size: 100% 1px;
   }
+
+  .App{
+    right: 5px;
+  }
 }
 
 @media only screen and (max-width: 1149px) {
@@ -209,7 +213,7 @@
     left: 18px;
     border: 0px solid darkred;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 1003;
   }
 
   .show-mobile {
@@ -219,7 +223,7 @@
   #svgmenu svg {
     width: 100%;
     position: absolute;
-    top: -35px;
+    top: -8px;
   }
 
   .showmenu .nav-holder {
@@ -280,4 +284,63 @@
   .nav>ul>li.dropdown {
     background-image: url("../../../../public/images/arrow-down.png");
   }
+
+  #header{
+    display: none;
+  }
+  .App{
+    margin-bottom: 15px!important;
+    z-index: 1002!important;
+  }
+
+  #FirebugUI{
+    width: 60%!important;
+  }
+  .info .container .row{
+    margin-top: 0!important;
+  }
+  .padding{
+    padding: 30px 0!important;
+  }
+  .leftline{
+    margin: 15px 0px 15px 0px!important;
+    width: 100%!important;
+    margin-left: 0!important;
+    padding: 0!important;
+  }
+  .contact-info{
+    width: 100%!important;
+  }
+  .mb{
+    margin-bottom: 15px!important;
+  }
+  .about {
+    margin-bottom: 15px!important;
+}
+.about-content .about-content-text > p{
+  padding: 0px 20px 0px 20px!important;
+}
+
+.about .heading{
+  text-align: center!important;
+}
+.mob{
+  background-color: white;
+  position: fixed;
+  top: 0;
+  z-index: 15;
+  height: 4.5rem;
+  width: 100%;
+}
+.mob-bar-logo img{
+  height: 92px;
+    width: 154px;
+}
+
+.homeslider{
+  margin-top: 4rem;
+}
+body{
+  overflow: scroll;
+}
 }

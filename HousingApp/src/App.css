@@ -9,7 +9,10 @@
   font-family: system-ui;
   /* font-size: large; */
 }
-
+/* div,section,iframe{
+    border: 1px solid #333333;
+    height: 100px_350px;
+} */
 body {
   font-family: "Poppins", sans-serif;
   background-color: var(--color1);
@@ -233,11 +236,11 @@ img {
     max-width: 90%;
   } */
 
-  .back::after,
+  /* .back::after,
   .back img,
   .back {
     height: 30vh;
-  }
+  } */
 }
 
 .p-inputtext:enabled:focus {

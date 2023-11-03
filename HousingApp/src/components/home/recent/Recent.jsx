@@ -53,7 +53,7 @@ const Recent = () => {
 				{/* <div className='container d-flex flex-row justify-content-center flex-wrap'> */}
 				<div className='container'>
 					<Heading title='Latest Projects' subtitle='Recently Active or Completed Projects' />
-					<div className="row">
+					<div className="row" style={{placeContent:"center"}}>
 						<RecentCard />
 					</div>
 				</div>

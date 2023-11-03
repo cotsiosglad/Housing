@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ProjectDetailsPreview from '../../admin/ProjectDetailsPreview';
+import Header from "../../common/header/Header"
+import Footer from "../../common/footer/Footer"
 import { ConvertPathToGalleriaModel } from '../../helper/CommonFunctions';
 import { GetDocById, GetStorageFolderFiles } from '../../../firebase';
 
@@ -44,7 +46,7 @@ const ProjectDetails = ({ match }) => {
 
   async function fetchAndSetProjectImages(path) {
     try {
-      debugger;
+      // debugger;
       const fileData = await GetStorageFolderFiles(path);
       const files = fileData.map((m) => ConvertPathToGalleriaModel(m.fileUrl, m.fileName));
       if (files.length > 0) {
@@ -83,7 +85,7 @@ const ProjectDetails = ({ match }) => {
       setProject(projectData[0]);
       setTextEditorValue(projectData[0].description)
       GetDocById(projectData[0].id, "ProjectApartments", "projectId").then(async (data) => {
-        debugger;
+        // debugger;
         setProjectApartmentList(data[0].apartments);
         //get uploaded files for each apartment
         data[0].apartments.map(async (item) => {
@@ -252,8 +254,10 @@ const ProjectDetails = ({ match }) => {
 
   return (
     <>
+    <Header/>
       <ProjectDetailsPreview project={project} projectMainImage={projectMainImage} proejctDescription={textEditorValue} apartmentList={projectApartmentList} projectDocuments={projectDocuments} projectImages={projectImages} projectSideImage={projectSideImage} />
       {/* <Child /> */}
+      <Footer/>
     </>
   )
 }
