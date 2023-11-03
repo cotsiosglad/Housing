@@ -27,7 +27,7 @@ export default function DialogContactForm({ dialogVisibleStage, updateDialogVisi
   //Configuration for emailjs
   // const form = useRef();
   const dialogFooterTemplate = () => {
-    return <Button type="submit" label="Submit" severity="secondary" icon="pi pi-check" onClick={saveContactForm} />;
+    return <Button type="submit" label="Υποβολή" severity="secondary" icon="pi pi-check" onClick={saveContactForm} />;
   };
 
   const onInputChange = (e, name) => {
@@ -105,21 +105,21 @@ export default function DialogContactForm({ dialogVisibleStage, updateDialogVisi
   return (
     <>
       <Toast ref={toast} position="bottom-right" />
-      <Dialog header="Contact Details" breakpoints={{ '960px': '75vw', '641px': '90vw' }} maximized={isMobile ? true : false} visible={dialogVisibleStage} style={{ height: '448px', width: '50vw' }}
+      <Dialog header="Στοιχεία Επικοινωνίας" breakpoints={{ '960px': '75vw', '641px': '90vw' }} maximized={isMobile ? true : false} visible={dialogVisibleStage} style={{ height: '448px', width: '50vw' }}
         modal focusOnShow={true} keepInViewport={true} contentStyle={{ height: '300px' }} onHide={handleDialogVisibleState} footer={dialogFooterTemplate}>
         {/* <form ref={form} onSubmit={sendEmail}> */}
         <div className="container-fluid contact-form">
           <div className="row">
             <div className="col-12 col-md-6 d-grid">
               <label htmlFor="firstName" className="field-header">
-                Name
+                Όνομα 
               </label>
               <InputText name="firstName" id="firstName" value={contactModel.firstName} onChange={(e) => onInputChange(e, 'firstName')} required autoFocus className={classNames({ 'p-invalid': submitted && !contactModel.firstName })} />
-              {submitted && !contactModel.firstName && <small className="p-error">Name is required.</small>}
+              {submitted && !contactModel.firstName && <small className="p-error">Το όνομα είναι υποχρεωτικό.</small>}
             </div>
             <div className="col-12 col-md-6 d-grid">
               <label htmlFor="lastName" className="field-header">
-                Surname
+                Επώνυμο 
               </label>
               <InputText name="lastName" id="lastName" value={contactModel.lastName} onChange={(e) => onInputChange(e, 'lastName')} required autoFocus />
               {/* {submitted && !contactModel.lastName && <small className="p-error">Surname is required.</small>} */}
@@ -128,24 +128,24 @@ export default function DialogContactForm({ dialogVisibleStage, updateDialogVisi
           <div className="row">
             <div className="col-12 col-md-6 d-grid">
               <label htmlFor="contactNumber" className="field-header">
-                Phone Number
+                Αριθμός Τηλεφώνου
               </label>
               <InputNumber useGrouping={false} id="contactNumber" value={contactModel.contactNumber} onValueChange={(e) => onInputNumberChange(e, 'contactNumber')} required autoFocus className={classNames({ 'p-invalid': submitted && (!contactModel.contactNumber && !contactModel.contactEmail) })} />
 
             </div>
             <div className="col-12 col-md-6 d-grid">
               <label htmlFor="contactEmail" className="field-header">
-                Email
+                Ηλεκτρονικό Ταχυδρομείο
               </label>
               <InputText name="contactEmail" id="contactEmail" value={contactModel.contactEmail} onChange={(e) => onInputChange(e, 'contactEmail')} required autoFocus className={classNames({ 'p-invalid': submitted && (!contactModel.contactNumber && !contactModel.contactEmail) })} />
               {/* {submitted && !contactModel.contactEmail && <small className="p-error">Email is required.</small>} */}
             </div>
-            {submitted && (!contactModel.contactNumber && !contactModel.contactEmail) && <small className="p-error">Number or Email is required.</small>}
+            {submitted && (!contactModel.contactNumber && !contactModel.contactEmail) && <small className="p-error">Απαιτείται αριθμός ή ηλεκτρονικό ταχυδρομείο.</small>}
           </div>
           <div className="row">
             <div className="col-12 d-grid">
               <label htmlFor="contactEmail" className="field-header">
-                Comment
+                Σχόλιο 
               </label>
               <InputTextarea name="notes" id="notes" className="input" maxLength={200} autoResize value={contactModel.notes} onChange={(e) => onInputChange(e, 'notes')} rows={3} />
             </div>

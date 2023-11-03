@@ -141,8 +141,6 @@ function App() {
 	// 	rootMargin: '0px', // Margin around the root, in pixels
 	// 	threshold: 0.4, // The ratio of the target's visibility to trigger the callback
 	//   };
-
-
 	//   useEffect(() => {
 	// 	const options = {
 	// 		root: null, // Use the viewport as the root
@@ -227,28 +225,31 @@ function App() {
 		AOS.init();
 		const result = axios.get('https://geolocation-db.com/json/');
 		Promise.all([result]).then((response) => {
-			// debugger
-			const responseData = response[0].data;
-
-			if (!triggerPromise) {
-				model = {
-					IP: responseData.IPv4,
-					City: responseData.city,
-					CountryName: responseData.country_name,
-					DayTime: serverTimestamp()
-				}
-				triggerPromise = true
-				//console.log(model)
-				//Uncomment below to insert user's IP in Firebase
-				//WriteDoc(model, "VisitorsInfo")
+		// debugger
+		const responseData = response[0].data;
+		const today = new Date()
+		const dayandtime= today.toString()
+		//console.log(dayandtime)
+		if (!triggerPromise)
+		{
+			model = {
+				IP: responseData.IPv4,
+				City: responseData.city,
+				CountryName: responseData.country_name,
+				DayTime: dayandtime
 			}
-
-			// setUserData({
-			//   IP: responseData.IPv4,
-			//   City: responseData.city,
-			//   CountryName: responseData.country_name
-			// });
-
+			triggerPromise = true
+			//console.log(model)
+			//Uncomment below to insert user's IP in Firebase
+			//WriteDoc(model, "VisitorsInfo")
+		}
+		
+		// setUserData({
+		//   IP: responseData.IPv4,
+		//   City: responseData.city,
+		//   CountryName: responseData.country_name
+		// });
+		
 		})
 			.catch(function (error) {
 				console.error(error);

@@ -205,12 +205,12 @@ const Header = () => {
           <ul className="clearfix">
             <li className="active">
               <a href="/" title="Home">
-                Home
+              ΑΡΧΙΚΗ
               </a>
             </li>
             <li className="dropdown">
               <a title="Projects">
-                Projects</a>
+              ΕΡΓΑ</a>
 
               <ul>
                 <li className="">
@@ -222,13 +222,13 @@ const Header = () => {
               </ul>
             </li>
             <li className="">
-              <a href="/about" title="About">
-                About
+              <a href="/about" title="ΓΙΑ ΕΜΑΣ">
+              ΓΙΑ ΕΜΑΣ
               </a>
             </li>
             <li className="">
               <a href="/contact" title="Contact">
-                Contact
+              ΕΠΙΚΟΙΝΩΝΙΑ
               </a>
             </li>
 

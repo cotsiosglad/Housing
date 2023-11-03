@@ -1,18 +1,18 @@
 export const nav = [
   {
-    text: "home",
+    text: "ΑΡΧΙΚΗ",
     path: "/",
   },
   {
-    text: "about",
+    text: "ΓΙΑ ΕΜΑΣ",
     path: "/about",
   },
   {
-    text: "projects",
+    text: "ΕΡΓΑ",
     path: "/projects",
   },
   {
-    text: "services",
+    text: "ΥΠΗΡΕΣΙΕΣ",
     path: "/services",
   },
   // {
@@ -20,7 +20,7 @@ export const nav = [
   //   path: "/pricing",
   // },
   {
-    text: "contact",
+    text: "ΕΠΙΚΟΙΝΩΝΙΑ",
     path: "/contact",
   },
 ]

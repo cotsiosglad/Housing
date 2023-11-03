@@ -12,6 +12,7 @@ export default function ImageCarousel({ imageList }) {
         toggler: false,
         slide: 1
     });
+   
     const galleria = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [selectedImage, setSelectedImage] = useState({});
@@ -91,11 +92,17 @@ export default function ImageCarousel({ imageList }) {
     // useEffect(() => {
     //     setImages(imageList);
     // }, []);
+    // useEffect(() => {
+    //     setImages(imageList);
+    // }, []);
     const abc = (item) => {
         debugger;
         let itemIdx = imageList.indexOf(item) + 1;
         openLightboxOnSlide(itemIdx)
         console.log(itemIdx);
+        //setActiveIndex(itemIdx);
+        //setSelectedImage({ ...item, itemImageSrc: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1518270500.1698710400&semt=sph" });
+        //galleria.current.show();
         //setActiveIndex(itemIdx);
         //setSelectedImage({ ...item, itemImageSrc: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1518270500.1698710400&semt=sph" });
         //galleria.current.show();
@@ -108,7 +115,9 @@ export default function ImageCarousel({ imageList }) {
             <div className="m-2 text-center py-5 px-3">
                 <div className="mb-3">
                     {/* <img src={product.itemImageSrc} alt={product.alt} className="w-6 shadow-2" onClick={() => abc(product)} /> */}
+                    {/* <img src={product.itemImageSrc} alt={product.alt} className="w-6 shadow-2" onClick={() => abc(product)} /> */}
                     <img src={product.itemImageSrc} alt={product.alt} className="w-6 shadow-2" onClick={() => abc(product)} />
+
 
                 </div>
                 {/* <div>
@@ -132,14 +141,27 @@ export default function ImageCarousel({ imageList }) {
             {/* <Galleria ref={galleria} value={imageList} numVisible={7} style={{ maxWidth: '850px' }}
                 activeIndex={activeIndex} onItemChange={(e) => setActiveIndex(e.index)}
                 circular fullScreen showItemNavigators showThumbnails={false} item={(itemm) => { itemTemplate(selectedImage) }} thumbnail={thumbnailTemplate} /> */}
+            {/* <Galleria ref={galleria} value={imageList} numVisible={7} style={{ maxWidth: '850px' }}
+                activeIndex={activeIndex} onItemChange={(e) => setActiveIndex(e.index)}
+                circular fullScreen showItemNavigators showThumbnails={false} item={(itemm) => { itemTemplate(selectedImage) }} thumbnail={thumbnailTemplate} /> */}
 
             <FsLightbox
                 toggler={lightboxController.toggler}
 
+
                 sources={imageList.map(s => s.itemImageSrc)}
                 //source={sourceFiles}
                 // sources={imageList}
+                //source={sourceFiles}
+                // sources={imageList}
                 slide={lightboxController.slide}
+            // source={[
+            //     "https://firebasestorage.googleapis.com/v0/b/housing-app-628b7.appspot.com/o/projects%2Fab%2FprojectImages%2F1b6ed9d8-e7a7-4e9e-bb15-863d6106370c_%CE%99%CE%A3%CE%9F%CE%93%CE%95%CE%99%CE%9F.png?alt=media&token=b01462e5-f832-4695-962b-65c89b427726"
+            //     ,
+            //     "https://firebasestorage.googleapis.com/v0/b/housing-app-628b7.appspot.com/o/projects%2Fab%2FprojectImages%2F69abfa7e-349f-434e-aecb-16bca2d5891f_2.png?alt=media&token=ff3ae818-17fd-4215-be3f-3d88ec3f0040"
+            //     ,
+            //     "https://firebasestorage.googleapis.com/v0/b/housing-app-628b7.appspot.com/o/projects%2Fab%2FprojectImages%2Fbbd0ab13-cfce-47db-9768-586025b28135_3.png?alt=media&token=3b43b308-3b88-40fd-9b44-87a30bc07ab2"
+            // ]}
             // source={[
             //     "https://firebasestorage.googleapis.com/v0/b/housing-app-628b7.appspot.com/o/projects%2Fab%2FprojectImages%2F1b6ed9d8-e7a7-4e9e-bb15-863d6106370c_%CE%99%CE%A3%CE%9F%CE%93%CE%95%CE%99%CE%9F.png?alt=media&token=b01462e5-f832-4695-962b-65c89b427726"
             //     ,

@@ -11,7 +11,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      branchName: AdsAnalytics
     strategy:
       matrix:
         node-version: [18.x]
@@ -19,10 +20,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: ./HousingApp/package-lock.json
+
     - run: npm ci
-    - run: npm run build
+      working-directory: ./HousingApp
+
+    - run: CI=false npm run build
+      working-directory: ./HousingApp
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: "${{ env.branchName }}-${{ github.run_id }}"
+        path: ./HousingApp/build
+        retention-days: 7

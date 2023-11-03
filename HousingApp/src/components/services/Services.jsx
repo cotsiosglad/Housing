@@ -31,7 +31,7 @@ const Services = () => {
     <>
       <ScrollToTop />
       <div className='services mb'>
-        <Back name='Services' title='Services -All Services' cover={img} />
+        <Back name='Υπηρεσίες' title='Υπηρεσίες - Όλες οι υπηρεσίες' cover={img} />
         <div className='container mtop'>
           <div className="row d-flex justify-content-evenly">
             <ServiceBox serviceButtonState={dialogServiceVisible} updateServiceButtonService={setDialogServiceVisible} />

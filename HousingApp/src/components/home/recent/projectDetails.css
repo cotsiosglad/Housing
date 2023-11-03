@@ -155,7 +155,12 @@
   width: 19em;
   /* height: 2.6em;
   line-height: 2.5em; */
+  /* height: 2.6em;
+  line-height: 2.5em; */
   overflow: hidden;
+  padding: 0.7em 3.3em 0.7em 1.7em;
+  /* margin: 20px; */
+  margin-bottom: 20px;
   padding: 0.7em 3.3em 0.7em 1.7em;
   /* margin: 20px; */
   margin-bottom: 20px;

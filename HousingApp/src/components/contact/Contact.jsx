@@ -13,19 +13,19 @@ const Contact = () => {
     <>
       <ScrollToTop />
       <section className='contact mb'>
-        <Back name='Contact Us' title='Get Helps & Friendly Support' cover={img} />
+        <Back name='ΕΠΙΚΟΙΝΩΝIA' title='Λάβετε Βοήθεια και Φιλική Υποστήριξη' cover={img} />
         <div className='container'>
           <div className="row">
             <div className="col-12 col-md-6 col-lg-6">
               <form className='shadow'>
-                <h4 className="title">Contact Us</h4> <br />
+                <h4 className="title">ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΑΖΙ ΜΑΣ</h4> <br />
                 <div>
-                  <input type='text' placeholder='Name' />
-                  <input type='text' placeholder='Email' />
+                  <input type='text' placeholder='Όνομα ' />
+                  <input type='text' placeholder='Ηλεκτρονικό Ταχυδρομείο' />
                 </div>
-                <input type='text' placeholder='Subject' />
+                <input type='text' placeholder='Θέμα' />
                 <textarea cols='30' rows='10'></textarea>
-                <button className="btn btn-secondary">Submit Request</button>
+                <button className="btn btn-secondary">Υποβολή αίτησης</button>
               </form>
             </div>
             <div className="col-12 col-md-6 col-lg-6 leftline">
