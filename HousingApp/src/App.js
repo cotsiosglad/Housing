@@ -225,7 +225,6 @@ function App() {
 		AOS.init();
 		const result = axios.get('https://geolocation-db.com/json/');
 		Promise.all([result]).then((response) => {
-<<<<<<< HEAD
 		// debugger
 		const responseData = response[0].data;
 		const today = new Date()
@@ -251,30 +250,6 @@ function App() {
 		//   CountryName: responseData.country_name
 		// });
 		
-=======
-			// debugger
-			const responseData = response[0].data;
-
-			if (!triggerPromise) {
-				model = {
-					IP: responseData.IPv4,
-					City: responseData.city,
-					CountryName: responseData.country_name,
-					DayTime: serverTimestamp()
-				}
-				triggerPromise = true
-				//console.log(model)
-				//Uncomment below to insert user's IP in Firebase
-				//WriteDoc(model, "VisitorsInfo")
-			}
-
-			// setUserData({
-			//   IP: responseData.IPv4,
-			//   City: responseData.city,
-			//   CountryName: responseData.country_name
-			// });
-
->>>>>>> main
 		})
 			.catch(function (error) {
 				console.error(error);

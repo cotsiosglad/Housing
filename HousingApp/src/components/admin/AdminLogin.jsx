@@ -14,11 +14,11 @@ const AdminLogin = () => {
     setPersistence(auth, browserLocalPersistence).then(() => {
       signInWithEmailAndPassword(auth, loginEmail, loginPassword)
       .then((userCredential) => {
-        console.log("Sign in was successful")
+        // console.log("Sign in was successful")
         const user = userCredential.user;
         // console.log("User UID: " + user.uid);
         // console.log("User Email: " + user.email);
-        console.log(auth)
+        // console.log(auth)
         // window.location.href= '/admin/home'
         auth.onAuthStateChanged(user => {
           user ? window.location.href= '/admin/home' : window.location.href= '/admin/';
@@ -27,9 +27,9 @@ const AdminLogin = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.error('Error code:', errorCode);
-        console.error('Error message:', errorMessage);
-        setErrorMessage(errorMessage);
+        // console.error('Error code:', errorCode);
+        // console.error('Error message:', errorMessage);
+        setErrorMessage("Please enter the correct email or password");
       });
     })
 
