@@ -57,7 +57,7 @@ const RecentCard = () => {
 
                 </div>
                 <div className="houses-grid-content">
-                  <span>Completed</span>
+                  <span>Ολοκληρωμένο</span>
                   <h4>{val.name}</h4>
                 </div>
                 <div className="rentals-grid-tabs">
@@ -65,10 +65,10 @@ const RecentCard = () => {
                     <BsFillPinMapFill /> Nicosia
                   </span>
                   <span className="rentals-grid-tab">
-                    <BsBuildingFill /> Residential
+                    <BsBuildingFill /> Κατοικία
                   </span>
                   <span className="rentals-grid-tab">
-                    <BsFillLayersFill /> 6 storeys
+                    <BsFillLayersFill /> 6 ορόφοι
                   </span>
                 </div>
               </div>

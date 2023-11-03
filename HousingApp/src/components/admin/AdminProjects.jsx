@@ -63,8 +63,8 @@ export default function AdminProjects() {
         totalArea: "",
         status: "Available"
     }
-    const statuses = ['Available', 'Sold'];
-    const projectStatuses = ["Completed", "Under Construction", "Planned"];
+    const statuses = ["Διαθέσιμο", "Πωλήθηκε"];
+    const projectStatuses = ["Ολοκληρωμένο", "Υπό Κατασκευή", "Σχεδιασμένο"];
 
     const [projects, setProjects] = useState(null);
     // const [projectDetails, setProjectDetails] = useState(emptyProjectDetails);
