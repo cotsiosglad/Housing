@@ -16,7 +16,7 @@ const Contact = () => {
         <Back name='ΕΠΙΚΟΙΝΩΝIA' title='Λάβετε Βοήθεια και Φιλική Υποστήριξη' cover={img} />
         <div className='container'>
           <div className="row">
-            <div className="col-6">
+            <div className="col-12 col-md-6 col-lg-6">
               <form className='shadow'>
                 <h4 className="title">ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΑΖΙ ΜΑΣ</h4> <br />
                 <div>
@@ -28,7 +28,7 @@ const Contact = () => {
                 <button className="btn btn-secondary">Υποβολή αίτησης</button>
               </form>
             </div>
-            <div className="col-6 leftline">
+            <div className="col-12 col-md-6 col-lg-6 leftline">
               <div className="contact-info h-100">
                 <strong>Domus Alba</strong>
                 <p className="adresss">Archiepiskopou Leontiou 23, 2407, Engomi, Nicosia, Cyprus</p>

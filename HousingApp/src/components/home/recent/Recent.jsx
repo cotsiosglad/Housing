@@ -52,8 +52,8 @@ const Recent = () => {
 			<section className='recent padding' data-aos="fade-up" data-aos-duration="1000" data-aos-once="true" data-aos-offset="300" data-aos-easing="linear">
 				{/* <div className='container d-flex flex-row justify-content-center flex-wrap'> */}
 				<div className='container'>
-					<Heading title='Τελευταία Έργα' subtitle='Πρόσφατα Ενεργά ή Ολοκληρωμένα Έργα' />
-					<div className="row">
+					<Heading title='Latest Projects' subtitle='Recently Active or Completed Projects' />
+					<div className="row" style={{placeContent:"center"}}>
 						<RecentCard />
 					</div>
 				</div>

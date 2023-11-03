@@ -160,6 +160,11 @@ function AdminMainPage() {
       command: () => setSelectedMenuItem("Projects"),
     },
     {
+      label: "Services",
+      icon: "pi-wallet",
+      command: () => setSelectedMenuItem("Services"),
+    },
+    {
       label: "Users",
       icon: "pi pi-users",
       command: () => setSelectedMenuItem("Users"),
@@ -387,8 +392,10 @@ const options = {
         )
       case "Projects":
         return <AdminProjects />
-      case "Users":
-        return <div>Users</div>;;
+        case "Services":
+          return <div>Services</div>;
+        case "Users":
+        return <div>Users</div>;
       default:
         return null;
     }

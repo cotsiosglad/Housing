@@ -12,7 +12,7 @@ const Blog = () => {
       <section className='blog-out mb'>
         <Back name='Ανάπτυξη' title='Επενδυτικά Έργα' cover={img} />
         <div className='container projects mtop'>
-          <div className="row">
+          <div className="row" style={{placeContent:"center"}}>
             <RecentCard />
 
           </div>
