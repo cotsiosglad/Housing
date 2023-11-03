@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menubar } from "primereact/menubar";
 import { Chip } from 'primereact/chip';
 import 'primeicons/primeicons.css';
@@ -11,10 +11,143 @@ import projects from "../data/Data";
 import users from "../data/Data";
 import AdminProjects from "./AdminProjects"
 import { Chart } from 'primereact/chart';
-
+import { GetAllDocs } from "../../firebase";
+import { getAuth, signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+let NicosiaUsers,LarnacaUsers,PaphosUsers,LimassolUsers,NicosiaDay;
+let triggerPromise = false
+let userArray = [];
+let days = [];
+let totalVisitors = [];
+let VisitorsDayTime = [];
+let WeeklyVisitors = 0
 function AdminMainPage() {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Home");
+  const [users, setUsers] = useState([]);
+  // const auth = getAuth(app)
+  console.log(auth)
+  // if (auth.currentUser == null){
+  //   window.location.href= '/admin/'
+  // }
+  const GetDocs = async () => {
+    await GetAllDocs("VisitorsInfo") 
+    .then (visitors => {
+      
+      if(!triggerPromise)
+      {
+        
+        triggerPromise = true
+        
+        for (let i = 0; i < visitors.length; i++) {
+          totalVisitors.push(visitors[i]);
+          //console.log(visitors[i]);
+        }
+        //console.log(totalVisitors.length);
+        // debugger;
+        days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun']
+        const newDate = new Date()
+    
+        NicosiaUsers  = totalVisitors.filter(w=>w.data.City=='Nicosia').length
+        PaphosUsers = totalVisitors.filter(w=>w.data.City=='Paphos').length
+        LarnacaUsers = totalVisitors.filter(w=>w.data.City=='Larnaca').length
+        LimassolUsers = totalVisitors.filter(w=>w.data.City=='Limassol').length
+        
+        for (let i=0; i < days.length; i++){
+          totalVisitors.filter(w=>w.data.City=='Nicosia')
+        }
 
+        userArray.push({
+          City : "Nicosia",
+          counter : NicosiaUsers
+        })
+        userArray.push({
+          City : "Paphos",
+          counter : PaphosUsers
+        })
+        userArray.push({
+          City : "Larnaca",
+          counter : LarnacaUsers
+        })
+        userArray.push({
+          City : "Limassol",
+          counter : LimassolUsers
+        })
+        userArray = Array.from(userArray);
+        setUsers((prevFiles) => [...userArray]);
+        //debugger;
+        //console.log(users)
+        //console.log(userArray)
+        //console.log("Nicosia users:"+ NicosiaUsers+ "Paphos users:" + PaphosUsers + "Larnaca users:" + LarnacaUsers + "Limassol Users: " + LimassolUsers)
+        // if (totalVisitors)
+        // {
+        //   for (let i=0; i < totalVisitors.length; i ++) {
+        //     if(totalVisitors[i].data.City === 'Nicosia'){
+        //       NicosiaUsers = totalVisitors.length
+        //       console.log("Nicosia Users: " + NicosiaUsers)
+        //     } else if(totalVisitors[i].data.City === 'Larnaca'){
+        //       LarnacaUsers = totalVisitors.length
+        //       console.log("Larnaca Users: " + LarnacaUsers)
+        //     } else if(totalVisitors[i].data.City === 'Paphos'){
+        //       PaphosUsers = totalVisitors.length
+        //       console.log("Paphos Users: " + PaphosUsers)
+        //     }
+        //   }
+        // }
+      }
+      
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  function isDateInCurrentWeek(targetDate) {
+    // Get the current date
+    const currentDate = new Date();
+  
+    // Calculate the start of the current week (Sunday)
+    const startOfWeek = new Date(currentDate);
+    startOfWeek.setHours(0, 0, 0, 0);
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
+  
+    // Calculate the end of the current week (7 days later)
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 7);
+  
+    // Convert the target date to a Date object (if it's not already)
+    if (!(targetDate instanceof Date)) {
+      targetDate = new Date(targetDate);
+    }
+  
+    // Compare the target date with the start and end of the current week
+    return targetDate >= startOfWeek && targetDate <= endOfWeek;
+  }
+  // Add a for loop that scans all visitors's dates , check if date is in current week, if its true then add to the object, if false don't
+  //console.log(totalVisitors)
+  let counter = 0;
+  for (let i = 0; i < totalVisitors.length; i++){
+    VisitorsDayTime = totalVisitors[i].data.Date
+    //console.log(VisitorsDayTime)
+    let yourDate = new Date(VisitorsDayTime);
+    let result = isDateInCurrentWeek(yourDate);
+    //console.log(result)
+    if (result == true){
+       //console.log("in current week")
+       counter ++;
+       
+       
+    }
+    else {
+      //console.log("not in current week")
+    }
+    
+  }
+  console.log("Total counter :"+ counter)
+  // Test the function with your date
+
+  //debugger;
+  
+  // console.log(result)
   const menuItems = [
     {
       label: "Home",
@@ -31,14 +164,21 @@ function AdminMainPage() {
       icon: "pi pi-users",
       command: () => setSelectedMenuItem("Users"),
     },
+    {
+      label: "Sign Out",
+      icon: "pi pi-users",
+      command: () => {signOut(auth).then(
+        window.location.href= '/admin'
+      )}
+    },
     // Add more menu items as needed
   ];
-
+  
   const data = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
+    labels: [days[0], days[1], days[2], days[3], days[4], days[5], days[6]],
     datasets: [
         {
-            label: 'Daily Visitors',
+            label: 'Weekly Visitors',
             data: [40, 60, 46, 55, 37, 50, 30],
             backgroundColor: [
                 'rgba(255, 159, 64, 0.2)',
@@ -56,30 +196,34 @@ function AdminMainPage() {
         }
     ]
 };
-const dataMonth = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  datasets: [
-      {
-          label: 'Daily Visitors',
-          data: [40, 60, 46, 55, 37, 50, 30, 22, 11, 23, 45, 53],
-          backgroundColor: [
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-            ],
-            borderWidth: 2
-      }
-  ]
-};
+// console.log(NicosiaUsers)
+// console.log(LarnacaUsers)
+// console.log(PaphosUsers)
+// const i = 2
+// const nicosia = NicosiaUsers
+// const larnaca = LarnacaUsers
+// const paphos = PaphosUsers
+// const limassol = LimassolUsers
+
+
+
+// const dataMonth = {
+//   labels: ['Nicosia', 'Paphos', 'Limassol', 'Larnaca'],
+//   datasets: [
+//       {
+//           label: 'Daily Visitors',
+//           data: [nicosia, paphos, limassol, larnaca],
+//           backgroundColor: [
+//               'rgba(75, 192, 192, 0.2)',
+//               'rgba(75, 192, 192, 0.2)',
+//               'rgba(75, 192, 192, 0.2)',
+//               'rgba(75, 192, 192, 0.2)',
+//               'rgba(75, 192, 192, 0.2)',
+//             ],
+//             borderWidth: 2
+//       }
+//   ]
+// };
 
 const options = {
     scales: {
@@ -147,7 +291,30 @@ const options = {
   //   )
   // };
 
+  
   const InfoBlock = () => {
+    GetDocs();
+    
+    const getDataMonth = () => {
+      const dataMonth = {
+      labels: ['Nicosia', 'Paphos', 'Limassol', 'Larnaca'],
+      datasets: [
+          {
+              label: 'Total Visitors Per City',
+              data: [NicosiaUsers, PaphosUsers, LimassolUsers, LarnacaUsers],
+              backgroundColor: [
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                ],
+                borderWidth: 2
+          }
+      ]
+      }
+      return dataMonth;
+    }
     return (
       <div className = "container">
       <div className="info-block row h-100 justify-content-center align-content-center">
@@ -184,7 +351,7 @@ const options = {
           <Chart type="bar" data={data} options={options} />
         </div>
         <div className="col-6 chartCard">
-          <Chart type="bar" data={dataMonth} options={options} />
+          <Chart type="bar" data={getDataMonth()} options={options} />
         </div>
       </div>
       </div>
@@ -209,7 +376,7 @@ const options = {
   // }
 
   const renderContent = () => {
-    console.log(selectedMenuItem)
+    //console.log(selectedMenuItem)
     switch (selectedMenuItem) {
       case "Home":
         return (
