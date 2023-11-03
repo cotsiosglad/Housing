@@ -63,10 +63,10 @@ const Pages = () => {
           {/* Route for AdminLogin with AdminLoginLayout */}
           
           {/* <Route exact path="/admin/home" render={() => someUser ? <AdminLoginLayout><AdminMainPage /></AdminLoginLayout> : <Redirect to='/admin' /> } /> */}
-          <UserAuthorization>
+          {/* <UserAuthorization> */}
             <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} />
             <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
-          </UserAuthorization>
+          {/* </UserAuthorization> */}
           {/* <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} /> */}
           {/* <Route path="/projects/:id">
             <DefaultLayout>
