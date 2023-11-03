@@ -17,7 +17,7 @@ import UserAuthorization from "../helper/UserAuthorization"
 const someUser = GetAuthUser();
 
 
-debugger;
+// debugger;
 const DefaultLayout = ({ children }) => (
   <>
     <Header />
