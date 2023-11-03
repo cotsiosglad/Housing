@@ -423,7 +423,7 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                                     <LiaMapMarkerSolid />
                                 </div>
                                 <div className='info-icon-content'>
-                                    <p className='info-icon-title'>LOCATION</p>
+                                    <p className='info-icon-title'>Περιοχή</p>
                                     <p className='info-icon-description'>{project.location},{project.region}</p>
                                 </div>
                             </div>
@@ -432,7 +432,7 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                                     <LiaLayerGroupSolid />
                                 </div>
                                 <div className='info-icon-content'>
-                                    <p className='info-icon-title'>FLOORS</p>
+                                    <p className='info-icon-title'>Ορόφοι</p>
                                     <p className='info-icon-description'>{project.floors}</p>
                                 </div>
                             </div>
@@ -441,7 +441,7 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                                     <LiaBedSolid />
                                 </div>
                                 <div className='info-icon-content'>
-                                    <p className='info-icon-title'>BEDROOMS</p>
+                                    <p className='info-icon-title'>Κρεβάτια</p>
                                     <p className='info-icon-description'>{project.bedrooms}</p>
                                 </div>
                             </div>
@@ -450,7 +450,7 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                                     <LiaBathSolid />
                                 </div>
                                 <div className='info-icon-content'>
-                                    <p className='info-icon-title'>BATHROOMS</p>
+                                    <p className='info-icon-title'>Μπάνια</p>
                                     <p className='info-icon-description'>{project.bathrooms}</p>
                                 </div>
                             </div>
@@ -461,7 +461,7 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                                     <LiaBuilding />
                                 </div>
                                 <div className='info-icon-content'>
-                                    <p className='info-icon-title'>TYPE</p>
+                                    <p className='info-icon-title'>Τύπος</p>
                                     <p className='info-icon-description'> {project.type}</p>
                                 </div>
                             </div>
@@ -470,7 +470,7 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                                     <LiaBoxesSolid />
                                 </div>
                                 <div className='info-icon-content'>
-                                    <p className='info-icon-title'>APARTMENTS</p>
+                                    <p className='info-icon-title'>Διαμερίσματα</p>
                                     <p className='info-icon-description'>{apartmentList && apartmentList.length > 0 ? apartmentList.length + 1 : 0}</p>
                                 </div>
                             </div>
@@ -479,7 +479,7 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                                     <LiaExclamationCircleSolid />
                                 </div>
                                 <div className='info-icon-content'>
-                                    <p className='info-icon-title'>STATUS</p>
+                                    <p className='info-icon-title'>Κατάσταση</p>
                                     <p className='info-icon-description'>{project.status}</p>
                                 </div>
                             </div>
@@ -546,20 +546,20 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                         <LoadingBar isVisible={blocked} />
                         <div className='col-12'>
                             <div className='project-wrapper-title'>
-                                <Heading title="AVAILABILITY" />
+                                <Heading title="ΔΙΑΘΕΣΙΜΟΤΗΤΑ" />
                             </div>
                             <div className='project-wrapper-content'>
                                 <DataTable selectionMode="single" selection={selectedProject} metaKeySelection={false} onSelectionChange={(e) => onSelectItem(e.value)} dataKey="flatNo" value={apartmentList} stripedRows tableStyle={{ minWidth: '50rem' }}>
-                                    <Column field="flatNo" header="Flat No."></Column>
-                                    <Column field="beds" header="Beds"></Column>
-                                    <Column field="baths" header="Baths"></Column>
-                                    <Column field="internalArea" header="Cov. Area"></Column>
-                                    <Column field="coveredVerandas" header="Cov. Verandas"></Column>
-                                    <Column field="verandas" header="Verandas"></Column>
-                                    <Column field="storage" header="Storage"></Column>
-                                    <Column field="area" header="Area"></Column>
-                                    
-                                    <Column field="status" header="Status"></Column>
+                                <Column field="flatNo" header="Αριθμός Διαμερίσματος"></Column>
+                                <Column field="beds" header="Κρεβάτια"></Column>
+                                <Column field="baths" header="Μπάνια"></Column>
+                                <Column field="internalArea" header="Καλυμμένη Περιοχή"></Column>
+                                <Column field="coveredVerandas" header="Καλυμμένες Βεράντες"></Column>
+                                <Column field="verandas" header="Βεράντες"></Column>
+                                <Column field="storage" header="Αποθήκη"></Column>
+                                <Column field="area" header="Περιοχή"></Column>
+
+                                <Column field="status" header="Κατάσταση"></Column>
                                     <Column header="Actions" body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }} alignFrozen="right" frozen={true}></Column>
                                     {/* <Column header="Actions" exportable={false} style={{ minWidth: '8rem' }} alignFrozen="right" frozen={true}></Column> */}
                                 </DataTable>

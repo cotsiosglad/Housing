@@ -13,7 +13,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 
     const handleOptions = (options) => {
         const botMessage = createChatBotMessage(
-            "These are our services.",
+            "Αυτές είναι οι υπηρεσίες μας",
             {
                 widget: "options",
                 loading: true,
@@ -29,7 +29,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 
     const handleServiceList = () => {
         const botMessage = createChatBotMessage(
-            "These are our services",
+            "Αυτές είναι οι υπηρεσίες μας",
             {
                 widget: "serviceslist",
                 loading: true,
@@ -45,7 +45,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 
     const handleContactUs = () => {
         const botMessage = createChatBotMessage(
-            "If you want to contact us click on the links below:",
+            "Εάν θέλετε να επικοινωνήσετε μαζί μας, κάντε κλικ στους σύνδεσμους παρακάτω:",
             {
                 widget: "contactUs",
                 loading: true,
@@ -59,7 +59,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     }
     const handleProjectList = () => {
         const botMessage = createChatBotMessage(
-            "Below are our projects\nClick on any of them to see more details:",
+            "Παρακάτω βρίσκονται τα έργα μας.\nΚάντε κλικ σε οποιοδήποτε από αυτά για να δείτε περισσότερες λεπτομέρειες.",
             {
                 widget: "projectlists",
                 loading: true,

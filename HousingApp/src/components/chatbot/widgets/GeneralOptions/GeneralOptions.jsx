@@ -5,15 +5,15 @@ import Options from "../Options/Options";
 
 const chatbotItems = [
   {
-    name: "Services",
+    name: "Υπηρεσίες",
     handler: "handleServiceList",
   },
   {
-    name: "Projects",
+    name: "Εργα",
     handler: "handleProjectList"
   },
   {
-    name: "Contact Us",
+    name: "Επικοινωνία",
     handler: "handleContactUs"
   }
 ]

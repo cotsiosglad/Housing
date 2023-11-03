@@ -14,9 +14,9 @@ import ContactUs from './widgets/ContactUs/ContactUs.jsx';
 const botName = 'Domus Alba';
 const config = {
     initialMessages: [
-        createChatBotMessage(`Welcome to ${botName}`),
+        createChatBotMessage(`Καλώς ήλθατε στη ${botName}`),
         createChatBotMessage(
-            "What can I help you with today?",
+            "Πώς μπορώ να σας βοηθήσω σήμερα;",
             {
                 widget: "options",
                 withAvatar: true,
