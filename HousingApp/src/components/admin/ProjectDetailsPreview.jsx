@@ -576,7 +576,7 @@ const ProjectDetailsPreview = ({ project, apartmentList, proejctDescription, pro
                         <button
   className="whatsapp-button"
   onClick={() => {
-    const whatsappUrl = "https://web.whatsapp.com/send/?phone=%2B96812104&text=Entaaksi%2C&type=phone_number&app_absent=0";
+    const whatsappUrl = "https://web.whatsapp.com/send/?phone=%2B96812104&text=Ενδιαφέρομαι%2C&type=phone_number&app_absent=0";
     window.open(whatsappUrl, "_blank");
   }}
 >
