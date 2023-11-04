@@ -25,7 +25,7 @@ function AdminMainPage() {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Home");
   const [users, setUsers] = useState([]);
   // const auth = getAuth(app)
-  console.log(auth)
+  //console.log(auth)
   // if (auth.currentUser == null){
   //   window.location.href= '/admin/'
   // }
@@ -134,8 +134,6 @@ function AdminMainPage() {
     if (result == true){
        //console.log("in current week")
        counter ++;
-       
-       
     }
     else {
       //console.log("not in current week")
@@ -184,7 +182,7 @@ function AdminMainPage() {
     datasets: [
         {
             label: 'Weekly Visitors',
-            data: [40, 60, 46, 55, 37, 50, 30],
+            data: [0, 0, 0, 0, 0, 0, 0],
             backgroundColor: [
                 'rgba(255, 159, 64, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
