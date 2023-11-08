@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.contact{
+  overflow-x: hidden;
+}
+
 .contact textarea {
   border: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -124,6 +128,13 @@
   width: 18px;
   height: 18px;
   animation: pulse 1s linear infinite;
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1024px) {
+  .leftline {
+    width: 50% !important;
+    margin-top: 5rem!important;
+}
 }
 
 @keyframes pulse {
