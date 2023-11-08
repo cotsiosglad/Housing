@@ -1,15 +1,13 @@
-import React, { useState } from "react"
-import img from "../images/services.jpg"
-import Back from "../common/Back"
-import ServiceBox from "../services/serviceBox"
+import React, { useState } from "react";
+import img from "../images/services.jpg";
+import Back from "../common/Back";
+import ServiceBox from "../services/serviceBox";
 
-import "../../App.css"
-import "./services.css"
+import "../../App.css";
+import "./services.css";
 // import useIntersectionObserver from "../../customHooks/useIntersectionObserver"
-import ScrollToTop from "../../customHelperComponents/ScrollToTop"; // Import the ScrollToTop component
-import DialogContactForm from "../helper/dialogContactForm/DialogContactForm"
-
-
+// import ScrollToTop from "../../customHelperComponents/ScrollToTop"; // Import the ScrollToTop component
+import DialogContactForm from "../helper/dialogContactForm/DialogContactForm";
 
 const Services = () => {
   // useIntersectionObserver({
@@ -18,29 +16,37 @@ const Services = () => {
   // 	threshold: 0.4,
   // });~
 
-  const [dialogServiceVisible, setDialogServiceVisible] = useState(false)
+  const [dialogServiceVisible, setDialogServiceVisible] = useState(false);
 
   const updateDialogServiceVisible = (newState) => {
-    console.log(newState)
+    console.log(newState);
     setDialogServiceVisible(newState);
   };
 
-
-
   return (
     <>
-      <ScrollToTop />
-      <div className='services mb'>
-        <Back name='Υπηρεσίες' title='Υπηρεσίες - Όλες οι υπηρεσίες' cover={img} />
-        <div className='container mtop'>
+      {/* <ScrollToTop /> */}
+      <div className="services mb">
+        <Back
+          name="Υπηρεσίες"
+          title="Υπηρεσίες - Όλες οι υπηρεσίες"
+          cover={img}
+        />
+        <div className="container mtop">
           <div className="row d-flex justify-content-evenly">
-            <ServiceBox serviceButtonState={dialogServiceVisible} updateServiceButtonService={setDialogServiceVisible} />
+            <ServiceBox
+              serviceButtonState={dialogServiceVisible}
+              updateServiceButtonService={setDialogServiceVisible}
+            />
           </div>
         </div>
       </div>
-      <DialogContactForm dialogVisibleStage={dialogServiceVisible} updateDialogVisibleState={updateDialogServiceVisible} />
+      <DialogContactForm
+        dialogVisibleStage={dialogServiceVisible}
+        updateDialogVisibleState={updateDialogServiceVisible}
+      />
 
-      {/* 
+      {/*
       <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogServiceVisible} style={{  height:'448px',width: '75vw' }}
               modal  focusOnShow={true} keepInViewport={true}  contentStyle={{ height: '300px' }} onHide={() => setDialogServiceVisible(false)} footer={dialogFooterTemplate}>
         <div className="container-fluid contact-form">
@@ -65,7 +71,7 @@ const Services = () => {
               <label htmlFor="contactNumber" className="field-header">
                               Phone Number
               </label>
-              <InputNumber id="contactNumber" value={contactModel.contactNumber} onValueChange={(e) => onInputNumberChange(e, 'contactNumber')} required autoFocus className={classNames({ 'p-invalid': submitted && !contactModel.contactNumber })}/> 
+              <InputNumber id="contactNumber" value={contactModel.contactNumber} onValueChange={(e) => onInputNumberChange(e, 'contactNumber')} required autoFocus className={classNames({ 'p-invalid': submitted && !contactModel.contactNumber })}/>
               {submitted && !contactModel.contactNumber && <small className="p-error">Number is required.</small>}
             </div>
             <div className="col-12 col-md-6 d-grid">
@@ -86,7 +92,7 @@ const Services = () => {
         </div>
       </Dialog> */}
     </>
-  )
-}
+  );
+};
 
-export default Services
+export default Services;

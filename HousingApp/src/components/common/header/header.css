@@ -142,6 +142,11 @@
   display: none !important;
 }
 
+.slick-next:before,.slick-prev:before{
+  font-size: 35px!important;
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
 /* svg {
   fill: currentColor;
   vertical-align: middle;
@@ -198,7 +203,7 @@
   }
 
   .App{
-    right: 5px;
+    right: 70px;
   }
 }
 
@@ -342,5 +347,9 @@
 }
 body{
   overflow: scroll;
+}
+
+.slick-next:before,.slick-prev:before{
+  font-size: 20px!important;
 }
 }

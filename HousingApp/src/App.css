@@ -9,7 +9,7 @@
   font-family: system-ui;
   /* font-size: large; */
 }
-/* div,section,iframe{
+/* *{
     border: 1px solid #333333;
     height: 100px_350px;
 } */
@@ -196,6 +196,10 @@ img {
 
 .mb {
   margin-bottom: 80px;
+}
+
+.blog-out{
+  overflow-x: hidden
 }
 
 .section-show {

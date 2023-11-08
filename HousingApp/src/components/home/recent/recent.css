@@ -26,6 +26,7 @@
 }
 
 .recent {
+  overflow-x: hidden;
   background: var(--color2);;
 }
 
@@ -101,7 +102,8 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  text-align: center;
+  /* text-align: center; */
+  text-align: -webkit-center;
   color: #fff;
 }
 
