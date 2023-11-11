@@ -25,7 +25,7 @@ function AdminMainPage() {
   const [selectedMenuItem, setSelectedMenuItem] = useState("Home");
   const [users, setUsers] = useState([]);
   // const auth = getAuth(app)
-  console.log(auth);
+  //console.log(auth)
   // if (auth.currentUser == null){
   //   window.location.href= '/admin/'
   // }
@@ -135,10 +135,11 @@ function AdminMainPage() {
     let yourDate = new Date(VisitorsDayTime);
     let result = isDateInCurrentWeek(yourDate);
     //console.log(result)
-    if (result == true) {
-      //console.log("in current week")
-      counter++;
-    } else {
+    if (result == true){
+       //console.log("in current week")
+       counter ++;
+    }
+    else {
       //console.log("not in current week")
     }
   }
@@ -182,33 +183,35 @@ function AdminMainPage() {
   const data = {
     labels: [days[0], days[1], days[2], days[3], days[4], days[5], days[6]],
     datasets: [
-      {
-        label: "Weekly Visitors",
-        data: [40, 60, 46, 55, 37, 50, 30],
-        backgroundColor: [
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-        ],
-        borderColor: [
-          "rgb(255, 159, 64)",
-          "rgb(75, 192, 192)",
-          "rgb(54, 162, 235)",
-          "rgb(153, 102, 255)",
-        ],
-        borderWidth: 2,
-      },
-    ],
-  };
-  // console.log(NicosiaUsers)
-  // console.log(LarnacaUsers)
-  // console.log(PaphosUsers)
-  // const i = 2
-  // const nicosia = NicosiaUsers
-  // const larnaca = LarnacaUsers
-  // const paphos = PaphosUsers
-  // const limassol = LimassolUsers
+        {
+            label: 'Weekly Visitors',
+            data: [0, 0, 0, 0, 0, 0, 0],
+            backgroundColor: [
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+              ],
+              borderColor: [
+                'rgb(255, 159, 64)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+              ],
+              borderWidth: 2
+        }
+    ]
+};
+// console.log(NicosiaUsers)
+// console.log(LarnacaUsers)
+// console.log(PaphosUsers)
+// const i = 2
+// const nicosia = NicosiaUsers
+// const larnaca = LarnacaUsers
+// const paphos = PaphosUsers
+// const limassol = LimassolUsers
+
+
 
   // const dataMonth = {
   //   labels: ['Nicosia', 'Paphos', 'Limassol', 'Larnaca'],

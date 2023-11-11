@@ -4,16 +4,16 @@ import { app, auth } from '../../firebase';
 
 class UserAuthorization extends Component {
   async componentDidMount() {
+    const { pathname } = this.props.location;
     // Check if the user is authenticated
-    await auth.onAuthStateChanged((user) => {
-      if (!user) {
-        // If the user is not authenticated, redirect to the login page
-        this.props.history.push('/admin');
-      }
-      else {
-        this.props.history.push('/admin/home');
-      }
-    });
+    if (pathname === '/admin' || pathname === '/admin/home') {
+      // If the user is not authenticated, redirect to the login page
+      auth.onAuthStateChanged((user) => {
+        if (!user) {
+          this.props.history.push('/admin');
+        }
+      });
+    }
   }
 
   render() {

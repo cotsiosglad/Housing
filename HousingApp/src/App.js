@@ -206,7 +206,17 @@ function App() {
 	// 	};
 	//   }, []);
 
-
+	// Insert Dummy Data for testing
+	// const today = new Date()
+	// const dayandtime= today.toString()
+	// const model = {
+	// 	IP: "10.10.152.1",
+	// 	City: "Nicosia",
+	// 	CountryName: "Nicosia",
+	// 	DayTime: dayandtime
+	// }
+	// WriteDoc(model, "VisitorsInfo")
+	
 	// Define the options for the IntersectionObserver
 	const options = {
 		root: null,
