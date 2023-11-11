@@ -47,7 +47,7 @@ const ProjectDetailsPreview = ({
 }) => {
   const [toggler, setToggler] = useState(false);
   const [dialogFormVisible, setDialogFormVisible] = useState(false);
-  const [selectedAoartment, setSelectedApartment] = useState("");
+  const [selectedApartment, setSelectedApartment] = useState("");
   // const [selectedProject, setSelectedProject] = useState(null);
   const [blocked, setBlocked] = useState(false);
   // const [currProjectImages, setCurrProjectImages] = useState([]);
@@ -817,7 +817,7 @@ const ProjectDetailsPreview = ({
       <DialogContactForm
         dialogVisibleStage={dialogFormVisible}
         updateDialogVisibleState={updateDialogProjectVisible}
-        contactFormFor={selectedAoartment}
+        contactFormFor={selectedApartment}
       />
       {/* <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogFormVisible} style={{ width: '75vw' }} maximizable
                 modal contentStyle={{ height: '300px' }} onHide={() => setDialogFormVisible(false)} footer={dialogFooterTemplate}>
