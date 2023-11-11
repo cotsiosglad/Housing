@@ -21,15 +21,11 @@ const Contact = () => {
     <>
       <ScrollToTop />
       <section className="contact mb">
-        <Back
-          name="ΕΠΙΚΟΙΝΩΝIA"
-          title="Λάβετε Βοήθεια και Φιλική Υποστήριξη"
-          cover={img}
-        />
+        <Back name="ΕΠΙΚΟΙΝΩΝIA" title="Eπικοινωνήστε μαζί μας" cover={img} />
         <div className="container">
           <div className="row">
             <div className="col-12 col-md-6 col-lg-6">
-              <form className='shadow'>
+              <form className="shadow">
                 <h4 className="title">ΕΠΙΚΟΙΝΩΝIA</h4> <br />
                 <div>
                   <input type="text" placeholder="Όνομα " />

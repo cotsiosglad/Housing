@@ -98,7 +98,7 @@ export default () => {
           <div
             className="info-box col-12 col-md-6 col-lg-6 d"
             data-aos={isMobile ? "fade-in" : "fade-right"}
-            data-aos-delay="800"
+            data-aos-delay="600"
             data-aos-duration="1000"
             data-aos-once="true">
             <div className="card d-flex align-items-center flex-column">
@@ -118,7 +118,7 @@ export default () => {
           <div
             className="info-box col-12 col-md-6 col-lg-6 d"
             data-aos={isMobile ? "fade-in" : "fade-left"}
-            data-aos-delay="800"
+            data-aos-delay="600"
             data-aos-duration="1000"
             data-aos-once="true">
             <div className="card -flex align-items-center flex-column">
@@ -139,7 +139,7 @@ export default () => {
           <div
             className="info-box col-12 col-md-6 col-lg-6"
             data-aos={isMobile ? "fade-in" : "fade-right"}
-            data-aos-delay="800"
+            data-aos-delay="600"
             data-aos-duration="1000"
             data-aos-offset="300"
             data-aos-once="true">
@@ -159,7 +159,7 @@ export default () => {
           <div
             className="info-box col-12 col-md-6 col-lg-6"
             data-aos={isMobile ? "fade-in" : "fade-left"}
-            data-aos-delay="800"
+            data-aos-delay="600"
             data-aos-duration="1000"
             data-aos-offset="300"
             data-aos-once="true">

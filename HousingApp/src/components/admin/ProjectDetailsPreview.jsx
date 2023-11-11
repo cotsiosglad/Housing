@@ -47,6 +47,7 @@ const ProjectDetailsPreview = ({
 }) => {
   const [toggler, setToggler] = useState(false);
   const [dialogFormVisible, setDialogFormVisible] = useState(false);
+  const [selectedApartment, setSelectedApartment] = useState("");
   // const [selectedProject, setSelectedProject] = useState(null);
   const [blocked, setBlocked] = useState(false);
   // const [currProjectImages, setCurrProjectImages] = useState([]);
@@ -384,6 +385,9 @@ const ProjectDetailsPreview = ({
   // };
 
   const actionBodyTemplate = (rowData) => {
+    setSelectedApartment(
+      "Project:" + project.title + " Flat:" + rowData.flatNo
+    );
     return (
       <>
         <Button
@@ -721,16 +725,18 @@ const ProjectDetailsPreview = ({
                   value={apartmentList}
                   stripedRows
                   tableStyle={{ minWidth: "50rem" }}>
-                    <Column field="flatNo" header="Αριθμός Διαμερίσματος"></Column>
-                    <Column field="beds" header="Κρεβάτια"></Column>
-                    <Column field="baths" header="Μπάνια"></Column>
-                    <Column field="internalArea" header="Καλ. Περιοχή"></Column>
-                    <Column field="coveredVerandas" header="Καλ. Βεράντες"></Column>
-                    <Column field="verandas" header="Βεράντες"></Column>
-                    <Column field="storage" header="Αποθήκη"></Column>
-                    <Column field="area" header="Περιοχή"></Column>
+                  <Column field="flatNo" header="Διαμέρισμα"></Column>
+                  <Column field="beds" header="Κρεβάτια"></Column>
+                  <Column field="baths" header="Μπάνια"></Column>
+                  <Column field="internalArea" header="Καλ. Περιοχή"></Column>
+                  <Column
+                    field="coveredVerandas"
+                    header="Καλ. Βεράντες"></Column>
+                  <Column field="verandas" header="Βεράντες"></Column>
+                  <Column field="storage" header="Αποθήκη"></Column>
+                  <Column field="area" header="Περιοχή"></Column>
 
-                    <Column field="status" header="Κατάσταση"></Column>
+                  <Column field="status" header="Κατάσταση"></Column>
                   <Column
                     header="Actions"
                     body={actionBodyTemplate}
@@ -758,13 +764,13 @@ const ProjectDetailsPreview = ({
               Download
             </a>
             <button
-            className="whatsapp-button"
-            onClick={() => {
-                const whatsappUrl = "https://web.whatsapp.com/send/?phone=%2B96812104&text=Ενδιαφέρομαι%2C&type=phone_number&app_absent=0";
+              className="whatsapp-button"
+              onClick={() => {
+                const whatsappUrl =
+                  "https://web.whatsapp.com/send/?phone=%2B96812104&text=Ενδιαφέρομαι%2C&type=phone_number&app_absent=0";
                 window.open(whatsappUrl, "_blank");
-            }}
-            >
-            WhatsApp
+              }}>
+              WhatsApp
               <svg
                 viewBox="0 0 48 48"
                 y="0px"
@@ -811,6 +817,7 @@ const ProjectDetailsPreview = ({
       <DialogContactForm
         dialogVisibleStage={dialogFormVisible}
         updateDialogVisibleState={updateDialogProjectVisible}
+        contactFormFor={selectedApartment}
       />
       {/* <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogFormVisible} style={{ width: '75vw' }} maximizable
                 modal contentStyle={{ height: '300px' }} onHide={() => setDialogFormVisible(false)} footer={dialogFooterTemplate}>

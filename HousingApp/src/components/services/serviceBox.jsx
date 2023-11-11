@@ -33,7 +33,11 @@ import ScrollToTop from "../../customHelperComponents/ScrollToTop";
 //   )
 // }
 
-const ServiceBox = ({ serviceButtonState, updateServiceButtonService }) => {
+const ServiceBox = ({
+  serviceButtonState,
+  updateServiceButtonService,
+  updateSelectedServiceState,
+}) => {
   // return (
   //   <>
   //       {services.map((items, index) => (
@@ -64,6 +68,7 @@ const ServiceBox = ({ serviceButtonState, updateServiceButtonService }) => {
   const handleChangeState = (e) => {
     // Request a state update in the parent
     updateServiceButtonService(!serviceButtonState);
+    updateSelectedServiceState("Service:" + e);
     console.log(!serviceButtonState);
   };
 
@@ -100,7 +105,11 @@ const ServiceBox = ({ serviceButtonState, updateServiceButtonService }) => {
             </div>
           </div>
           <div className="service-card-button">
-            <button type="button" onClick={handleChangeState}>
+            <button
+              type="button"
+              onClick={() => {
+                handleChangeState(items.title);
+              }}>
               Ενδιαφέρομαι
             </button>
           </div>
