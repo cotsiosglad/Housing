@@ -9,7 +9,7 @@ import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { isBrowser, isMobile } from 'react-device-detect';
-// import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";
 
 export default function DialogContactForm({ dialogVisibleStage, updateDialogVisibleState }) {
 
@@ -25,7 +25,7 @@ export default function DialogContactForm({ dialogVisibleStage, updateDialogVisi
   const [submitted, setSubmitted] = useState(false);
   const toast = useRef(null);
   //Configuration for emailjs
-  // const form = useRef();
+  const form = useRef();
   const dialogFooterTemplate = () => {
     return <Button type="submit" label="Υποβολή" severity="secondary" icon="pi pi-check" onClick={saveContactForm} />;
   };
@@ -64,16 +64,16 @@ export default function DialogContactForm({ dialogVisibleStage, updateDialogVisi
 
         try {
           debugger;
-          // emailjs.sendForm('service_id', 'template_id', form.current, 'public_key')
-          //   .then((result) => {
-          //     alert("Message sent successfully")
-          //     console.log(result.text);
-          //   }, (error) => {
-          //     console.log(error.text);
-          //   });
-          //var aa = getDocById(1,"Contacts");
+          emailjs.sendForm('service_2l3wljg', 'template_iehmlgn', form.current, 'KjCooaWk0QOfBkzcz')
+            .then((result) => {
+              alert("Message sent successfully")
+              console.log(result.text);
+            }, (error) => {
+              console.log(error.text);
+            });
+          // var aa = getDocById(1,"Contacts");
           // writeDoc(_project,'Contacts')
-          //console.log(aa);
+          // console.log(aa);
         }
         catch (e) {
           console.log(e);
@@ -98,16 +98,16 @@ export default function DialogContactForm({ dialogVisibleStage, updateDialogVisi
   console.log("Mobile:" + isMobile)
 
   // Configuration for emailjs
-  // const sendEmail = (e) => {
-  //   e.preventDefault();
+  const sendEmail = (e) => {
+    e.preventDefault();
 
-  // };
+  };
   return (
     <>
       <Toast ref={toast} position="bottom-right" />
       <Dialog header="Στοιχεία Επικοινωνίας" breakpoints={{ '960px': '75vw', '641px': '90vw' }} maximized={isMobile ? true : false} visible={dialogVisibleStage} style={{ height: '448px', width: '50vw' }}
         modal focusOnShow={true} keepInViewport={true} contentStyle={{ height: '300px' }} onHide={handleDialogVisibleState} footer={dialogFooterTemplate}>
-        {/* <form ref={form} onSubmit={sendEmail}> */}
+        <form ref={form} onSubmit={sendEmail}>
         <div className="container-fluid contact-form">
           <div className="row">
             <div className="col-12 col-md-6 d-grid">
@@ -151,7 +151,7 @@ export default function DialogContactForm({ dialogVisibleStage, updateDialogVisi
             </div>
           </div>
         </div>
-        {/* </form> */}
+        </form>
       </Dialog>
     </>
   )
