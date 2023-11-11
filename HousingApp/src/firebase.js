@@ -42,15 +42,8 @@ export const GetAuthUser = () => {
 
     }
     catch (e) {
-        const errorModel = {
-            code: e?.code ? e.code.toString() : null,
-            name: e?.name ? e.name.toString() : null,
-            stack: e?.stack ? e.stack.toString() : null,
-            message: e?.message ? e?.message.toString() : null,
-            timestamp: serverTimestamp()
-        }
-        //write error
-        WriteDoc(errorModel, "ErrorLog");
+        WriteError(e);
+        return null;
     }
 }
 
@@ -76,15 +69,8 @@ export const WriteDoc = async (writeData, collectionName) => {
 
     }
     catch (e) {
-        const errorModel = {
-            code: e?.code ? e.code.toString() : null,
-            name: e?.name ? e.name.toString() : null,
-            stack: e?.stack ? e.stack.toString() : null,
-            message: e?.message ? e?.message.toString() : null,
-            timestamp: serverTimestamp()
-        }
-        //write error
-        await WriteDoc(errorModel, "ErrorLog");
+        WriteError(e);
+        return null;
     }
 }
 
@@ -106,15 +92,17 @@ export const UpdateDoc = async (writeData, findId, collectionName, idPropertyNam
 
     }
     catch (e) {
-        const errorModel = {
-            code: e?.code ? e.code.toString() : null,
-            name: e?.name ? e.name.toString() : null,
-            stack: e?.stack ? e.stack.toString() : null,
-            message: e?.message ? e?.message.toString() : null,
-            timestamp: serverTimestamp()
-        }
-        //write error
-        await WriteDoc(errorModel, "ErrorLog");
+        // const errorModel = {
+        //     code: e?.code ? e.code.toString() : null,
+        //     name: e?.name ? e.name.toString() : null,
+        //     stack: e?.stack ? e.stack.toString() : null,
+        //     message: e?.message ? e?.message.toString() : null,
+        //     timestamp: serverTimestamp()
+        // }
+        // //write error
+        // await WriteDoc(errorModel, "ErrorLog");
+        WriteError(e);
+        return null;
     }
 }
 
@@ -140,16 +128,7 @@ export const GetDocById = async (findId, collectionName, idPropertyName = null) 
 
     }
     catch (e) {
-        console.log(e);
-        const errorModel = {
-            code: e?.code ? e.code.toString() : null,
-            name: e?.name ? e.name.toString() : null,
-            stack: e?.stack ? e.stack.toString() : null,
-            message: e?.message ? e?.message.toString() : null,
-            timestamp: serverTimestamp()
-        }
-        //write error
-        await WriteDoc(errorModel, "ErrorLog");
+        WriteError(e);
         return null;
     }
 }
@@ -169,16 +148,7 @@ export const GetDocRefId = async (findId, collectionName, idPropertyName = null)
 
     }
     catch (e) {
-        console.log(e);
-        const errorModel = {
-            code: e?.code ? e.code.toString() : null,
-            name: e?.name ? e.name.toString() : null,
-            stack: e?.stack ? e.stack.toString() : null,
-            message: e?.message ? e?.message.toString() : null,
-            timestamp: serverTimestamp()
-        }
-        //write error
-        await WriteDoc(errorModel, "ErrorLog");
+        WriteError(e);
         return null;
     }
 }
@@ -198,16 +168,7 @@ export const GetDocByRefId = async (collectionName, refId) => {
 
     }
     catch (e) {
-        console.log(e);
-        const errorModel = {
-            code: e?.code ? e.code.toString() : null,
-            name: e?.name ? e.name.toString() : null,
-            stack: e?.stack ? e.stack.toString() : null,
-            message: e?.message ? e?.message.toString() : null,
-            timestamp: serverTimestamp()
-        }
-        //write error
-        await WriteDoc(errorModel, "ErrorLog");
+        WriteError(e);
         return null;
     }
 }
@@ -278,9 +239,7 @@ export const GetStorageFolderList = async (folderPath, pageToken) => {
 
     }
     catch (e) {
-        console.log(e);
-        //write error
-        WriteDoc(e, "ErrorLog");
+        WriteError(e);
         return null;
     }
 }
@@ -324,7 +283,41 @@ export const GetStorageFolderList = async (folderPath, pageToken) => {
 //         return null;
 //     }
 // }
+export const DownloadSingleFile= async (folderPath)=>{
+    try {
+        //folderPath = "images/projects/abc";
+        debugger;
+        const result = await GetStorageFolderList(folderPath);
 
+        if(result && result.length>0){
+            await getDownloadURL(ref(storage, result[0].fullPath)).then((url) => {
+                // `url` is the download URL for 'images/stars.jpg'
+            
+                // This can be downloaded directly:
+                const xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = (event) => {
+                  const blob = xhr.response;
+                };
+                xhr.open('GET', url);
+                xhr.send();
+              });
+        }
+return true;
+        // This can be downloaded directly:
+        // const xhr = new XMLHttpRequest();
+        // xhr.responseType = 'blob';
+        // xhr.onload = (event) => {
+        //     const blob = xhr.response;
+        // };
+        // xhr.open('GET', url);
+        // xhr.send();
+        // return retList;
+    } catch (e) {
+        WriteError(e);
+        return null;
+    }
+}
 export const GetStorageFolderFiles = async (folderPath) => {
     try {
         //folderPath = "images/projects/abc";
@@ -352,13 +345,12 @@ export const GetStorageFolderFiles = async (folderPath) => {
         // xhr.send();
         // return retList;
     } catch (e) {
-        console.log(e);
-        WriteDoc(e, "ErrorLog");
+        WriteError(e);
         return null;
     }
 };
 
-export const DeleteStorageFolderFiles = async (folderPath) => {
+export async function DeleteStorageFolderFiles (folderPath){
     try {
         //folderPath = "images/projects/abc";
         const result = await GetStorageFolderList(folderPath);
@@ -379,8 +371,7 @@ export const DeleteStorageFolderFiles = async (folderPath) => {
         // xhr.send();
         // return retList;
     } catch (e) {
-        console.log(e);
-        WriteDoc(e, "ErrorLog");
+        WriteError(e);
         return null;
     }
 };
@@ -408,8 +399,7 @@ export const DeleteFileIfNotExist = async (folderPath, fileNameList) => {
         // xhr.send();
         // return retList;
     } catch (e) {
-        console.log(e);
-        WriteDoc(e, "ErrorLog");
+        WriteError(e);
         return null;
     }
 };

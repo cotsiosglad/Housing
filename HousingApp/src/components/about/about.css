@@ -1,5 +1,6 @@
 .about {
   margin-bottom: 80px;
+  overflow-x: hidden;
 }
 .about .heading {
   text-align: left;

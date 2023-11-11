@@ -6,21 +6,22 @@ import { StrictMode, useEffect, useRef, useState } from "react"
 //import { initializeApp } from "firebase/app";
 // import firebaseConfig from "./components/firebaseConfig/firebaseconfig";
 //import { getAnalytics } from "firebase/analytics";
-import Chatbot from "react-chatbot-kit";
+// import Chatbot from "react-chatbot-kit";
 import 'react-chatbot-kit/build/main.css';
-import config from "./components/chatbot/chatconfig";
-import MessageParser from "./components/chatbot/chatMessageParser";
-import ActionProvider from "./components/chatbot/chatActionProvider";
+// import config from "./components/chatbot/chatconfig";
+// import MessageParser from "./components/chatbot/chatMessageParser";
+// import ActionProvider from "./components/chatbot/chatActionProvider";
 //#region NIKOLAS
-import useIntersectionObserver from './customHooks/useIntersectionObserver'; // Import the custom hook
+// import useIntersectionObserver from './customHooks/useIntersectionObserver'; // Import the custom hook
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 // import { app } from "./firebase.js";
 import { initializeApp } from 'firebase/app'
 // import { getFirestore, doc, setDoc, getDocs, collection, serverTimestamp } from "firebase/firestore"
 import axios from "axios";
-import { WriteDoc } from "./firebase";
-import { Timestamp, serverTimestamp } from "firebase/firestore";
+// import { WriteDoc } from "./firebase";
+// import { Timestamp, serverTimestamp } from "firebase/firestore";
+import { ScrollTop } from "primereact/scrolltop";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyD-4YcVKrl3j55I2jTGb_3WEZkeyIrQgOw",
@@ -73,8 +74,8 @@ const app = initializeApp(firebaseConfig);
 // 		})
 // 	}
 // }
-const inputs = { title: "Nikolas", path: "the image/path" }
-const readDoc = { id: "650291541", collection: "images" }
+// const inputs = { title: "Nikolas", path: "the image/path" }
+// const readDoc = { id: "650291541", collection: "images" }
 // const setUserData = 
 // {
 // 	IP : '',
@@ -286,7 +287,12 @@ function App() {
 		//console.log(model)
 	}, [])
 
-	return <><StrictMode><Pages /></StrictMode></>
+	return <><StrictMode><Pages /><ScrollTop
+	target="window"
+	threshold={100}
+	className="btn-secondary"
+	icon="pi pi-arrow-up text-base"
+  /></StrictMode></>
 }
 
 export default App
