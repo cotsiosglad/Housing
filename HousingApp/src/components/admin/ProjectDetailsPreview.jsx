@@ -759,8 +759,14 @@ const ProjectDetailsPreview = ({
               target="_blank">
               Download
             </a>
-            <button className="whatsapp-button">
-              WhatsApp
+            <button
+            className="whatsapp-button"
+            onClick={() => {
+                const whatsappUrl = "https://web.whatsapp.com/send/?phone=%2B96812104&text=Ενδιαφέρομαι%2C&type=phone_number&app_absent=0";
+                window.open(whatsappUrl, "_blank");
+            }}
+            >
+            WhatsApp
               <svg
                 viewBox="0 0 48 48"
                 y="0px"
