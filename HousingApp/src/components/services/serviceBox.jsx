@@ -1,7 +1,8 @@
-import React,{useEffect} from "react"
-import { services } from "../data/Data"
-import "./serviceBox.css"
-import { BsCheckLg} from 'react-icons/bs';
+import React, { useEffect } from "react";
+import { services } from "../data/Data";
+import "./serviceBox.css";
+import { BsCheckLg } from "react-icons/bs";
+import ScrollToTop from "../../customHelperComponents/ScrollToTop";
 
 //https://uiverse.io/Yaya12085/serious-eagle-83
 // const ServiceBox = () => {
@@ -24,7 +25,7 @@ import { BsCheckLg} from 'react-icons/bs';
 //                     )
 //                 })}
 //             </ul>
-            
+
 //           </div>
 //         ))}
 //       {/* </div> */}
@@ -33,7 +34,6 @@ import { BsCheckLg} from 'react-icons/bs';
 // }
 
 const ServiceBox = ({ serviceButtonState, updateServiceButtonService }) => {
-
   // return (
   //   <>
   //       {services.map((items, index) => (
@@ -69,43 +69,46 @@ const ServiceBox = ({ serviceButtonState, updateServiceButtonService }) => {
 
   return (
     <>
-        {services.map((items, index) => (
-          <div className="service-card-container col-md-4" data-aos="flip-left" data-aos-duration="1000" data-aos-once="true" key={index}>
-            <div className="service-card-header">
-              {items.title}
+      <ScrollToTop />
+      {services.map((items, index) => (
+        <div
+          className="service-card-container col-md-4"
+          data-aos="flip-left"
+          data-aos-duration="1000"
+          data-aos-once="true"
+          key={index}>
+          <div className="service-card-header">{items.title}</div>
+          <div className="mb-4 h-100">
+            <div className="service-card-content">
+              {items.provides.map((point, itemIndex) => {
+                return (
+                  <div className="row" key={`${index}-${itemIndex}`}>
+                    <div className="col-2 col-md-3 col-lg-2 service-card-content-item">
+                      <span>
+                        <BsCheckLg />
+                      </span>
+                    </div>
+                    <div className="col-9 col-md-8 col-lg-9">
+                      <p>{point.Description}</p>
+                      <span className={point.Note ? "fst-italic" : "d-none"}>
+                        {point.Note}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-            <div className="mb-4 h-100">
-               <div className="service-card-content">
-              {items.provides.map((point,itemIndex)=> {
-                  return(
-                      <div className="row" key={`${index}-${itemIndex}`}>
-                        <div className="col-2 col-md-3 col-lg-2 service-card-content-item">
-                        <span>
-                          <BsCheckLg/>
-                        </span>
-                        </div>
-                        <div className="col-9 col-md-8 col-lg-9">
-                          <p>
-                            {point.Description}
-                          </p>
-                          <span className={point.Note?"fst-italic":"d-none"}>{point.Note}</span>
-                        </div>
-                      </div>
-                  )
-                })}
-              </div> 
-            </div>
-            <div className="service-card-button">
-              <button type="button" onClick={handleChangeState}>
-                Ενδιαφερομαι
-              </button>
-            </div>
+          </div>
+          <div className="service-card-button">
+            <button type="button" onClick={handleChangeState}>
+              Ενδιαφέρομαι
+            </button>
+          </div>
         </div>
-        ))}
+      ))}
     </>
-  )
-
-}
+  );
+};
 //for service cards
 //https://uiverse.io/htwarriors108/tasty-stingray-56
-export default ServiceBox
+export default ServiceBox;
