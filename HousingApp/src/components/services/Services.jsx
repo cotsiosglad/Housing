@@ -17,6 +17,7 @@ const Services = () => {
   // });~
 
   const [dialogServiceVisible, setDialogServiceVisible] = useState(false);
+  const [selectedService, setSelectedService] = useState("");
 
   const updateDialogServiceVisible = (newState) => {
     console.log(newState);
@@ -37,6 +38,7 @@ const Services = () => {
             <ServiceBox
               serviceButtonState={dialogServiceVisible}
               updateServiceButtonService={setDialogServiceVisible}
+              updateSelectedServiceState={setSelectedService}
             />
           </div>
         </div>
@@ -44,6 +46,7 @@ const Services = () => {
       <DialogContactForm
         dialogVisibleStage={dialogServiceVisible}
         updateDialogVisibleState={updateDialogServiceVisible}
+        contactFormFor={selectedService}
       />
 
       {/*

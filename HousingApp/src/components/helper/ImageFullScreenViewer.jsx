@@ -53,7 +53,7 @@ export default function ImageFullScreenViewer({
         // toggler={lightboxController.toggler}
         toggler={toggler}
         sources={imageList}
-        // onClose={handleUpdateToggler}
+        onClose={handleUpdateToggler}
         //source={sourceFiles}
         // sources={imageList}
         //source={sourceFiles}
