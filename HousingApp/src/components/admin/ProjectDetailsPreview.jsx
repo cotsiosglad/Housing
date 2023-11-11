@@ -709,7 +709,7 @@ const ProjectDetailsPreview = ({
             <LoadingBar isVisible={blocked} />
             <div className="col-12">
               <div className="project-wrapper-title">
-                <Heading title="ΔΙΑΘΕΣΗΜΟΤΙΤΑ" />
+                <Heading title="ΔΙΑΘΕΣΙΜΟΤΗΤΑ" />
               </div>
               <div className="project-wrapper-content">
                 <DataTable
@@ -724,8 +724,8 @@ const ProjectDetailsPreview = ({
                     <Column field="flatNo" header="Αριθμός Διαμερίσματος"></Column>
                     <Column field="beds" header="Κρεβάτια"></Column>
                     <Column field="baths" header="Μπάνια"></Column>
-                    <Column field="internalArea" header="Καλυμμένη Περιοχή"></Column>
-                    <Column field="coveredVerandas" header="Καλυμμένες Βεράντες"></Column>
+                    <Column field="internalArea" header="Καλ. Περιοχή"></Column>
+                    <Column field="coveredVerandas" header="Καλ. Βεράντες"></Column>
                     <Column field="verandas" header="Βεράντες"></Column>
                     <Column field="storage" header="Αποθήκη"></Column>
                     <Column field="area" header="Περιοχή"></Column>
