@@ -101,7 +101,7 @@ const ServiceBox = ({ serviceButtonState, updateServiceButtonService }) => {
           </div>
           <div className="service-card-button">
             <button type="button" onClick={handleChangeState}>
-              Interested
+              Ενδιαφέρομαι
             </button>
           </div>
         </div>

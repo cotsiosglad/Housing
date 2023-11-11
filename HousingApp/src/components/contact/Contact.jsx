@@ -28,9 +28,9 @@ const Contact = () => {
         />
         <div className="container">
           <div className="row">
-            <div className="col-12 col-md-12 col-lg-6">
-              <form className="shadow">
-                <h4 className="title">ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΑΖΙ ΜΑΣ</h4> <br />
+            <div className="col-12 col-md-6 col-lg-6">
+              <form className='shadow'>
+                <h4 className="title">ΕΠΙΚΟΙΝΩΝIA</h4> <br />
                 <div>
                   <input type="text" placeholder="Όνομα " />
                   <input type="text" placeholder="Ηλεκτρονικό Ταχυδρομείο" />

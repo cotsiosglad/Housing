@@ -9,7 +9,7 @@ const ProjectLists = props => {
         {
             name: items.title, // Use titleType from services as the name
             handler: props.actionProvider.handleProjectDetailslisted,
-            redirect: `/projects/${items.id}`,
+            redirect: `/projects/${items.title}`,
             id: index + 1,
         })
 
