@@ -13,19 +13,9 @@ const About = () => {
         <ScrollToTop />
         <section className="about">
           {/* <Back name='About Us' title='About Us - Who We Are?' cover={img} /> */}
-<<<<<<< HEAD
           <Back name='Για Εμάς' title='Σχετικά με εμάς - Ποιοί είμαστε;' cover={img} />
           <div className='about-content container mtop' >
             <div className='row'>
-=======
-          <Back
-            name="About Us"
-            title="Σχετικά με εμάς - Ποιοί είμαστε;"
-            cover={img}
-          />
-          <div className="about-content container mtop">
-            <div className="row">
->>>>>>> main
               <div className="col-md-6 about-content-text">
                 <Heading title="Ποιοι Είμαστε" subtitle="" />
 
@@ -110,19 +100,9 @@ const About = () => {
         <ScrollToTop />
         <section className="about">
           {/* <Back name='About Us' title='About Us - Who We Are?' cover={img} /> */}
-<<<<<<< HEAD
           <Back name='Για Εμάς' title='Σχετικά με εμάς - Ποιοί είμαστε;' cover={img} />
           <div className='about-content container mtop' >
             <div className='row'>
-=======
-          <Back
-            name="About Us"
-            title="Σχετικά με εμάς - Ποιοί είμαστε;"
-            cover={img}
-          />
-          <div className="about-content container mtop">
-            <div className="row">
->>>>>>> main
               <div className="col-md-6">
                 <Heading title="Ποιοι Είμαστε" subtitle="" />
 
