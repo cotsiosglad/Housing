@@ -117,12 +117,12 @@ const ProjectDetailsPreview = ({
       projectImages.length > 0
         ? projectImages
         : [
-            {
-              itemImageSrc: "../images/no_image.jpg",
-              thumbnailImageSrc: "../images/no_image.jpg",
-              alt: "No Image",
-            },
-          ];
+          {
+            itemImageSrc: "../images/no_image.jpg",
+            thumbnailImageSrc: "../images/no_image.jpg",
+            alt: "No Image",
+          },
+        ];
     //let _images = []
 
     let aa = project;
@@ -706,9 +706,8 @@ const ProjectDetailsPreview = ({
           </div>
         </div>
         <div
-          className={`row ${
-            apartmentList && apartmentList.length > 0 ? "" : "d-none"
-          }`}>
+          className={`row ${apartmentList && apartmentList.length > 0 ? "" : "d-none"
+            }`}>
           <BlockUI blocked={blocked}>
             <LoadingBar isVisible={blocked} />
             <div className="col-12">
@@ -721,6 +720,7 @@ const ProjectDetailsPreview = ({
                   // selection={selectedProject}
                   metaKeySelection={false}
                   onSelectionChange={(e) => onSelectItem(e.value)}
+                  rowClassName={'colouredRows'}
                   dataKey="flatNo"
                   value={apartmentList}
                   stripedRows

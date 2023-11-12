@@ -121,6 +121,11 @@
   .info-block{
     margin-top: 12rem;
   }
+  .red{
+    background: #6366F1!important;
+    color: white !important;
+  }
+
   @media screen and (max-width: 450px){
     .info-block{
         display: flex;

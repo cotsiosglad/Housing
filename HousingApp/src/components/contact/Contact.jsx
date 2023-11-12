@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useRef } from "react";
 import img from "../images/pricing.jpg";
 import Back from "../common/Back";
 import "./contact.css";
@@ -16,24 +16,77 @@ import SocialMediaBar from "../common/header/SocialMediaBar";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { BsFacebook, BsTwitter, BsLinkedin, BsInstagram } from "react-icons/bs";
 import { FaViber, FaWhatsappSquare } from "react-icons/fa";
+import { WriteDoc } from "../../firebase";
+import emailjs from "@emailjs/browser";
+import { Toast } from "primereact/toast";
+import { serverTimestamp } from "firebase/firestore"
+
+const emptyContactModel = {
+  firstName: "",
+  lastName: "",
+  subject: "",
+  contactNumber: "",
+  contactEmail: "",
+  notes: "",
+  contactType: "Contact Us",
+  dateCreated: "",
+  wasRead: false,
+};
+
 const Contact = () => {
+  const form = useRef();
+  const toast = useRef();
+
+  const submitContuctUsForm = (formData) => {
+    debugger;
+    if (formData && formData.current) {
+      let _contactModel = { ...emptyContactModel };
+      _contactModel.firstName = formData.current["firstName"].value;
+      _contactModel.contactEmail = formData.current["contactEmail"].value;
+      _contactModel.subject = formData.current["subject"].value;
+      _contactModel.notes = formData.current["notes"].value;
+      _contactModel.dateCreated = serverTimestamp()
+
+      toast.current.show({ severity: "success", summary: "Successful", detail: "Submitted", life: 3000, });
+      WriteDoc(_contactModel, "Contacts").then((res) => {
+        _contactModel.firstName = formData.current["firstName"].value = "";
+        _contactModel.contactEmail = formData.current["contactEmail"].value = "";
+        _contactModel.subject = formData.current["subject"].value = "";
+        _contactModel.notes = formData.current["notes"].value = "";
+      });
+      emailjs.sendForm("service_2l3wljg", "template_iehmlgn", form.current, "KjCooaWk0QOfBkzcz").then(
+        (result) => {
+          //toast.current.show({ severity: "success", summary: "Successful", detail: "Submitted", life: 3000, });
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+    }
+
+  }
+
   return (
     <>
       <ScrollToTop />
+      <Toast ref={toast} position="bottom-right" />
       <section className="contact mb">
         <Back name="ΕΠΙΚΟΙΝΩΝIA" title="Eπικοινωνήστε μαζί μας" cover={img} />
         <div className="container">
           <div className="row">
             <div className="col-12 col-md-6 col-lg-6">
-              <form className="shadow">
+              <form ref={form} className="shadow">
                 <h4 className="title">ΕΠΙΚΟΙΝΩΝIA</h4> <br />
                 <div>
-                  <input type="text" placeholder="Όνομα " />
-                  <input type="text" placeholder="Ηλεκτρονικό Ταχυδρομείο" />
+                  <input name="firstName" type="text" placeholder="Όνομα " />
+                  <input name="contactEmail" type="text" placeholder="Ηλεκτρονικό Ταχυδρομείο" />
                 </div>
-                <input type="text" placeholder="Θέμα" />
-                <textarea cols="30" rows="10"></textarea>
-                <button className="btn btn-secondary">Υποβολή αίτησης</button>
+                <input name="subject" type="text" placeholder="Θέμα" />
+                <textarea name="notes" cols="30" rows="10"></textarea>
+                <button type="button"
+                  className="btn btn-secondary" onClick={() => { submitContuctUsForm(form) }}>
+                  Υποβολή αίτησης
+                </button>
               </form>
             </div>
             <div className="col-12 col-md-12 col-lg-6 leftline">

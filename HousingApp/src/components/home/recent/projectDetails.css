@@ -130,7 +130,11 @@
 }
 
 /* Change background color of DataTable cells */
-.p-datatable tr {
+/* .p-datatable tr {
+  background-color: var(--color1) !important;
+} */
+
+.colouredRows{
   background-color: var(--color1) !important;
 }
 
