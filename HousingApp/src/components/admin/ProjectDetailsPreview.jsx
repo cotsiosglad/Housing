@@ -82,7 +82,7 @@ const ProjectDetailsPreview = ({
   // }
   function fbshareCurrentPage() {
     //var n = window.location.href;
-    var n = `https://www.domusalba.eu/projects/${project.title}`;
+    var n = `https://domusalba.eu/projects/${project.refName}`;
     return window.open("https://www.facebook.com/sharer/sharer.php?u=" + escape(n) + "&t=" + project.title, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600", "_blank"),
       !1
   }
@@ -814,18 +814,20 @@ const ProjectDetailsPreview = ({
               <div className="container">
                 <div className="row">
                   <div className="col-4">
-                    <BsMessenger style={{ fontSize: "xx-large", cursor: "pointer" }}>
-                      <a href={`fb-messenger://share/?link=https://www.domusalba.eu/projects/${project.refName}`}></a>
-                    </BsMessenger>
+                    <a href={`fb-messenger://share/?link=https://domusalba.eu/projects/${project.refName}`}>
+                      <BsMessenger style={{ fontSize: "xx-large", cursor: "pointer", color: "#0404da" }} />
+                    </a>
+
                   </div>
                   <div className="col-4">
-                    <BsFacebook onClick={() => { fbshareCurrentPage() }} style={{ fontSize: "xx-large", cursor: "pointer" }}>
+                    <BsFacebook onClick={() => { fbshareCurrentPage() }} style={{ fontSize: "xx-large", cursor: "pointer", color: "#0404da" }}>
                     </BsFacebook>
                   </div>
                   <div className="col-4">
-                    <FaViber style={{ fontSize: "xx-large", cursor: "pointer" }}>
-                      <a href={`viber://forward?text=https://www.domusalba.eu/projects/${project.refName}`}></a>
-                    </FaViber>
+                    <a href={`viber://forward?text=https://domusalba.eu/projects/${project.refName}`}>
+                      <FaViber style={{ fontSize: "xx-large", cursor: "pointer", color: "#9c309c" }} />
+                    </a>
+
                   </div>
                 </div>
               </div>
