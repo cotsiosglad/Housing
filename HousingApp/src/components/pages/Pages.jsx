@@ -13,6 +13,7 @@ import AdminMainPage from "../admin/AdminMainPage"
 import ProjectDetails from "../home/recent/ProjectDetails"
 import { auth, GetAuthUser } from "../../firebase"
 import UserAuthorization from "../helper/UserAuthorization"
+import NotFoundPage from "./NotFoundPage"
 // Layout component with Header and Footer
 const someUser = GetAuthUser();
 
@@ -61,11 +62,11 @@ const Pages = () => {
           <Route exact path="/contact" render={() => <DefaultLayout><Contact /></DefaultLayout>} />
 
           {/* Route for AdminLogin with AdminLoginLayout */}
-          
+
           {/* <Route exact path="/admin/home" render={() => someUser ? <AdminLoginLayout><AdminMainPage /></AdminLoginLayout> : <Redirect to='/admin' /> } /> */}
           {/* <UserAuthorization> */}
-            {/* <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} /> */}
-            <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
+          {/* <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} /> */}
+          <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
           {/* </UserAuthorization> */}
           {/* <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} /> */}
           {/* <Route path="/projects/:id">
@@ -74,6 +75,7 @@ const Pages = () => {
             </DefaultLayout>
           </Route>  */}
           <Route path="/projects/:id" component={ProjectDetails} />
+          <Route path='*' component={NotFoundPage} />
         </Switch>
       </Router>
     </>

@@ -224,6 +224,10 @@ img {
   overflow: hidden !important;
 }
 
+.overflow-hidden{
+  overflow: hidden!important;
+}
+
 @media screen and (max-width: 800px) {
 
   .grid4,

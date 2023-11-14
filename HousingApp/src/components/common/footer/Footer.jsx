@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { Button } from 'primereact/button';
 import { Link } from "react-router-dom";
 // import { footer } from "../../data/Data"
@@ -25,8 +25,9 @@ import MessageParser from "../../../components/chatbot/chatMessageParser";
 import ActionProvider from "../../../components/chatbot/chatActionProvider";
 import "../../../components/chatbot/chatBot.css";
 import SocialMediaBar from "../header/SocialMediaBar";
-import { services, projects } from "../../data/Data";
+import { services } from "../../data/Data";
 import "./footer.css";
+import { GetAllDocs } from "../../../firebase";
 
 const Footer = () => {
   const [showBot, toggleBot] = useState(false);
@@ -34,80 +35,23 @@ const Footer = () => {
   const saveMessages = (messages, HTMLString) => {
     localStorage.setItem("chat_messages", JSON.stringify(messages));
   };
-
-  // const loadMessages = () => {
-  //   const messages = JSON.parse(localStorage.getItem('chat_messages'));
-  //   return messages;
-  // };
-
-  // return (
-  //   <>
-  //     <footer>
-  //       <div className='container'>
-  //         <div className="row box">
-  //           <div className="col-2">
-  //             <div className='logo'>
-  //               <Link to="/">
-  //                 {/* <img src='./images/dalogo.png' alt='' /> */}
-  //                 <img src={logoImg} alt='' />
-  //               </Link>
-  //               {/* <img src='../images/logo-light.png' alt='' /> */}
-  //               {/* <h2>Any help you need</h2>
-  //               <p>Find the best deal for you!</p> */}
-
-  //               {/* <div className='input flex'>
-  //                 <input type='text' placeholder='Email Address' />
-  //                 <button>Subscribe</button>
-  //               </div> */}
-  //             </div>
-  //           </div>
-  //           <div className="col-7 text-center align-self-center">
-  //             <span>
-  //               <BsFillPinMapFill />
-  //               <a href="https://goo.gl/maps/gGd1bFMoN7TgSRKy8" target="_blank" rel="noreferrer"> 170, Strovolou Avenue Street 2480 Στρόβολος, Κύπρος</a>
-  //             </span>
-  //           </div>
-  //           <div className="offset-1 col-2 align-self-center">
-  //             <span className="d-block">
-  //               <BsFillTelephoneFill /> +357 97729606
-  //             </span>
-  //             <span className="d-block">
-  //               <BsFacebook />
-  //               <a href="https://www.facebook.com/domusalbacy/" target="_blank" rel="noreferrer"> domusalbacy</a>
-  //             </span>
-  //           </div>
-  //         </div>
-
-  //         {/* {footer.map((val, index) => ( // Add a unique key based on the index
-  //           <div key={index} className='box'>
-  //             <h3>{val.title}</h3>
-  //             <ul>
-  //               {val.text.map((items, itemIndex) => ( // Add a unique key for the inner map
-  //                 <li key={itemIndex}> {items.list} </li>
-  //               ))}
-  //             </ul>
-  //           </div>
-  //         ))} */}
-  //       </div>
-  //     </footer>
-  //     {/* <div className='legal'>
-  //       <span>Rights belong to CCNE</span>
-  //     </div> */}
-  //     <div className="App">
-  //       {showBot && (
-  //         <Chatbot
-  //           config={config}
-  //           actionProvider={ActionProvider}
-  //           // messageHistory={loadMessages()}
-  //           messageParser={MessageParser}
-  //           saveMessages={saveMessages}
-  //         />
-  //       )}
-  //       <button onClick={() => toggleBot((prev) => !prev)}>Bot</button>
-  //     </div>
-  //   </>
-  // )
-
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    //add firebase api here
+    //ProductService.getProducts().then((data) => setProjects(data));
+    //var aa = GetDocByRefId("Projects", "Jt2Prr7DhQb5NmosVi0n").then((data) => console.log(data));
+    async function fetchData() {
+      try {
+        const data = await GetAllDocs("Projects");
+        const sortedProjects = data.map((m) => m.data).sort((a, b) => a.sortNumber - b.sortNumber);
+        setProjects(sortedProjects);
+      } catch (error) {
+        // Handle errors here
+        console.error("Error fetching projects:", error);
+      }
+    }
+    fetchData();
+  }, []);
   return (
     <>
       <footer>
@@ -146,7 +90,7 @@ const Footer = () => {
                     .slice(0, 3)
                     .map((items, index) => (
                       <div key={index}>
-                        <Link to={`/projects/${items.id}`}>{items.title}</Link>
+                        <Link to={`/projects/${items.refName}`}>{items.title}</Link>
                       </div>
                     ))}
                 </div>
