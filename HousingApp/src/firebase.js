@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, doc, addDoc, setDoc, getDocs, getDoc, updateDoc, collection, serverTimestamp, query, where } from "firebase/firestore"
+import { getFirestore, doc, addDoc, setDoc, getDocs, getDoc, updateDoc, collection, serverTimestamp, query, where,deleteDoc } from "firebase/firestore"
 import { getStorage, ref, listAll, getDownloadURL, deleteObject } from "firebase/storage"
 // import { signInWithEmailAndPassword, signOut, getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
@@ -101,6 +101,57 @@ export const UpdateDoc = async (writeData, findId, collectionName, idPropertyNam
         // }
         // //write error
         // await WriteDoc(errorModel, "ErrorLog");
+        WriteError(e);
+        return null;
+    }
+}
+
+export async function DeleteDocByRefId(collectionName,idFieldToSearch,idToSearch){
+    try {
+        if (collectionName) {
+            let refId = await GetDocRefId(idToSearch, collectionName, idFieldToSearch);
+            if (refId) {
+                const docRef = doc(db, collectionName, refId); // Replace with your collection and document ID
+                await deleteDoc(doc(db, collectionName, refId));
+                return true;
+            }
+
+        }
+
+        return false
+
+    }
+    catch (e) {
+        // const errorModel = {
+        //     code: e?.code ? e.code.toString() : null,
+        //     name: e?.name ? e.name.toString() : null,
+        //     stack: e?.stack ? e.stack.toString() : null,
+        //     message: e?.message ? e?.message.toString() : null,
+        //     timestamp: serverTimestamp()
+        // }
+        // //write error
+        // await WriteDoc(errorModel, "ErrorLog");
+        WriteError(e);
+        return null;
+    }
+}
+
+export const UpdateMessageReadFlag = async (flag, refId) => {
+    try {
+        if (refId) {
+            
+            // const docRef = db.collection(collectionName).doc(refId); // Replace with your collection and document ID
+            const docRef = doc(db, "Contacts", refId); // Replace with your collection and document ID
+            const update = await updateDoc(docRef, {"wasRead":flag});
+            return true;
+            
+
+        }
+
+        return null
+
+    }
+    catch (e) {
         WriteError(e);
         return null;
     }
@@ -344,6 +395,46 @@ export const GetStorageFolderFiles = async (folderPath) => {
         // xhr.open('GET', url);
         // xhr.send();
         // return retList;
+    } catch (e) {
+        WriteError(e);
+        return null;
+    }
+};
+
+async function ListAllDeleteFiles(storageReference){
+    const listResults = await listAll(storageReference);
+    if(listResults.items.length>0){
+        const promises = await listResults.items.map(async (item) => {
+        return deleteObject(item)
+        
+      });
+      await Promise.all(promises);
+
+    }
+    else{
+        const promises = await listResults.prefixes.map(async (item) => {
+            await ListAllDeleteFiles(item);
+      });
+      await Promise.all(promises);
+    }
+    
+}
+
+export async function DeleteAllCloudStorageFiles (folderPath){
+    try {
+        const storageRef = ref(storage,folderPath);
+        await ListAllDeleteFiles(storageRef);
+//         //folderPath = "images/projects/abc";
+//         const storageRef = ref(storage,folderPath);
+// const listResults = await listAll(storageRef);
+//     const promises = await listResults.prefixes.map(async (item) => {
+//         const currFiles = await listAll(item);
+//  return currFiles.map((file)=>{return deleteObject(file)})
+    
+//   });
+//   const aa = await Promise.all(promises);
+        return true;
+       
     } catch (e) {
         WriteError(e);
         return null;

@@ -10,10 +10,10 @@ import "./adminMainPage.css";
 import projects from "../data/Data";
 import users from "../data/Data";
 import AdminProjects from "./AdminProjects";
+import AdminContacts from "./AdminContacts";
 import { Chart } from "primereact/chart";
-import { GetAllDocs } from "../../firebase";
 import { getAuth, signOut } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth, GetAllDocs } from "../../firebase";
 let NicosiaUsers, LarnacaUsers, PaphosUsers, LimassolUsers, NicosiaDay;
 let triggerPromise = false;
 let userArray = [];
@@ -22,7 +22,46 @@ let totalVisitors = [];
 let VisitorsDayTime = [];
 let WeeklyVisitors = 0;
 function AdminMainPage() {
+  const infoBlockElements = [
+    {
+      item: "Projects",
+      subNote: "",
+      noOfItems: 3,
+      notifications: 0,
+      icon: "pi-building",
+    },
+    // {
+    //   item: "Services",
+    //   subNote: "",
+    //   noOfItems: 3,
+    //   notifications: 0,
+    //   icon: "pi-wallet",
+    // },
+    {
+      item: "Users",
+      subNote: "",
+      noOfItems: 2,
+      notifications: 0,
+      icon: "pi pi-users",
+    },
+    {
+      item: "Messages",
+      subNote: "0 new messages",
+      noOfItems: 2,
+      notifications: 0,
+      icon: "pi-inbox",
+    },
+    {
+      item: "Interests",
+      subNote: "1 new interest",
+      noOfItems: 7,
+      notifications: 1,
+      icon: "pi-bell",
+    },
+  ];
+  const [infoElements, setInfoElements] = useState(infoBlockElements);
   const [selectedMenuItem, setSelectedMenuItem] = useState("Home");
+
   const [users, setUsers] = useState([]);
   // const auth = getAuth(app)
   //console.log(auth)
@@ -135,9 +174,9 @@ function AdminMainPage() {
     let yourDate = new Date(VisitorsDayTime);
     let result = isDateInCurrentWeek(yourDate);
     //console.log(result)
-    if (result == true){
-       //console.log("in current week")
-       counter ++;
+    if (result == true) {
+      //console.log("in current week")
+      counter++;
     }
     else {
       //console.log("not in current week")
@@ -160,10 +199,15 @@ function AdminMainPage() {
       icon: "pi pi-building",
       command: () => setSelectedMenuItem("Projects"),
     },
+    // {
+    //   label: "Services",
+    //   icon: "pi pi-wallet",
+    //   command: () => setSelectedMenuItem("Services"),
+    // },
     {
-      label: "Services",
-      icon: "pi pi-wallet",
-      command: () => setSelectedMenuItem("Services"),
+      label: "Contacts",
+      icon: "pi pi-envelope",
+      command: () => setSelectedMenuItem("Contacts"),
     },
     // {
     //   label: "Users",
@@ -183,33 +227,33 @@ function AdminMainPage() {
   const data = {
     labels: [days[0], days[1], days[2], days[3], days[4], days[5], days[6]],
     datasets: [
-        {
-            label: 'Weekly Visitors',
-            data: [0, 0, 0, 0, 0, 0, 0],
-            backgroundColor: [
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)'
-              ],
-              borderColor: [
-                'rgb(255, 159, 64)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-              ],
-              borderWidth: 2
-        }
+      {
+        label: 'Weekly Visitors',
+        data: [0, 0, 0, 0, 0, 0, 0],
+        backgroundColor: [
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(153, 102, 255, 0.2)'
+        ],
+        borderColor: [
+          'rgb(255, 159, 64)',
+          'rgb(75, 192, 192)',
+          'rgb(54, 162, 235)',
+          'rgb(153, 102, 255)',
+        ],
+        borderWidth: 2
+      }
     ]
-};
-// console.log(NicosiaUsers)
-// console.log(LarnacaUsers)
-// console.log(PaphosUsers)
-// const i = 2
-// const nicosia = NicosiaUsers
-// const larnaca = LarnacaUsers
-// const paphos = PaphosUsers
-// const limassol = LimassolUsers
+  };
+  // console.log(NicosiaUsers)
+  // console.log(LarnacaUsers)
+  // console.log(PaphosUsers)
+  // const i = 2
+  // const nicosia = NicosiaUsers
+  // const larnaca = LarnacaUsers
+  // const paphos = PaphosUsers
+  // const limassol = LimassolUsers
 
 
 
@@ -239,43 +283,37 @@ function AdminMainPage() {
     },
   };
 
-  const infoBlockElements = [
-    {
-      item: "Projects",
-      subNote: "",
-      noOfItems: 3,
-      notifications: 0,
-      icon: "pi-building",
-    },
-    {
-      item: "Services",
-      subNote: "",
-      noOfItems: 3,
-      notifications: 0,
-      icon: "pi-wallet",
-    },
-    {
-      item: "Users",
-      subNote: "",
-      noOfItems: 2,
-      notifications: 0,
-      icon: "pi pi-users",
-    },
-    {
-      item: "Messages",
-      subNote: "3 new messages",
-      noOfItems: 2,
-      notifications: 3,
-      icon: "pi-inbox",
-    },
-    {
-      item: "Interests",
-      subNote: "1 new interest",
-      noOfItems: 7,
-      notifications: 1,
-      icon: "pi-bell",
-    },
-  ];
+
+  useEffect(() => {
+    GetAllDocs("Contacts").then((result) => {
+      let _infoElements = [...infoElements];
+      let messages = _infoElements.filter(w => w.item == "Messages")[0];
+      let index = _infoElements.indexOf(messages);
+      let retrievedData = result.map(m => m.data).filter(w => w.contactType == "Contact Us")
+      messages.noOfItems = retrievedData.length;
+      messages.notifications = retrievedData.filter(w => w.wasRead == false).length;
+      _infoElements[index] = messages;
+
+      let interests = _infoElements.filter(w => w.item == "Interests")[0];
+      index = _infoElements.indexOf(interests);
+      retrievedData = result.map(m => m.data).filter(w => w.contactType != "Contact Us");
+      interests.noOfItems = retrievedData.length;
+      interests.notifications = retrievedData.filter(w => w.wasRead == false).length;
+      _infoElements[index] = interests;
+
+      setInfoElements(_infoElements);
+    })
+
+    GetAllDocs("Projects").then((result) => {
+      let _infoElements = [...infoElements];
+      let projects = _infoElements.filter(w => w.item == "Projects")[0];
+      let index = _infoElements.indexOf(projects);
+      projects.noOfItems = result.length;
+      _infoElements[index] = projects;
+
+      setInfoElements(_infoElements);
+    })
+  }, [])
 
   // const InfoBlock = () =>{
   //   return(
@@ -323,7 +361,7 @@ function AdminMainPage() {
     return (
       <div className="container">
         <div className="info-block row h-100 justify-content-center align-content-center">
-          {infoBlockElements.map((val, index) => {
+          {infoElements.map((val, index) => {
             return (
               // <div className="col-12 col-lg-2" key={index}>
               //   <div className="info-block-card text-center">
@@ -400,6 +438,8 @@ function AdminMainPage() {
         return <AdminProjects />;
       case "Services":
         return <div>Services</div>;
+      case "Contacts":
+        return <AdminContacts />;
       case "Users":
         return <div>Users</div>;
       default:

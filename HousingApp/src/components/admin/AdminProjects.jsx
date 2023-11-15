@@ -30,6 +30,8 @@ import {
   GetStorageFolderFiles,
   DeleteFileIfNotExist,
   DeleteStorageFolderFiles,
+  DeleteDocByRefId,
+  DeleteAllCloudStorageFiles
 } from "../../firebase";
 import {
   ref,
@@ -763,7 +765,7 @@ export default function AdminProjects() {
               return ConvertPathToGalleriaModel(m.fileUrl, m.fileName);
             }),
             flat: "",
-            destinationFolder: "video",
+            destinationFolder: "videos",
           };
           if (_currFile.files.length > 0) {
             const _files = [...projectVideo];
@@ -803,10 +805,14 @@ export default function AdminProjects() {
     setDeleteProjectDialog(true);
   };
 
-  const deleteProject = () => {
+  async function deleteProject() {
     let _projects = projects.filter((val) => val.id !== project.id);
-
+    debugger
+    await DeleteDocByRefId("Projects", "id", project.id);
+    await DeleteDocByRefId("ProjectApartments", "projectId", project.id);
+    await DeleteAllCloudStorageFiles("projects/" + project.refName);
     setProjects(_projects);
+
     //firebase api to delete current project and project details
     setDeleteProjectDialog(false);
     setProject(emptyProject);
@@ -1423,6 +1429,7 @@ export default function AdminProjects() {
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} projects"
             globalFilter={globalFilter}
             header={header}
+            exportFilename="ProjectsExport"
             scrollable>
             {/* <Column selectionMode="multiple" exportable={false}></Column> */}
             <Column field="id" header="ID" hidden></Column>

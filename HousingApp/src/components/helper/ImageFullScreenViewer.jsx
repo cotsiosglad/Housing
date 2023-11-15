@@ -6,9 +6,9 @@ export default function ImageFullScreenViewer({
   toggler,
   updateToggler,
 }) {
-  debugger;
+  // debugger;
   const handleUpdateToggler = () => {
-    debugger;
+    // debugger;
     updateToggler(false);
   };
   // const [toggler, setToggler] = useState(false);
@@ -49,11 +49,12 @@ export default function ImageFullScreenViewer({
   // } else {
   return (
     <>
-      <FsLightbox
-        // toggler={lightboxController.toggler}
-        toggler={toggler}
-        sources={imageList}
-        onClose={handleUpdateToggler}
+      <div className="overflow-hidden">
+        <FsLightbox
+          // toggler={lightboxController.toggler}
+          toggler={toggler}
+          sources={imageList}
+          onClose={handleUpdateToggler}
         //source={sourceFiles}
         // sources={imageList}
         //source={sourceFiles}
@@ -80,7 +81,9 @@ export default function ImageFullScreenViewer({
         //   // "https://www.youtube.com/watch?v=3nQNiWdeH2Q",
         //   // "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
         // ]}
-      />
+        />
+      </div>
+
     </>
   );
   // }

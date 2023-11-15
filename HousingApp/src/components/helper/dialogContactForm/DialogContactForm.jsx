@@ -10,6 +10,8 @@ import { classNames } from "primereact/utils";
 import { InputTextarea } from "primereact/inputtextarea";
 import { isBrowser, isMobile } from "react-device-detect";
 import emailjs from "@emailjs/browser";
+import { WriteDoc } from "../../../firebase";
+import { serverTimestamp } from "firebase/firestore"
 
 export default function DialogContactForm({
   dialogVisibleStage,
@@ -22,6 +24,9 @@ export default function DialogContactForm({
     contactNumber: "",
     contactEmail: "",
     notes: "",
+    contactType: contactFormFor,
+    dateCreated: "",
+    wasRead: false,
   };
 
   const [contactModel, setContactModel] = useState(emptyContactModel);
@@ -70,14 +75,21 @@ export default function DialogContactForm({
       contactModel.firstName &&
       (contactModel.contactNumber || contactModel.contactEmail)
     ) {
-      let _contactForm = { ...contactModel };
+      let _contactForm = { ...contactModel, dateCreated: serverTimestamp(), contactType: form.current["contactType"].value };
       console.log(_contactForm);
-
+      debugger;
       if (_contactForm) {
         //const index = findIndexById(project.id);
 
         try {
           debugger;
+          toast.current.show({
+            severity: "success",
+            summary: "Successful",
+            detail: "Submitted",
+            life: 3000,
+          });
+          WriteDoc(_contactForm, "Contacts");
           emailjs
             .sendForm(
               "service_2l3wljg",
@@ -87,8 +99,10 @@ export default function DialogContactForm({
             )
             .then(
               (result) => {
-                alert("Message sent successfully");
-                console.log(result.text);
+
+                //alert("Message sent successfully");
+
+                //console.log(result.text);
               },
               (error) => {
                 console.log(error.text);
@@ -102,12 +116,6 @@ export default function DialogContactForm({
         }
 
         //_projects[index] = _project;
-        toast.current.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Submitted",
-          life: 3000,
-        });
 
         handleDialogVisibleState(false);
       } else {

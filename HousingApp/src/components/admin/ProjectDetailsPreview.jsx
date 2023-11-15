@@ -9,8 +9,10 @@ import {
   LiaBathSolid,
   LiaBuilding,
   LiaBoxesSolid,
-  LiaExclamationCircleSolid,
+  LiaExclamationCircleSolid
 } from "react-icons/lia";
+import { BsMessenger, BsFacebook } from "react-icons/bs";
+import { FaViber } from "react-icons/fa";
 import FsLightbox from "fslightbox-react";
 import { DataTable } from "primereact/datatable";
 //import { Dialog } from 'primereact/dialog';
@@ -34,6 +36,9 @@ import { GetStorageFolderFiles } from "../../firebase";
 import { Skeleton } from "primereact/skeleton";
 import { GetGoogleMapsEmbedUrlSrc } from "../helper/CommonFunctions";
 import ImageFullScreenViewer from "../helper/ImageFullScreenViewer";
+import ScrollToTop from "../../customHelperComponents/ScrollToTop";
+import { OverlayPanel } from 'primereact/overlaypanel';
+
 
 const ProjectDetailsPreview = ({
   project,
@@ -50,6 +55,7 @@ const ProjectDetailsPreview = ({
   const [selectedApartment, setSelectedApartment] = useState("");
   // const [selectedProject, setSelectedProject] = useState(null);
   const [blocked, setBlocked] = useState(false);
+  const op = useRef(null);
   // const [currProjectImages, setCurrProjectImages] = useState([]);
   // const [productIndex, setProductIndex] = useState(0);
   // const [lightboxController, setLightboxController] = useState({
@@ -74,6 +80,13 @@ const ProjectDetailsPreview = ({
   //     slide: number,
   //   });
   // }
+  function fbshareCurrentPage() {
+    //var n = window.location.href;
+    var n = `https://domusalba.eu/projects/${project.refName}`;
+    return window.open("https://www.facebook.com/sharer/sharer.php?u=" + escape(n) + "&t=" + project.title, "", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600", "_blank"),
+      !1
+  }
+
   async function fetchAndSetItemImages(path) {
     try {
       debugger;
@@ -117,12 +130,12 @@ const ProjectDetailsPreview = ({
       projectImages.length > 0
         ? projectImages
         : [
-            {
-              itemImageSrc: "../images/no_image.jpg",
-              thumbnailImageSrc: "../images/no_image.jpg",
-              alt: "No Image",
-            },
-          ];
+          {
+            itemImageSrc: "../images/no_image.jpg",
+            thumbnailImageSrc: "../images/no_image.jpg",
+            alt: "No Image",
+          },
+        ];
     //let _images = []
 
     let aa = project;
@@ -514,7 +527,8 @@ const ProjectDetailsPreview = ({
   };
 
   return (
-    <>
+    <div className="overflow-hidden">
+      <ScrollToTop />
       {/* <FsLightbox
         // toggler={lightboxController.toggler}
         toggler={toggler}
@@ -706,9 +720,8 @@ const ProjectDetailsPreview = ({
           </div>
         </div>
         <div
-          className={`row ${
-            apartmentList && apartmentList.length > 0 ? "" : "d-none"
-          }`}>
+          className={`row ${apartmentList && apartmentList.length > 0 ? "" : "d-none"
+            }`}>
           <BlockUI blocked={blocked}>
             <LoadingBar isVisible={blocked} />
             <div className="col-12">
@@ -721,6 +734,7 @@ const ProjectDetailsPreview = ({
                   // selection={selectedProject}
                   metaKeySelection={false}
                   onSelectionChange={(e) => onSelectItem(e.value)}
+                  rowClassName={'colouredRows'}
                   dataKey="flatNo"
                   value={apartmentList}
                   stripedRows
@@ -766,8 +780,8 @@ const ProjectDetailsPreview = ({
             <button
               className="whatsapp-button"
               onClick={() => {
-                const whatsappUrl =
-                  "https://web.whatsapp.com/send/?phone=%2B96812104&text=Ενδιαφέρομαι%2C&type=phone_number&app_absent=0";
+                const whatsappUrl = `https://wa.me/35797729606?text=Ενδιαφέρομαι%20για%20το%20${project.refName}!%20Παρακαλώ%20επικοινωνήστε%20μαζί%20μου.`
+                // "https://web.whatsapp.com/send/?phone=%2B96812104&text=Ενδιαφέρομαι%2C&type=phone_number&app_absent=0";
                 window.open(whatsappUrl, "_blank");
               }}>
               WhatsApp
@@ -795,6 +809,31 @@ const ProjectDetailsPreview = ({
                   fill="#fff"></path>
               </svg>
             </button>
+            <Button className="w-100 mt-4" style={{ lineHeight: "28px" }} severity="secondary" outlined type="button" icon="pi pi-share-alt" label="Share" onClick={(e) => op.current.toggle(e)} />
+            <OverlayPanel ref={op} closeOnEscape dismissable={true}>
+              <div className="container">
+                <div className="row">
+                  <div className="col-4">
+                    <a href={`fb-messenger://share/?link=https://domusalba.eu/projects/${project.refName}`}>
+                      <BsMessenger style={{ fontSize: "xx-large", cursor: "pointer", color: "#0404da" }} />
+                    </a>
+
+                  </div>
+                  <div className="col-4">
+                    <BsFacebook onClick={() => { fbshareCurrentPage() }} style={{ fontSize: "xx-large", cursor: "pointer", color: "#0404da" }}>
+                    </BsFacebook>
+                  </div>
+                  <div className="col-4">
+                    <a href={`viber://forward?text=https://domusalba.eu/projects/${project.refName}`}>
+                      <FaViber style={{ fontSize: "xx-large", cursor: "pointer", color: "#9c309c" }} />
+                    </a>
+
+                  </div>
+                </div>
+              </div>
+
+
+            </OverlayPanel>
           </div>
           <div className="col-12 col-md-8 col-lg-8 text-center align-self-center">
             {/* <video controls autoPlay={false} style={{ height: "230px" }}>
@@ -822,7 +861,7 @@ const ProjectDetailsPreview = ({
       {/* <Dialog header="Flex Scroll" breakpoints={{ '960px': '75vw', '641px': '90vw' }} visible={dialogFormVisible} style={{ width: '75vw' }} maximizable
                 modal contentStyle={{ height: '300px' }} onHide={() => setDialogFormVisible(false)} footer={dialogFooterTemplate}>
       </Dialog> */}
-    </>
+    </div >
   );
 };
 
