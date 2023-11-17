@@ -22,6 +22,7 @@ import axios from "axios";
 // import { WriteDoc } from "./firebase";
 // import { Timestamp, serverTimestamp } from "firebase/firestore";
 import { ScrollTop } from "primereact/scrolltop";
+import {Helmet} from "react-helmet";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyD-4YcVKrl3j55I2jTGb_3WEZkeyIrQgOw",
@@ -34,6 +35,19 @@ const firebaseConfig = {
 
 };
 
+ 
+// class Application extends React.Component {
+//     render () {
+//       return (
+//           <div>
+//               <Helmet>
+//                   <title>App Title</title>
+//                   <link rel="canonical" href="https://domusalba.eu" />
+//               </Helmet>
+//           </div>
+//       );
+//     }
+//   };
 const app = initializeApp(firebaseConfig);
 // const db = getFirestore(app);
 // //firebase.firestore().collection('restaurants').doc(id).get();
