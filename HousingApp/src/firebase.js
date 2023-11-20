@@ -31,12 +31,12 @@ export const GetAuthUser = () => {
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
         
-        return true
+        return user
         // ...
         } else {
         // User is signed out
         // ...
-        return false
+        return ""
         
         };
 

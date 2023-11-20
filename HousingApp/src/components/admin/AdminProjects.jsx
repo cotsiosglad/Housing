@@ -31,7 +31,8 @@ import {
   DeleteFileIfNotExist,
   DeleteStorageFolderFiles,
   DeleteDocByRefId,
-  DeleteAllCloudStorageFiles
+  DeleteAllCloudStorageFiles,
+  GetAuthUser
 } from "../../firebase";
 import {
   ref,
@@ -48,6 +49,7 @@ import {
 import { v4 } from "uuid";
 import ProjectDetailsPreview from "./ProjectDetailsPreview";
 import LoadingBar from "../helper/loadingBar/LoadingBar";
+import { serverTimestamp } from "firebase/firestore";
 // import { wait } from '@testing-library/user-event/dist/utils';
 
 export default function AdminProjects() {
@@ -72,6 +74,10 @@ export default function AdminProjects() {
     status: statuses[0],
     availability: "",
     mapSrc: "",
+    createdBy: "",
+    createdOn: "",
+    updatedBy: "",
+    updatedOn: ""
   };
 
   let emptyProjectDetails = {
@@ -136,9 +142,25 @@ export default function AdminProjects() {
     //ProductService.getProducts().then((data) => setProjects(data));
 
     //var aa = GetDocByRefId("Projects", "Jt2Prr7DhQb5NmosVi0n").then((data) => console.log(data));
-    GetAllDocs("Projects").then((data) =>
+    GetAllDocs("Projects").then((data) => {
+      const _data = data.map((m) => {
+        const _createdOn = m.data.createdBy;
+        const _updatedOn = m.data.updatedOn;
+        // Convert Firebase timestamp to JavaScript Date object
+        const newCreatedOnDate = new Date(_createdOn.seconds * 1000 + _createdOn.nanoseconds / 1e6);
+        const newUpdatedOnDate = new Date(_updatedOn.seconds * 1000 + _updatedOn.nanoseconds / 1e6);
+
+        // Add a new property to the object with the local datetime string
+        return {
+          ...m.data,
+          createdBy: newCreatedOnDate.toLocaleString(),
+          updatedOn: newUpdatedOnDate.toLocaleString()
+        };
+      });
       // console.log(data),
-      setProjects(data.map((m) => m.data))
+      setProjects(_data);
+    }
+
     );
   }, []);
 
@@ -370,92 +392,97 @@ export default function AdminProjects() {
     let projectRef = project.refName;
     debugger;
     if (filesUploaded.length > 0 && projectRef) {
-      let path = filesUploaded[0].destinationFolder
-        ? "projects/" + projectRef + "/" + filesUploaded[0].destinationFolder
-        : projectRef;
-      const allFiles = filesUploaded.map((m) => m.files).flat();
-      const blobFiles = await Promise.all(
-        allFiles.map((fl, index) => {
-          return CreateObjectURLFromURL(fl.itemImageSrc);
-        })
-      );
-      //delete all files from current folder
-      const deleted = await DeleteStorageFolderFiles(path);
-      for (let i = 0; i < allFiles.length; i++) {
-        // let path = item.destinationFolder
-        //   ? "projects/" + projectRef + "/" + item.destinationFolder
-        //   : projectRef;
-        // const blobFiles = await Promise.all(
-        //   item.files.map((fl, index) => {
-        //     return CreateObjectURLFromURL(fl.itemImageSrc);
-        //   })
-        // );
-        if (
-          blobFiles &&
-          blobFiles.length > 0 &&
-          !blobFiles.some((w) => w == undefined)
-        ) {
-          if (deleted) {
-            // if (item.files.length > 0) {
-            //delete all files from current path
-            //await DeleteStorageFolderFiles(path).then((res) => {
-            const filePath =
-              allFiles[i].itemImageSrc.indexOf("blob") < 0
-                ? `${path}/${allFiles[i].alt}`
-                : `${path}/${v4() + "_" + allFiles[i].alt}`;
-            const imageRef = ref(storage, filePath);
-            const b64 = await ConvertFileToBase64(blobFiles[i]);
-            if (b64) {
-              await uploadString(imageRef, b64, "data_url");
+      filesUploaded.forEach(async fileToUpload => {
+        let path = fileToUpload.destinationFolder
+          ? "projects/" + projectRef + "/" + fileToUpload.destinationFolder
+          : projectRef;
+        // const allFiles = fileToUpload.map((m) => m.files).flat();
+        const allFiles = fileToUpload.files;
+
+        const blobFiles = await Promise.all(
+          allFiles.map((fl, index) => {
+            return CreateObjectURLFromURL(fl.itemImageSrc);
+          })
+        );
+        //delete all files from current folder
+        const deleted = await DeleteStorageFolderFiles(path);
+        for (let i = 0; i < allFiles.length; i++) {
+          // let path = item.destinationFolder
+          //   ? "projects/" + projectRef + "/" + item.destinationFolder
+          //   : projectRef;
+          // const blobFiles = await Promise.all(
+          //   item.files.map((fl, index) => {
+          //     return CreateObjectURLFromURL(fl.itemImageSrc);
+          //   })
+          // );
+          if (
+            blobFiles &&
+            blobFiles.length > 0 &&
+            !blobFiles.some((w) => w == undefined)
+          ) {
+            if (deleted) {
+              // if (item.files.length > 0) {
+              //delete all files from current path
+              //await DeleteStorageFolderFiles(path).then((res) => {
+              const filePath =
+                allFiles[i].itemImageSrc.indexOf("blob") < 0
+                  ? `${path}/${allFiles[i].alt}`
+                  : `${path}/${v4() + "_" + allFiles[i].alt}`;
+              const imageRef = ref(storage, filePath);
+              const b64 = await ConvertFileToBase64(blobFiles[i]);
+              if (b64) {
+                await uploadString(imageRef, b64, "data_url");
+              }
+              // //check if path exists
+              // await getDownloadURL(imageRef)
+              //   .then((url) => {
+              //     //the file exists do nothing
+              //     //const filePath = file.itemImageSrc.indexOf("blob") < 0 ? `${path}/${file.alt}` : `${path}/${v4() + "_" + file.alt}`;
+              //     //const imageRef = ref(storage, filePath)
+              //     // const imageRef = ref(storage, `images/projects/${path}/${v4() + "_" + file.name}`)
+              //   })
+              //   .catch((error) => {
+              //     ConvertFileToBase64(file.itemImageSrc).then(
+              //       (base64String) => {
+              //         uploadString(imageRef, base64String, "data_url");
+              //         //uploadBytes(imageRef, retFile);
+              //       }
+              //     );
+              //   });
+
+              // await DeleteStorageFolderFiles(path).then((res) => {
+              //     debugger;
+
+              //     //const filePath = file.itemImageSrc.indexOf("blob") < 0 ? `${path}/${file.alt}` : `${path}/${v4() + "_" + file.alt}`;
+              //     //const imageRef = ref(storage, filePath)
+              //     // const imageRef = ref(storage, `images/projects/${path}/${v4() + "_" + file.name}`)
+              //     ConvertFileToBase64(file.itemImageSrc).then((base64String) => {
+              //         debugger;
+              //         uploadString(imageRef, base64String, 'data_url')
+              //         //uploadBytes(imageRef, retFile);
+              //     });
+
+              // })
+
+              //   debugger;
+              //   if (item && item.files && item.files.length > 0) {
+              //     debugger;
+              //     const filenames = item.files.map((m) => m.alt).flat();
+              //     await DeleteFileIfNotExist(path, filenames);
+              //   }
+            } else {
+              toast.current.show({
+                severity: "error",
+                summary: "Error on saving files",
+                detail: `The files were not saved`,
+                life: 3000,
+              });
             }
-            // //check if path exists
-            // await getDownloadURL(imageRef)
-            //   .then((url) => {
-            //     //the file exists do nothing
-            //     //const filePath = file.itemImageSrc.indexOf("blob") < 0 ? `${path}/${file.alt}` : `${path}/${v4() + "_" + file.alt}`;
-            //     //const imageRef = ref(storage, filePath)
-            //     // const imageRef = ref(storage, `images/projects/${path}/${v4() + "_" + file.name}`)
-            //   })
-            //   .catch((error) => {
-            //     ConvertFileToBase64(file.itemImageSrc).then(
-            //       (base64String) => {
-            //         uploadString(imageRef, base64String, "data_url");
-            //         //uploadBytes(imageRef, retFile);
-            //       }
-            //     );
-            //   });
-
-            // await DeleteStorageFolderFiles(path).then((res) => {
-            //     debugger;
-
-            //     //const filePath = file.itemImageSrc.indexOf("blob") < 0 ? `${path}/${file.alt}` : `${path}/${v4() + "_" + file.alt}`;
-            //     //const imageRef = ref(storage, filePath)
-            //     // const imageRef = ref(storage, `images/projects/${path}/${v4() + "_" + file.name}`)
-            //     ConvertFileToBase64(file.itemImageSrc).then((base64String) => {
-            //         debugger;
-            //         uploadString(imageRef, base64String, 'data_url')
-            //         //uploadBytes(imageRef, retFile);
-            //     });
-
-            // })
-
-            //   debugger;
-            //   if (item && item.files && item.files.length > 0) {
-            //     debugger;
-            //     const filenames = item.files.map((m) => m.alt).flat();
-            //     await DeleteFileIfNotExist(path, filenames);
-            //   }
-          } else {
-            toast.current.show({
-              severity: "error",
-              summary: "Error on saving files",
-              detail: `The files were not saved`,
-              life: 3000,
-            });
           }
+          //  );
         }
-        //  );
-      }
+      });
+
     }
   }
 
@@ -466,7 +493,7 @@ export default function AdminProjects() {
       "custom-upload-btn p-button-success p-button-rounded p-button-outlined p-button-icon-only p-button-sm",
   };
 
-  const saveProject = async () => {
+  async function saveProject() {
     setSubmitted(true);
     setBlocker(true);
     console.log(textEditorValue);
@@ -542,27 +569,31 @@ export default function AdminProjects() {
         // _apartmentList.map(s => s.projectId = _project.id);
         // console.log(_projectDetails);
         console.log(_apartments);
+
+        const currUser = await GetAuthUser();
+        debugger;
         const idx = _projects.findIndex((w) => w.id == project.id);
         if (project.id) {
           //const index = findIndexById(project.id);
 
           //UPDATE PROJECT
-
-          UpdateDoc(_project, _project.id, "Projects").then((response) => {
-            UpdateDoc(
+          _project.updatedBy = currUser?.email ?? "";
+          _project.updatedOn = serverTimestamp();
+          await UpdateDoc(_project, _project.id, "Projects").then(async (response) => {
+            await UpdateDoc(
               _apartments,
               _project.id,
               "ProjectApartments",
               "projectId"
-            ).then((response) => {
-              saveFilesToCloud(projectImages).then(setProjectImages([]));
-              saveFilesToCloud(projectDocuments).then(setProjectDocuments([]));
-              saveFilesToCloud(projectSideImage).then(setProjectSideImage([]));
-              saveFilesToCloud(projectMainImage).then(setProjectMainImage([]));
-              saveFilesToCloud(apartmentUploadedFiles).then(
+            ).then(async (response) => {
+              await saveFilesToCloud(projectImages).then(setProjectImages([]));
+              await saveFilesToCloud(projectDocuments).then(setProjectDocuments([]));
+              await saveFilesToCloud(projectSideImage).then(setProjectSideImage([]));
+              await saveFilesToCloud(projectMainImage).then(setProjectMainImage([]));
+              await saveFilesToCloud(apartmentUploadedFiles).then(
                 setApartmentUploadedFiles([])
               );
-              saveFilesToCloud(projectVideo).then(setProjectVideo([]));
+              await saveFilesToCloud(projectVideo).then(setProjectVideo([]));
 
               toast.current.show({
                 severity: "success",
@@ -571,6 +602,7 @@ export default function AdminProjects() {
                 life: 3000,
               });
               completed = "OK";
+              _project.updatedOn = "";
               _projects[idx] = _project;
               _projects = Array.from(_projects);
               setProjects(_projects);
@@ -600,6 +632,10 @@ export default function AdminProjects() {
           //NEW PROJECT
 
           //var aa = GetDocById(1, "Projects");
+          _project.createdBy = currUser?.email ?? "";
+          _project.createdOn = serverTimestamp();
+          _project.updatedBy = currUser?.email ?? "";
+          _project.updatedOn = serverTimestamp();
           const projectCurrId = Date.now();
           _project = { ..._project, id: projectCurrId };
           WriteDoc(_project, "Projects").then((docRef) => {
@@ -622,7 +658,8 @@ export default function AdminProjects() {
                 setApartmentUploadedFiles([])
               );
               saveFilesToCloud(projectVideo).then(setProjectVideo([]));
-
+              _project.createdOn = "";
+              _project.updatedOn = "";
               _projects.push(_project);
               _projects = Array.from(_projects);
               setProjects(_projects);
@@ -657,7 +694,7 @@ export default function AdminProjects() {
     saveProjectEnd: setBlocker(false);
   };
 
-  const editProject = async (row) => {
+  async function editProject(row) {
     let path = "";
     setMainBlocker(!mainBlocker);
     setProject({ ...row });
@@ -670,9 +707,9 @@ export default function AdminProjects() {
       async (data) => {
         setProjectApartmentList(data[0].apartments);
         //get uploaded files for each apartment
-        await data[0].apartments.map(async (item) => {
+        const apartmentFiles = await data[0].apartments.map(async (item) => {
           path = "projects/" + row.refName + "/apartments/" + item.flatNo;
-          await GetStorageFolderFiles(path).then((fileData) => {
+          return await GetStorageFolderFiles(path).then((fileData) => {
             const _currFile = {
               files: fileData.map((m) => {
                 return ConvertPathToGalleriaModel(m.fileUrl, m.fileName);
@@ -680,17 +717,21 @@ export default function AdminProjects() {
               flat: item.flatNo,
               destinationFolder: "apartments/" + item.flatNo,
             };
-            if (_currFile.files.length > 0) {
-              const _apartmentFiles = [...apartmentUploadedFiles];
-              _apartmentFiles.push(_currFile);
-              setApartmentUploadedFiles(_apartmentFiles);
-            }
+            return _currFile;
+            // if (_currFile.files.length > 0) {
+            //   const _apartmentFiles = [...apartmentUploadedFiles];
+            //   _apartmentFiles.push(_currFile);
+            //   return _apartmentFiles;
+            //   // setApartmentUploadedFiles(_apartmentFiles);
+            // }
           });
           // fileList.push({
           //     files: currFiles.map(m => { return ConvertPathToGalleriaModel(m.fileUrl, m.fileName) }),
           //     flat: item.flatNo
           // });
         });
+        let uploadedFiles = await Promise.all(apartmentFiles);
+        setApartmentUploadedFiles(uploadedFiles);
         //get uploaded project images
         path = "projects/" + row.refName + "/projectImages";
         await GetStorageFolderFiles(path).then((fileData) => {
@@ -1276,7 +1317,7 @@ export default function AdminProjects() {
       )
     ) {
       _projectApartments = _projectApartments.filter(
-        (p) => p.id !== apartment.id
+        (p) => p.flatNo !== apartment.flatNo
       );
 
       toast.current.show({
@@ -1351,6 +1392,7 @@ export default function AdminProjects() {
         _files = Object.values(
           apartmentUploadedFiles.map((m) => m.files)
         ).flat();
+        index = _files.indexOf(_files.filter(w => w.itemImageSrc == index)[0]);
         break;
       default:
         break;
@@ -1485,6 +1527,16 @@ export default function AdminProjects() {
             <Column
               field="status"
               header="Status"
+              sortable
+              style={{ minWidth: "15rem" }}></Column>
+            <Column
+              field="updatedBy"
+              header="Update By"
+              sortable
+              style={{ minWidth: "15rem" }}></Column>
+            <Column
+              field="updatedOn"
+              header="Updated On"
               sortable
               style={{ minWidth: "15rem" }}></Column>
             {/* <Column field="price" header="Price" body={priceBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column> */}
@@ -2178,7 +2230,7 @@ export default function AdminProjects() {
                           severity="danger"
                           aria-label="Cancel"
                           onClick={() => {
-                            handleDeleteFile(index, "APARTMENT_IMAGES");
+                            handleDeleteFile(upFile.itemImageSrc, "APARTMENT_IMAGES");
                             setApartmentFilesDialog(false);
                           }}
                         />
