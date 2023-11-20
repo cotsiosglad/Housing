@@ -1392,6 +1392,7 @@ export default function AdminProjects() {
         _files = Object.values(
           apartmentUploadedFiles.map((m) => m.files)
         ).flat();
+        index = _files.indexOf(_files.filter(w => w.itemImageSrc == index)[0]);
         break;
       default:
         break;
@@ -2229,7 +2230,7 @@ export default function AdminProjects() {
                           severity="danger"
                           aria-label="Cancel"
                           onClick={() => {
-                            handleDeleteFile(index, "APARTMENT_IMAGES");
+                            handleDeleteFile(upFile.itemImageSrc, "APARTMENT_IMAGES");
                             setApartmentFilesDialog(false);
                           }}
                         />
