@@ -102,9 +102,10 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  /* text-align: center; */
-  text-align: -webkit-center;
   color: #fff;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .houses-grid-item .houses-grid-content span {

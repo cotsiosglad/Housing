@@ -124,8 +124,12 @@
   text-decoration: underline !important;
 }
 
+.p-datatable-thead{
+  background-color: var(--color1) !important;
+}
+
 /* Change background color of DataTable rows on hover */
-.p-datatable tbody tr:hover {
+.project-view .p-datatable tbody tr:hover {
   border: 2px solid var(--color2) !important;
 }
 
@@ -152,7 +156,7 @@
   background-color: var(--color4) !important;
 }
 
-.p-button:hover,.p-button:focus {
+.project-view .p-button:hover,.project-view .p-button:focus {
   background-color: var(--color4) !important;
   color: var(--color1)!important;
 }
