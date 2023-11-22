@@ -12,7 +12,7 @@ import {
   LiaExclamationCircleSolid
 } from "react-icons/lia";
 import { BsMessenger, BsFacebook } from "react-icons/bs";
-import { FaViber } from "react-icons/fa";
+import { FaViber, FaRegCopy } from "react-icons/fa";
 import FsLightbox from "fslightbox-react";
 import { DataTable } from "primereact/datatable";
 //import { Dialog } from 'primereact/dialog';
@@ -57,6 +57,7 @@ const ProjectDetailsPreview = ({
   // const [selectedProject, setSelectedProject] = useState(null);
   const [blocked, setBlocked] = useState(false);
   const op = useRef(null);
+  const toast = useRef(null);
   // const [currProjectImages, setCurrProjectImages] = useState([]);
   // const [productIndex, setProductIndex] = useState(0);
   // const [lightboxController, setLightboxController] = useState({
@@ -88,6 +89,15 @@ const ProjectDetailsPreview = ({
       !1
   }
 
+  function copyUrl() {
+    navigator.clipboard.writeText(window.location.href);
+    toast.current.show({
+      severity: "success",
+      summary: "Copied",
+      detail: "URL Copied!",
+      life: 3000,
+    });
+  }
   async function fetchAndSetItemImages(path) {
     try {
       debugger;
@@ -577,7 +587,7 @@ const ProjectDetailsPreview = ({
                     : ""
                 )}
                 target="_blank">
-                Download
+                Download Brochure
               </a>
               <button
                 className="whatsapp-button"
@@ -615,21 +625,24 @@ const ProjectDetailsPreview = ({
               <OverlayPanel ref={op} closeOnEscape dismissable={true}>
                 <div className="container">
                   <div className="row">
-                    <div className="col-4">
+                    <div className="col-3">
                       <a href={`fb-messenger://share/?link=https://domusalba.eu/projects/${project.refName}`}>
                         <BsMessenger style={{ fontSize: "xx-large", cursor: "pointer", color: "#0404da" }} />
                       </a>
 
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                       <BsFacebook onClick={() => { fbshareCurrentPage() }} style={{ fontSize: "xx-large", cursor: "pointer", color: "#0404da" }}>
                       </BsFacebook>
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                       <a href={`viber://forward?text=https://domusalba.eu/projects/${project.refName}`}>
                         <FaViber style={{ fontSize: "xx-large", cursor: "pointer", color: "#9c309c" }} />
                       </a>
 
+                    </div>
+                    <div className="col-3">
+                      <FaRegCopy onClick={() => { copyUrl() }} style={{ fontSize: "xx-large", cursor: "pointer", color: "#323639" }} />
                     </div>
                   </div>
                 </div>

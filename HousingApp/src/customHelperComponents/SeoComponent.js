@@ -21,7 +21,7 @@ const Seo = ({ title, description, pathSlug, keywords }) => {
         {
           name:"og_type",
           property: 'og:type',
-          content: "project",
+          content: "website",
         },
         {
           name: 'og_image',
