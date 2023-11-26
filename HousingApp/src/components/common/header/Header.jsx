@@ -213,43 +213,6 @@ const Header = () => {
         </div>
         <MobileMenu isOpen={isMenuOpen} onClose={toggleMenu} />
       </div>
-      <div className="nav-holder show-mobile">
-        <nav className="nav">
-          <ul className="clearfix">
-            <li className="active">
-              <a href="/" title="Home">
-                ΑΡΧΙΚΗ
-              </a>
-            </li>
-            <li className="dropdown">
-              <a title="Projects">ΕΡΓΑ</a>
-
-              <ul>
-                <li className="">
-                  <a href="/projects/oak-tree-residences">
-                    Oak Tree Residences
-                  </a>
-                </li>
-                <li className="">
-                  <a href="/projects/n-mylona-residences">
-                    N. Mylona Residences
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li className="">
-              <a href="/about" title="ΓΙΑ ΕΜΑΣ">
-                ΓΙΑ ΕΜΑΣ
-              </a>
-            </li>
-            <li className="">
-              <a href="/contact" title="Contact">
-                ΕΠΙΚΟΙΝΩΝΙΑ
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
     </>
   );
 };

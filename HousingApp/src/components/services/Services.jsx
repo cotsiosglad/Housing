@@ -8,6 +8,7 @@ import "./services.css";
 // import useIntersectionObserver from "../../customHooks/useIntersectionObserver"
 // import ScrollToTop from "../../customHelperComponents/ScrollToTop"; // Import the ScrollToTop component
 import DialogContactForm from "../helper/dialogContactForm/DialogContactForm";
+import Seo from "../../customHelperComponents/SeoComponent";
 
 const Services = () => {
   // useIntersectionObserver({
@@ -26,6 +27,8 @@ const Services = () => {
 
   return (
     <>
+      <Seo title={"Services"} description={"Domus Alba Services"} pathSlug="Services" keywords={["domus alba services", "services", "Αγορά Κατοικιών", "Ενοίκιο διαμέρισμα σπίτι", "Apartment house for rent", "Apartment for sale", "Αγορά Σπιτίου", "Αγορά διαμερίσματος"]} />
+
       {/* <ScrollToTop /> */}
       <div className="services mb">
         <Back
