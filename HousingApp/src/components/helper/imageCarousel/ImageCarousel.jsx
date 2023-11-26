@@ -148,7 +148,7 @@ export default function ImageCarousel({ imageList }) {
     e.preventDefault();
     let itemIdx = imageList.indexOf(item) + 1;
     openLightboxOnSlide(itemIdx);
-    console.log("x:" + window.scrollX + " y:" + window.scrollY)
+    // console.log("x:" + window.scrollX + " y:" + window.scrollY)
     setCurrectPosition({ x: window.scrollX, y: window.scrollY })
     //setActiveIndex(itemIdx);
     //setSelectedImage({ ...item, itemImageSrc: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1518270500.1698710400&semt=sph" });
@@ -187,9 +187,9 @@ export default function ImageCarousel({ imageList }) {
   };
 
   const onViewerClosed = () => {
-    console.log("x:" + window.scrollX + " y:" + window.scrollY)
+    //console.log("x:" + window.scrollX + " y:" + window.scrollY)
 
-    console.log("position" + currentPosition)
+    //console.log("position" + currentPosition)
 
     window.scrollTo(currentPosition.x, currentPosition.y);
   }

@@ -338,7 +338,7 @@ const ProjectDetailsPreview = ({
 
   return (
     <>
-      <Seo title={project.title} description={project.title} pathSlug={`projects/${project.refName}`} />
+      <Seo title={project.title} description={project.title} pathSlug={`projects/${project.refName}`} keywords={[project.title, "project", `domus alba ${project.title}`]} />
       <div className="overflow-hidden">
         <ScrollToTop />
         {/* <FsLightbox

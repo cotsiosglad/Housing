@@ -10,6 +10,10 @@ const Seo = ({ title, description, pathSlug, keywords }) => {
           content: description,
         },
         {
+          name: 'keywords',
+          content: keywords.join(),
+        },
+        {
           property: 'og:title',
           content: description,
         },
@@ -36,11 +40,8 @@ const Seo = ({ title, description, pathSlug, keywords }) => {
         {
           property: 'og:image',
           content: "https://firebasestorage.googleapis.com/v0/b/housing-app-628b7.appspot.com/o/images%2FDA_final%20logo-black.png?alt=media&token=81dcc63e-3448-4bd4-876b-6f792e338871",
-        },
-        // {
-        //   name: 'keywords',
-        //   content: keywords.join(),
-        // },
+        }
+        
 		]}
     links={[
      {
