@@ -66,7 +66,7 @@ export default function DialogContactForm({
 
   const handleDialogVisibleState = (e) => {
     updateDialogVisibleState(!dialogVisibleStage);
-    console.log(dialogVisibleStage);
+    // console.log(dialogVisibleStage);
   };
 
   const saveContactForm = () => {
@@ -76,7 +76,7 @@ export default function DialogContactForm({
       (contactModel.contactNumber || contactModel.contactEmail)
     ) {
       let _contactForm = { ...contactModel, dateCreated: serverTimestamp(), contactType: form.current["contactType"].value };
-      console.log(_contactForm);
+      // console.log(_contactForm);
       debugger;
       if (_contactForm) {
         //const index = findIndexById(project.id);
@@ -112,7 +112,7 @@ export default function DialogContactForm({
           // writeDoc(_project,'Contacts')
           // console.log(aa);
         } catch (e) {
-          console.log(e);
+          // console.log(e);
         }
 
         //_projects[index] = _project;
@@ -129,7 +129,7 @@ export default function DialogContactForm({
       setContactModel(emptyContactModel);
     }
   };
-  console.log("Mobile:" + isMobile);
+  // console.log("Mobile:" + isMobile);
 
   // Configuration for emailjs
   const sendEmail = (e) => {

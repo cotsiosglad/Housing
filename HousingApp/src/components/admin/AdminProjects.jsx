@@ -172,7 +172,7 @@ export default function AdminProjects() {
   };
 
   const updateTextEditorValue = (newState) => {
-    console.log(newState);
+    // console.log(newState);
     setTextEditorValue(newState);
   };
 
@@ -243,7 +243,7 @@ export default function AdminProjects() {
           _files = projectMainImage;
           break;
         case "PROJECT_VIDEO":
-          console.log(URL.createObjectURL(e.files[0]));
+          // console.log(URL.createObjectURL(e.files[0]));
           preventUpload = projectVideo.length == 1;
           _files = projectVideo;
           break;
@@ -496,7 +496,7 @@ export default function AdminProjects() {
   async function saveProject() {
     setSubmitted(true);
     setBlocker(true);
-    console.log(textEditorValue);
+    // console.log(textEditorValue);
 
     try {
       if (
@@ -568,7 +568,7 @@ export default function AdminProjects() {
         };
         // _apartmentList.map(s => s.projectId = _project.id);
         // console.log(_projectDetails);
-        console.log(_apartments);
+        // console.log(_apartments);
 
         const currUser = await GetAuthUser();
         debugger;

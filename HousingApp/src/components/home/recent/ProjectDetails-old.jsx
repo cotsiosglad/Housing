@@ -278,7 +278,7 @@ const ProjectDetails = ({ match }) => {
   };
 
   const updateDialogProjectVisible = (newState) => {
-    console.log(newState)
+    // console.log(newState)
     setDialogFormVisible(newState);
   };
 

@@ -3,9 +3,9 @@
     height: 50px;
 }
 
-.services{
+/* .services{
   overflow-x: hidden;
-}
+} */
 .services .heading h1 {
     color: var(--color4);
 }
