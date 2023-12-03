@@ -283,7 +283,6 @@ const ProjectDetails = ({ match }) => {
   };
 
   const onSelectItem = (item) => {
-    debugger;
     setBlocked(true);
     let list = GetStorageFolderFiles().then((result) => {
       setItemImages(result);

@@ -25,7 +25,6 @@ function useIntersectionObserver(options=null) {
     sectionElements.forEach(s => observer.observe(s));
 
     return () => {
-      debugger;
       sectionElements.forEach(s => observer.unobserve(s));
       // console.log(sectionElements)
     };

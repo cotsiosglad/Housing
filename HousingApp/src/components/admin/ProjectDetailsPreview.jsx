@@ -101,7 +101,6 @@ const ProjectDetailsPreview = ({
   }
   async function fetchAndSetItemImages(path) {
     try {
-      debugger;
       const fileData = await GetStorageFolderFiles(path);
       const files = fileData.map((m) => {
         // return ConvertPathToGalleriaModel(m.fileUrl, m.fileName);
@@ -188,7 +187,6 @@ const ProjectDetailsPreview = ({
   ];
 
   const itemTemplate = (item) => {
-    debugger;
     return (
       <img
         src={item.itemImageSrc}
@@ -230,7 +228,6 @@ const ProjectDetailsPreview = ({
   };
 
   async function onSelectItem(item) {
-    debugger;
     setBlocked(true);
     const path = "projects/" + project.refName + "/apartments/" + item.flatNo;
     // let list = GetStorageFolderFiles(path).then((result) => {
@@ -256,7 +253,6 @@ const ProjectDetailsPreview = ({
     //     setToggler(true);
     //   }
     const aa = await fetchAndSetItemImages(path);
-    debugger;
     if (aa) {
       setItemImages(aa);
       setToggler(true);
@@ -303,7 +299,6 @@ const ProjectDetailsPreview = ({
   };
 
   async function downloadFile(path) {
-    debugger;
     //const downloaded = await DownloadSingleFile(path);
   }
 
@@ -340,7 +335,7 @@ const ProjectDetailsPreview = ({
   return (
     <>
       <Toast ref={toast} position="bottom-right" />
-      <Seo title={project.title} description={project.title} pathSlug={`projects/${project.refName}`} keywords={[project.title, "project", `domus alba ${project.title}`]} />
+      {/* <Seo title={project.title} description={project.title} pathSlug={`projects/${project.refName}`} keywords={[project.title, "project", `domus alba ${project.title}`]} /> */}
       <div className="overflow-hidden">
         <ScrollToTop />
         {/* <FsLightbox
@@ -663,6 +658,7 @@ const ProjectDetailsPreview = ({
           <div className="row mt-4">
             <div className="col-12">
               <iframe
+                title={`map for ${project.title}`}
                 src={GetGoogleMapsEmbedUrlSrc(project.mapSrc)}
                 style={{ border: "0", width: "100%", height: "304px" }}
                 loading="lazy"

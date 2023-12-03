@@ -390,7 +390,6 @@ export default function AdminProjects() {
 
   async function saveFilesToCloud(filesUploaded) {
     let projectRef = project.refName;
-    debugger;
     if (filesUploaded.length > 0 && projectRef) {
       filesUploaded.forEach(async fileToUpload => {
         let path = fileToUpload.destinationFolder
@@ -571,7 +570,6 @@ export default function AdminProjects() {
         // console.log(_apartments);
 
         const currUser = await GetAuthUser();
-        debugger;
         const idx = _projects.findIndex((w) => w.id == project.id);
         if (project.id) {
           //const index = findIndexById(project.id);
@@ -915,7 +913,6 @@ export default function AdminProjects() {
   };
 
   const onInputChange = (e, name) => {
-    debugger;
     const val = (e.target && e.target.value) || "";
     let _project = { ...project };
 

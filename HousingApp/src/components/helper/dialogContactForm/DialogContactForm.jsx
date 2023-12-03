@@ -77,12 +77,10 @@ export default function DialogContactForm({
     ) {
       let _contactForm = { ...contactModel, dateCreated: serverTimestamp(), contactType: form.current["contactType"].value };
       // console.log(_contactForm);
-      debugger;
       if (_contactForm) {
         //const index = findIndexById(project.id);
 
         try {
-          debugger;
           toast.current.show({
             severity: "success",
             summary: "Successful",

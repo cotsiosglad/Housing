@@ -1,3 +1,4 @@
 User-agent: *
-Sitemap: https://domusalba.eu/sitemap.xml
 Disallow:
+
+Allow: Sitemap: https://domusalba.eu/sitemap.xml

@@ -7,7 +7,7 @@ const FeaturedCard = () => {
       <div className='content row d-flex flex-row justify-content-center flex-wrap'>
         {featured.map((items, index) => (
           <div className='box col-md-2' key={index}>
-            <img src={items.cover} alt='' />
+            <img src={items.cover} alt={items.name} />
             <h4>{items.name}</h4>
             <label>{items.total}</label>
           </div>

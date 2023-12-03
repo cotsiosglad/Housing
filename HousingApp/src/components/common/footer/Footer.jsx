@@ -60,7 +60,7 @@ const Footer = () => {
             <div className="col-12 col-md-4 col-lg-4 d-flex justify-content-center flex-column">
               <div className="logoFooter">
                 <Link to="/">
-                  <img src={logoImg} alt="" />
+                  <img src={logoImg} alt="logo" />
                 </Link>
               </div>
               <div className="footer-info">
@@ -100,7 +100,7 @@ const Footer = () => {
                   <h5>ΕΠΙΚΟΙΝΩΝΙΑ</h5>
                   <div>
                     <CiPhone />
-                    <a>+357 97729606</a>
+                    <a href="tel:+35797729606">+357 97729606</a>
                   </div>
                   <div>
                     <CiMail />
@@ -120,6 +120,7 @@ const Footer = () => {
                 </div>
                 <div className="col-12 col-md-6 col-lg-6 align-self-center">
                   <iframe
+                    title={`office location`}
                     src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d815.6750023054768!2d33.33372926962593!3d35.139159094995286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzXCsDA4JzIxLjAiTiAzM8KwMjAnMDMuNyJF!5e0!3m2!1sen!2s!4v1695144534824!5m2!1sen!2s"
                     style={{ border: "0", width: "100%" }}
                     loading="lazy"

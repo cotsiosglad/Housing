@@ -16,7 +16,7 @@ const Team = () => {
                 <button className='btn3'>{val.list} Listings</button>
                 <div className='details'>
                   <div className='img'>
-                    <img src={val.cover} alt='' />
+                    <img src={val.cover} alt={val.name} />
                     <i className='fa-solid fa-circle-check'></i>
                   </div>
                   <i className='fa fa-location-dot'></i>

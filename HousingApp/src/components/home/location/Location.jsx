@@ -13,7 +13,7 @@ const Location = () => {
           <div className='content d-flex flex-row justify-content-center flex-wrap'>
             {location.map((item, index) => (
               <div className='box' key={index}>
-                <img src={item.cover} alt='' />
+                <img src={item.cover} alt='box' />
                 <div className='overlay'>
                   <h5>{item.name}</h5>
                   <p>
