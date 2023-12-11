@@ -75,7 +75,6 @@ const Header = () => {
   }, []); // The empty dependency array ensures this effect runs once on mount
 
   const mobileMenu = () => {
-    debugger;
     const svgmenu = document.getElementById("svgmenu");
     if (svgmenu.classList.contains("opened")) closemenu();
     else openmenu();
@@ -141,7 +140,6 @@ const Header = () => {
   }
 
   function closemenu() {
-    debugger;
     const svgmenu = document.getElementById("svgmenu");
     svgmenu.classList.remove("opened");
     // if (inter) clearInterval(inter);
@@ -169,7 +167,7 @@ const Header = () => {
             data-aos-duration="3000"
             data-aos-offset="0">
             <a href="/">
-              <img src={logoImg} alt="Logo" />
+              <img src={logoImg} alt="Domus Alba Logo" />
             </a>
           </div>
           <div className="topicons">
@@ -209,7 +207,7 @@ const Header = () => {
           </svg>
         </div>
         <div className="mob-bar-logo text-center">
-          <img src="../images/logoblack.png" title="logoblack.png"></img>
+          <img src="../images/logoblack.png" title="logoblack.png" alt="Domus Alba Black Logo"></img>
         </div>
         <MobileMenu isOpen={isMenuOpen} onClose={toggleMenu} />
       </div>

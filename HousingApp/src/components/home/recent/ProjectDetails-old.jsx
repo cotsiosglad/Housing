@@ -278,12 +278,11 @@ const ProjectDetails = ({ match }) => {
   };
 
   const updateDialogProjectVisible = (newState) => {
-    console.log(newState)
+    // console.log(newState)
     setDialogFormVisible(newState);
   };
 
   const onSelectItem = (item) => {
-    debugger;
     setBlocked(true);
     let list = GetStorageFolderFiles().then((result) => {
       setItemImages(result);

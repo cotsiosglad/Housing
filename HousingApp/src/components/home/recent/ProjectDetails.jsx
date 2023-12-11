@@ -68,7 +68,6 @@ const ProjectDetails = ({ match }) => {
 
   async function fetchAndsetApartmentUploadedFiles(path) {
     try {
-      debugger;
       const fileData = await GetStorageFolderFiles(path);
       const files = fileData.map((m) =>
         ConvertPathToGalleriaModel(m.fileUrl, m.fileName)

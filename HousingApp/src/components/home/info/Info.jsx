@@ -50,7 +50,7 @@ export default () => {
             data-aos-delay="100"
             data-aos-once="true">
             <div className="info-img position-relative overflow-hidden p-5 pe-0">
-              <img className="img-fluid w-100" src="/images/info-img.png" />
+              <img className="img-fluid w-100" src="/images/info-img.webp" alt="info-img" />
             </div>
           </div>
           <div

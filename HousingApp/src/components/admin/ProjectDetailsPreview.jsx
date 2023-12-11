@@ -39,6 +39,7 @@ import ImageFullScreenViewer from "../helper/ImageFullScreenViewer";
 import ScrollToTop from "../../customHelperComponents/ScrollToTop";
 import { OverlayPanel } from 'primereact/overlaypanel';
 import Seo from "../../customHelperComponents/SeoComponent";
+import { Toast } from "primereact/toast";
 
 
 const ProjectDetailsPreview = ({
@@ -100,7 +101,6 @@ const ProjectDetailsPreview = ({
   }
   async function fetchAndSetItemImages(path) {
     try {
-      debugger;
       const fileData = await GetStorageFolderFiles(path);
       const files = fileData.map((m) => {
         // return ConvertPathToGalleriaModel(m.fileUrl, m.fileName);
@@ -187,7 +187,6 @@ const ProjectDetailsPreview = ({
   ];
 
   const itemTemplate = (item) => {
-    debugger;
     return (
       <img
         src={item.itemImageSrc}
@@ -224,12 +223,11 @@ const ProjectDetailsPreview = ({
   };
 
   const updateDialogProjectVisible = (newState) => {
-    console.log(newState);
+    // console.log(newState);
     setDialogFormVisible(newState);
   };
 
   async function onSelectItem(item) {
-    debugger;
     setBlocked(true);
     const path = "projects/" + project.refName + "/apartments/" + item.flatNo;
     // let list = GetStorageFolderFiles(path).then((result) => {
@@ -255,7 +253,6 @@ const ProjectDetailsPreview = ({
     //     setToggler(true);
     //   }
     const aa = await fetchAndSetItemImages(path);
-    debugger;
     if (aa) {
       setItemImages(aa);
       setToggler(true);
@@ -275,7 +272,7 @@ const ProjectDetailsPreview = ({
   // }
 
   const renderSkeleton = (fileState) => {
-    console.log(fileState.files);
+    // console.log(fileState.files);
     if (fileState && fileState.length > 0) {
       return (
         <img
@@ -302,7 +299,6 @@ const ProjectDetailsPreview = ({
   };
 
   async function downloadFile(path) {
-    debugger;
     //const downloaded = await DownloadSingleFile(path);
   }
 
@@ -313,7 +309,7 @@ const ProjectDetailsPreview = ({
       .then((blob) => {
         // Create an Object URL from the blob
         const objectURL = URL.createObjectURL(blob);
-        console.log(objectURL);
+        // console.log(objectURL);
         const link = document.getElementsByClassName("download-button");
         if (link && link[0] && objectURL) {
           link[0].setAttribute("href", objectURL);
@@ -338,7 +334,8 @@ const ProjectDetailsPreview = ({
 
   return (
     <>
-      <Seo title={project.title} description={project.title} pathSlug={`projects/${project.refName}`} keywords={[project.title, "project", `domus alba ${project.title}`]} />
+      <Toast ref={toast} position="bottom-right" />
+      {/* <Seo title={project.title} description={project.title} pathSlug={`projects/${project.refName}`} keywords={[project.title, "project", `domus alba ${project.title}`]} /> */}
       <div className="overflow-hidden">
         <ScrollToTop />
         {/* <FsLightbox
@@ -622,7 +619,7 @@ const ProjectDetailsPreview = ({
                 </svg>
               </button>
               <Button className="w-100 mt-4" style={{ lineHeight: "28px" }} severity="secondary" outlined type="button" icon="pi pi-share-alt" label="Share" onClick={(e) => op.current.toggle(e)} />
-              <OverlayPanel ref={op} closeOnEscape dismissable={true}>
+              <OverlayPanel ref={op} dismissable={true}>
                 <div className="container">
                   <div className="row">
                     <div className="col-3">
@@ -661,6 +658,7 @@ const ProjectDetailsPreview = ({
           <div className="row mt-4">
             <div className="col-12">
               <iframe
+                title={`map for ${project.title}`}
                 src={GetGoogleMapsEmbedUrlSrc(project.mapSrc)}
                 style={{ border: "0", width: "100%", height: "304px" }}
                 loading="lazy"

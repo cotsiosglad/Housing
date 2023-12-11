@@ -21,7 +21,7 @@ const Services = () => {
   const [selectedService, setSelectedService] = useState("");
 
   const updateDialogServiceVisible = (newState) => {
-    console.log(newState);
+    // console.log(newState);
     setDialogServiceVisible(newState);
   };
 

@@ -3,7 +3,7 @@ import { services } from "../data/Data"
 // import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const CustomMessage = (props) => {
-    console.log(props)
+    // console.log(props)
     return (
         <>
             {services.map((items, index) => (

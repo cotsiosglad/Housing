@@ -22,7 +22,6 @@ export default function ImageCarousel({ imageList }) {
   // const [images, setImages] = useState(null);
   // const [imageIndex, setImageIndex] = useState(0);
   const itemTemplate = (item) => {
-    debugger;
     return (
       <img
         src={item.itemImageSrc}
@@ -144,7 +143,6 @@ export default function ImageCarousel({ imageList }) {
   //     setImages(imageList);
   // }, []);
   const abc = (e, item) => {
-    debugger;
     e.preventDefault();
     let itemIdx = imageList.indexOf(item) + 1;
     openLightboxOnSlide(itemIdx);

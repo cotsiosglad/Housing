@@ -4,25 +4,30 @@
     <loc>https://domusalba.eu</loc>
     <changefreq>monthly</changefreq>
     <priority>1</priority>
+    <lastmod>2023-12-01</lastmod> 
   </url>
   <url>
     <loc>https://domusalba.eu/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <lastmod>2023-12-01</lastmod> 
   </url>
   <url>
     <loc>https://domusalba.eu/projects</loc>
     <changefreq>monthly</changefreq>
     <priority>1</priority>
+    <lastmod>2023-12-01</lastmod> 
   </url>
   <url>
     <loc>https://domusalba.eu/services</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <lastmod>2023-12-01</lastmod> 
   </url>
   <url>
     <loc>https://domusalba.eu/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <lastmod>2023-12-01</lastmod> 
   </url>
 </urlset>

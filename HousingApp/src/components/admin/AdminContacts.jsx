@@ -37,7 +37,6 @@ export default function AdminContacts() {
                 // Compare and sort in descending order
                 return dateB - dateA;
             });
-            debugger;
             setContacts(sortedData);
         })
     }, []);
@@ -85,13 +84,11 @@ export default function AdminContacts() {
     );
 
     const abv = (e) => {
-        debugger;
         if (e.wasRead) {
             return null
         }
         else { return 'red' }
 
-        debugger;
     }
 
     const rightToolbarTemplate = () => {

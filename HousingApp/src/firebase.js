@@ -337,7 +337,6 @@ export const GetStorageFolderList = async (folderPath, pageToken) => {
 export const DownloadSingleFile= async (folderPath)=>{
     try {
         //folderPath = "images/projects/abc";
-        debugger;
         const result = await GetStorageFolderList(folderPath);
 
         if(result && result.length>0){

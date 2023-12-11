@@ -14,7 +14,7 @@ function MobileMenu({ isOpen, onClose }) {
         data-aos-offset="0"
       >
         <a href="/">
-          <img src={logoImg} alt="Logo" />
+          <img src={logoImg} alt="Domus Alba Mobile Logo" />
         </a>
       </div>
 
