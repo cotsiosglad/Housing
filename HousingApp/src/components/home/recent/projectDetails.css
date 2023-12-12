@@ -161,6 +161,10 @@
   color: var(--color1)!important;
 }
 
+.p-button:focus {
+  background: rgba(0, 0, 0, 0.12)!important;
+}
+
 .download-button {
   font-family: inherit;
   display: inline-block;

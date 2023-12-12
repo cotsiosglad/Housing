@@ -1,6 +1,7 @@
 import React from "react";
 import "../Options/Options.css";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+// import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
 const OptionRedirect = props => {
     // const redirectFunction = (path) => {
@@ -17,10 +18,10 @@ const OptionRedirect = props => {
                     return (
                         <Link to={option.redirect} key={index} target="_blank" rel="noopener noreferrer">
                             <div
-                            className="option-item"
+                                className="option-item"
                             //onClick={redirectFunction(option.redirect)}
                             >
-                            {option.name}
+                                {option.name}
                             </div>
                         </Link>
                     );

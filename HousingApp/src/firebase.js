@@ -269,6 +269,11 @@ export const GetStorageFolderList = async (folderPath, pageToken) => {
         const getItemList = await listAll(listRef);
 
         if (getItemList) {
+            if(getItemList.prefixes.length>0)
+            {
+                //return subfolders
+                return getItemList.prefixes.map(m => ({ fullPath:m.fullPath}));
+            }
             // return getItemList.items.map(m => (m.storage.host + "/" + m.bucket + "/" + m.fullPath));
             return getItemList.items.map(m => ({ fullPath: m.fullPath, fileName: m.name }));
 
@@ -445,8 +450,14 @@ export async function DeleteStorageFolderFiles (folderPath){
         //folderPath = "images/projects/abc";
         const result = await GetStorageFolderList(folderPath);
 
-        const deletePromises = result.map(async (item) => {
-            await deleteObject(ref(storage, item.fullPath));
+        const deletePromises = result.map(async (item) => 
+        {
+            if(item.fileName){
+                await deleteObject(ref(storage, item.fullPath));
+            }
+            else{
+                await DeleteStorageFolderFiles(item.fullPath);
+            }
         });
 
         const retList = await Promise.all(deletePromises); // Wait for all downloads to complete  

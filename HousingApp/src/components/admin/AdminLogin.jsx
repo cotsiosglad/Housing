@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./adminLogin.css";
-import { useHistory } from "react-router-dom";
 import { auth } from "../../firebase.js";
 import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "firebase/auth";
 import AdminMainPage from "./AdminMainPage";
@@ -10,7 +9,6 @@ const AdminLogin = () => {
   const [loginPassword, setLoginPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  let history = useHistory();
 
   useEffect(() => {
     // Check the user's authentication status when the component mounts

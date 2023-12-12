@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { projects } from "../../../data/Data"
 import Options from "../Options/Options";
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import OptionRedirect from "../OptionRedirect/OptionRedirect";
 import { GetAllDocs } from "../../../../firebase";
 

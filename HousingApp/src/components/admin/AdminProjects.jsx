@@ -132,7 +132,7 @@ export default function AdminProjects() {
       alert("Image Uploaded");
     });
   };
-
+  const dialogToast = useRef(null);
   const toast = useRef(null);
   const dt = useRef(null);
 
@@ -225,12 +225,12 @@ export default function AdminProjects() {
   };
 
   const onUploadError = (e) => {
-    if (e && e.size > 1000000) {
-      toast.current.show({
+    if (e && e.size > 5000000) {
+      dialogToast.current.show({
         severity: "error",
         summary: "Upload Error",
         detail: "The file should not exceed 5MB",
-        life: 150000,
+        life: 3000,
       });
     }
   }
@@ -268,7 +268,7 @@ export default function AdminProjects() {
           break;
       }
       if (preventUpload) {
-        toast.current.show({
+        dialogToast.current.show({
           severity: "error",
           summary: "Upload Error",
           detail: "You can upload only 1 file",
@@ -316,7 +316,7 @@ export default function AdminProjects() {
           setApartmentUploadedFiles((prevFiles) => [..._files]);
           break;
         default:
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Error",
             detail: "File could not be saved",
@@ -480,7 +480,7 @@ export default function AdminProjects() {
               //     await DeleteFileIfNotExist(path, filenames);
               //   }
             } else {
-              toast.current.show({
+              dialogToast.current.show({
                 severity: "error",
                 summary: "Error on saving files",
                 detail: `The files were not saved`,
@@ -515,8 +515,8 @@ export default function AdminProjects() {
         document.querySelectorAll("input.p-invalid").length == 0
       ) {
         //return false if there are no main/side and project images
-        if (projectImages.length == 0 && projectImages.map(m => m.files).flat() < 3) {
-          toast.current.show({
+        if (projectImages.length == 0 || projectImages.map(m => m.files).flat().length < 3) {
+          dialogToast.current.show({
             severity: "error",
             summary: "Project Images Required",
             detail: `Please upload at least 3 project images`,
@@ -525,7 +525,7 @@ export default function AdminProjects() {
           setBlocker(false);
           return false;
         } else if (projectSideImage.length == 0) {
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Project Side Image Required",
             detail: `Please upload project side image`,
@@ -534,7 +534,7 @@ export default function AdminProjects() {
           setBlocker(false);
           return false;
         } else if (projectMainImage.length == 0) {
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Project Main Image Required",
             detail: `Please upload project main image`,
@@ -543,7 +543,7 @@ export default function AdminProjects() {
           setBlocker(false);
           return false;
         } else if (projectDocuments.length == 0) {
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Project Brochure Required",
             detail: `Please upload project brochure`,
@@ -558,7 +558,7 @@ export default function AdminProjects() {
         let _project = { ...project, description: textEditorValue };
 
         if (await checkIfRefExists(project.refName, project.id)) {
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Reference should be unique",
             detail: `Reference ${project.refName} already exists for another project`,
@@ -603,12 +603,7 @@ export default function AdminProjects() {
               );
               await saveFilesToCloud(projectVideo).then(setProjectVideo([]));
 
-              toast.current.show({
-                severity: "success",
-                summary: "Successful",
-                detail: "Submitted",
-                life: 3000,
-              });
+
               completed = "OK";
               _project.updatedOn = "";
               _projects[idx] = _project;
@@ -620,6 +615,12 @@ export default function AdminProjects() {
               setProjectApartmentList([]);
               setApartmentUploadedFiles([]);
               setTextEditorValue("");
+              toast.current.show({
+                severity: "success",
+                summary: "Successful",
+                detail: "Submitted",
+                life: 3000,
+              });
               setBlocker(false);
             });
           });
@@ -692,7 +693,7 @@ export default function AdminProjects() {
       }
     } catch (error) {
       WriteError(error);
-      toast.current.show({
+      dialogToast.current.show({
         severity: "error",
         summary: "Error on saving",
         detail: "Project failed to save",
@@ -857,9 +858,10 @@ export default function AdminProjects() {
   async function deleteProject() {
     let _projects = projects.filter((val) => val.id !== project.id);
     debugger
-    await DeleteDocByRefId("Projects", "id", project.id);
-    await DeleteDocByRefId("ProjectApartments", "projectId", project.id);
-    await DeleteStorageFolderFiles("projects/" + project.refName);
+    // await DeleteDocByRefId("Projects", "id", project.id);
+    // await DeleteDocByRefId("ProjectApartments", "projectId", project.id);
+    // await DeleteStorageFolderFiles("projects/" + project.refName);
+    await DeleteStorageFolderFiles("projects/test");
 
     setProjects(_projects);
 
@@ -1328,7 +1330,7 @@ export default function AdminProjects() {
         (p) => p.flatNo !== apartment.flatNo
       );
 
-      toast.current.show({
+      dialogToast.current.show({
         severity: "success",
         summary: "Apartment Deleted",
         detail: `Flat:${apartment.flatNo}`,
@@ -1357,7 +1359,7 @@ export default function AdminProjects() {
 
     const validation = fieldsToValid.map((item) => {
       if (!e[item]) {
-        toast.current.show({
+        dialogToast.current.show({
           severity: "error",
           summary: "Validation",
           detail: `${item} is required`,
@@ -1444,7 +1446,7 @@ export default function AdminProjects() {
           setApartmentUploadedFiles(updatedUploadedFiles);
           break;
         default:
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Error",
             detail: "File could not be saved",
@@ -1457,7 +1459,7 @@ export default function AdminProjects() {
 
   return (
     <>
-
+      <Toast ref={toast} position="bottom-right" />
       <BlockUI blocked={mainBlocker}>
         <LoadingBar isVisible={mainBlocker} />
         <div className="table-content">
@@ -1577,6 +1579,7 @@ export default function AdminProjects() {
             className="project-image block m-auto pb-3"
           />
         )}
+        <Toast ref={dialogToast} position="bottom-right" />
         <BlockUI blocked={blocker}>
           <LoadingBar isVisible={blocker} />
           <div className="container-fluid">
@@ -1835,7 +1838,7 @@ export default function AdminProjects() {
                     handleFileChange(e, "projectImages", "PROJECT_IMAGES")
                   }
                   accept="image/*"
-                  maxFileSize={1000000}
+                  maxFileSize={5000000}
                   auto
                   chooseLabel="Project Images"
                 />
@@ -2255,7 +2258,6 @@ export default function AdminProjects() {
           </div>
         </div>
       </Dialog>
-      <Toast ref={toast} position="bottom-left" baseZIndex={"999999"} />
     </>
   );
 }
