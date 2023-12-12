@@ -31,7 +31,6 @@ import {
   DeleteFileIfNotExist,
   DeleteStorageFolderFiles,
   DeleteDocByRefId,
-  DeleteAllCloudStorageFiles,
   GetAuthUser
 } from "../../firebase";
 import {
@@ -224,6 +223,17 @@ export default function AdminProjects() {
 
     setPreviewProjectDialog(!previewProjectDialog);
   };
+
+  const onUploadError = (e) => {
+    if (e && e.size > 1000000) {
+      toast.current.show({
+        severity: "error",
+        summary: "Upload Error",
+        detail: "The file should not exceed 5MB",
+        life: 150000,
+      });
+    }
+  }
 
   const handleFileChange = (e, folderName, typeOfUpload, flatNo = null) => {
     //const files = e.files;
@@ -505,11 +515,11 @@ export default function AdminProjects() {
         document.querySelectorAll("input.p-invalid").length == 0
       ) {
         //return false if there are no main/side and project images
-        if (projectImages.length == 0) {
+        if (projectImages.length == 0 && projectImages.map(m => m.files).flat() < 3) {
           toast.current.show({
             severity: "error",
             summary: "Project Images Required",
-            detail: `Please upload project images`,
+            detail: `Please upload at least 3 project images`,
             life: 3000,
           });
           setBlocker(false);
@@ -849,7 +859,8 @@ export default function AdminProjects() {
     debugger
     await DeleteDocByRefId("Projects", "id", project.id);
     await DeleteDocByRefId("ProjectApartments", "projectId", project.id);
-    await DeleteAllCloudStorageFiles("projects/" + project.refName);
+    await DeleteStorageFolderFiles("projects/" + project.refName);
+
     setProjects(_projects);
 
     //firebase api to delete current project and project details
@@ -1283,7 +1294,7 @@ export default function AdminProjects() {
           customUpload
           chooseOptions={uploadOptions}
           accept="image/*"
-          maxFileSize={1000000}
+          maxFileSize={5000000}
           uploadHandler={(e) =>
             handleFileChange(
               e,
@@ -1446,7 +1457,7 @@ export default function AdminProjects() {
 
   return (
     <>
-      <Toast ref={toast} />
+
       <BlockUI blocked={mainBlocker}>
         <LoadingBar isVisible={mainBlocker} />
         <div className="table-content">
@@ -1812,9 +1823,11 @@ export default function AdminProjects() {
                     </div> */}
             <div className="row mt-2">
               <div className="col-3 text-center">
+                <div style={{ color: "red" }}>*Upload at least 3 images</div>
                 <FileUpload
                   mode="basic"
                   chooseOptions={{ icon: "pi pi-upload" }}
+                  onValidationFail={onUploadError}
                   multiple
                   name="projectImages"
                   customUpload
@@ -1861,13 +1874,14 @@ export default function AdminProjects() {
                 </div>
               </div>
               <div className="col-3 text-center">
+                <br />
                 <FileUpload
                   mode="basic"
                   customUpload
                   chooseOptions={{ icon: "pi pi-upload" }}
                   name="projectDocs"
                   accept="application/pdf"
-                  maxFileSize={1000000}
+                  maxFileSize={5000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "documents", "PROJECT_DOCUMENTS")
                   }
@@ -1901,13 +1915,14 @@ export default function AdminProjects() {
                 </div>
               </div>
               <div className="col-3 text-center">
+                <br />
                 <FileUpload
                   mode="basic"
                   chooseOptions={{ icon: "pi pi-upload" }}
                   customUpload
                   name="projectSideImage"
                   accept="image/*"
-                  maxFileSize={1000000}
+                  maxFileSize={5000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "sideImage", "PROJECT_SIDE_IMAGE")
                   }
@@ -1948,13 +1963,14 @@ export default function AdminProjects() {
                 </div>
               </div>
               <div className="col-3">
+                <br />
                 <FileUpload
                   mode="basic"
                   chooseOptions={{ icon: "pi pi-upload" }}
                   customUpload
                   name="projectMainImage"
                   accept="image/*"
-                  maxFileSize={1000000}
+                  maxFileSize={5000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "mainImage", "PROJECT_MAIN_IMAGE")
                   }
@@ -2239,6 +2255,7 @@ export default function AdminProjects() {
           </div>
         </div>
       </Dialog>
+      <Toast ref={toast} position="bottom-left" baseZIndex={"999999"} />
     </>
   );
 }
