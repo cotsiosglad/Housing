@@ -45,7 +45,7 @@ import { ConvertPathToGalleriaModel } from "../../helper/CommonFunctions";
 //   )
 // }
 
-const RecentCard = () => {
+const RecentCard = ({ projectsToShow }) => {
   const [projects, setProjects] = useState([]);
   const [projectsMainImage, setProjectMainImage] = useState([]);
   useEffect(() => {
@@ -55,10 +55,17 @@ const RecentCard = () => {
     async function fetchData() {
       try {
         const data = await GetAllDocs("Projects");
-
-        const sortedProjects = data
-          .map((m) => m.data)
-          .sort((a, b) => a.sortNumber - b.sortNumber).slice(0, 3);;
+        let sortedProjects = [];
+        if (projectsToShow && projectsToShow > 0) {
+          sortedProjects = data
+            .map((m) => m.data)
+            .sort((a, b) => a.sortNumber - b.sortNumber).slice(0, projectsToShow);
+        }
+        else {
+          sortedProjects = data
+            .map((m) => m.data)
+            .sort((a, b) => a.sortNumber - b.sortNumber);
+        }
 
         const projectsWithImages = await Promise.all(
           sortedProjects.map(async (proj) => {

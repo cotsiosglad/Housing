@@ -62,7 +62,7 @@ const Recent = () => {
             subtitle="Recently Active or Completed Projects"
           />
           <div className="row" style={{ placeContent: "center" }}>
-            <RecentCard />
+            <RecentCard projectsToShow={3} />
           </div>
         </div>
       </section>
