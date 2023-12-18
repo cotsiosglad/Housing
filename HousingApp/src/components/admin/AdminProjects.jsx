@@ -31,7 +31,6 @@ import {
   DeleteFileIfNotExist,
   DeleteStorageFolderFiles,
   DeleteDocByRefId,
-  DeleteAllCloudStorageFiles,
   GetAuthUser
 } from "../../firebase";
 import {
@@ -133,7 +132,7 @@ export default function AdminProjects() {
       alert("Image Uploaded");
     });
   };
-
+  const dialogToast = useRef(null);
   const toast = useRef(null);
   const dt = useRef(null);
 
@@ -225,6 +224,17 @@ export default function AdminProjects() {
     setPreviewProjectDialog(!previewProjectDialog);
   };
 
+  const onUploadError = (e) => {
+    if (e && e.size > 5000000) {
+      dialogToast.current.show({
+        severity: "error",
+        summary: "Upload Error",
+        detail: "The file should not exceed 5MB",
+        life: 3000,
+      });
+    }
+  }
+
   const handleFileChange = (e, folderName, typeOfUpload, flatNo = null) => {
     //const files = e.files;
     let _files = [];
@@ -258,7 +268,7 @@ export default function AdminProjects() {
           break;
       }
       if (preventUpload) {
-        toast.current.show({
+        dialogToast.current.show({
           severity: "error",
           summary: "Upload Error",
           detail: "You can upload only 1 file",
@@ -306,7 +316,7 @@ export default function AdminProjects() {
           setApartmentUploadedFiles((prevFiles) => [..._files]);
           break;
         default:
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Error",
             detail: "File could not be saved",
@@ -470,7 +480,7 @@ export default function AdminProjects() {
               //     await DeleteFileIfNotExist(path, filenames);
               //   }
             } else {
-              toast.current.show({
+              dialogToast.current.show({
                 severity: "error",
                 summary: "Error on saving files",
                 detail: `The files were not saved`,
@@ -505,17 +515,17 @@ export default function AdminProjects() {
         document.querySelectorAll("input.p-invalid").length == 0
       ) {
         //return false if there are no main/side and project images
-        if (projectImages.length == 0) {
-          toast.current.show({
+        if (projectImages.length == 0 || projectImages.map(m => m.files).flat().length < 3) {
+          dialogToast.current.show({
             severity: "error",
             summary: "Project Images Required",
-            detail: `Please upload project images`,
+            detail: `Please upload at least 3 project images`,
             life: 3000,
           });
           setBlocker(false);
           return false;
         } else if (projectSideImage.length == 0) {
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Project Side Image Required",
             detail: `Please upload project side image`,
@@ -524,7 +534,7 @@ export default function AdminProjects() {
           setBlocker(false);
           return false;
         } else if (projectMainImage.length == 0) {
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Project Main Image Required",
             detail: `Please upload project main image`,
@@ -533,7 +543,7 @@ export default function AdminProjects() {
           setBlocker(false);
           return false;
         } else if (projectDocuments.length == 0) {
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Project Brochure Required",
             detail: `Please upload project brochure`,
@@ -548,7 +558,7 @@ export default function AdminProjects() {
         let _project = { ...project, description: textEditorValue };
 
         if (await checkIfRefExists(project.refName, project.id)) {
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Reference should be unique",
             detail: `Reference ${project.refName} already exists for another project`,
@@ -593,12 +603,7 @@ export default function AdminProjects() {
               );
               await saveFilesToCloud(projectVideo).then(setProjectVideo([]));
 
-              toast.current.show({
-                severity: "success",
-                summary: "Successful",
-                detail: "Submitted",
-                life: 3000,
-              });
+
               completed = "OK";
               _project.updatedOn = "";
               _projects[idx] = _project;
@@ -610,6 +615,12 @@ export default function AdminProjects() {
               setProjectApartmentList([]);
               setApartmentUploadedFiles([]);
               setTextEditorValue("");
+              toast.current.show({
+                severity: "success",
+                summary: "Successful",
+                detail: "Submitted",
+                life: 3000,
+              });
               setBlocker(false);
             });
           });
@@ -682,7 +693,7 @@ export default function AdminProjects() {
       }
     } catch (error) {
       WriteError(error);
-      toast.current.show({
+      dialogToast.current.show({
         severity: "error",
         summary: "Error on saving",
         detail: "Project failed to save",
@@ -847,9 +858,11 @@ export default function AdminProjects() {
   async function deleteProject() {
     let _projects = projects.filter((val) => val.id !== project.id);
     debugger
-    await DeleteDocByRefId("Projects", "id", project.id);
-    await DeleteDocByRefId("ProjectApartments", "projectId", project.id);
-    await DeleteAllCloudStorageFiles("projects/" + project.refName);
+    // await DeleteDocByRefId("Projects", "id", project.id);
+    // await DeleteDocByRefId("ProjectApartments", "projectId", project.id);
+    // await DeleteStorageFolderFiles("projects/" + project.refName);
+    await DeleteStorageFolderFiles("projects/test");
+
     setProjects(_projects);
 
     //firebase api to delete current project and project details
@@ -1283,7 +1296,7 @@ export default function AdminProjects() {
           customUpload
           chooseOptions={uploadOptions}
           accept="image/*"
-          maxFileSize={1000000}
+          maxFileSize={5000000}
           uploadHandler={(e) =>
             handleFileChange(
               e,
@@ -1317,7 +1330,7 @@ export default function AdminProjects() {
         (p) => p.flatNo !== apartment.flatNo
       );
 
-      toast.current.show({
+      dialogToast.current.show({
         severity: "success",
         summary: "Apartment Deleted",
         detail: `Flat:${apartment.flatNo}`,
@@ -1346,7 +1359,7 @@ export default function AdminProjects() {
 
     const validation = fieldsToValid.map((item) => {
       if (!e[item]) {
-        toast.current.show({
+        dialogToast.current.show({
           severity: "error",
           summary: "Validation",
           detail: `${item} is required`,
@@ -1433,7 +1446,7 @@ export default function AdminProjects() {
           setApartmentUploadedFiles(updatedUploadedFiles);
           break;
         default:
-          toast.current.show({
+          dialogToast.current.show({
             severity: "error",
             summary: "Error",
             detail: "File could not be saved",
@@ -1446,7 +1459,7 @@ export default function AdminProjects() {
 
   return (
     <>
-      <Toast ref={toast} />
+      <Toast ref={toast} position="bottom-right" />
       <BlockUI blocked={mainBlocker}>
         <LoadingBar isVisible={mainBlocker} />
         <div className="table-content">
@@ -1566,6 +1579,7 @@ export default function AdminProjects() {
             className="project-image block m-auto pb-3"
           />
         )}
+        <Toast ref={dialogToast} position="bottom-right" />
         <BlockUI blocked={blocker}>
           <LoadingBar isVisible={blocker} />
           <div className="container-fluid">
@@ -1812,9 +1826,11 @@ export default function AdminProjects() {
                     </div> */}
             <div className="row mt-2">
               <div className="col-3 text-center">
+                <div style={{ color: "red" }}>*Upload at least 3 images</div>
                 <FileUpload
                   mode="basic"
                   chooseOptions={{ icon: "pi pi-upload" }}
+                  onValidationFail={onUploadError}
                   multiple
                   name="projectImages"
                   customUpload
@@ -1822,7 +1838,7 @@ export default function AdminProjects() {
                     handleFileChange(e, "projectImages", "PROJECT_IMAGES")
                   }
                   accept="image/*"
-                  maxFileSize={1000000}
+                  maxFileSize={5000000}
                   auto
                   chooseLabel="Project Images"
                 />
@@ -1861,13 +1877,14 @@ export default function AdminProjects() {
                 </div>
               </div>
               <div className="col-3 text-center">
+                <br />
                 <FileUpload
                   mode="basic"
                   customUpload
                   chooseOptions={{ icon: "pi pi-upload" }}
                   name="projectDocs"
                   accept="application/pdf"
-                  maxFileSize={1000000}
+                  maxFileSize={5000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "documents", "PROJECT_DOCUMENTS")
                   }
@@ -1901,13 +1918,14 @@ export default function AdminProjects() {
                 </div>
               </div>
               <div className="col-3 text-center">
+                <br />
                 <FileUpload
                   mode="basic"
                   chooseOptions={{ icon: "pi pi-upload" }}
                   customUpload
                   name="projectSideImage"
                   accept="image/*"
-                  maxFileSize={1000000}
+                  maxFileSize={5000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "sideImage", "PROJECT_SIDE_IMAGE")
                   }
@@ -1948,13 +1966,14 @@ export default function AdminProjects() {
                 </div>
               </div>
               <div className="col-3">
+                <br />
                 <FileUpload
                   mode="basic"
                   chooseOptions={{ icon: "pi pi-upload" }}
                   customUpload
                   name="projectMainImage"
                   accept="image/*"
-                  maxFileSize={1000000}
+                  maxFileSize={5000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "mainImage", "PROJECT_MAIN_IMAGE")
                   }

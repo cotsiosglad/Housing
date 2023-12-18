@@ -13,7 +13,7 @@ import {
   CiLocationOn,
 } from "react-icons/ci";
 import SocialMediaBar from "../common/header/SocialMediaBar";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 import { BsFacebook, BsTwitter, BsLinkedin, BsInstagram } from "react-icons/bs";
 import { FaViber, FaWhatsappSquare } from "react-icons/fa";
 import { WriteDoc } from "../../firebase";
@@ -46,21 +46,23 @@ const Contact = () => {
       _contactModel.notes = formData.current["notes"].value;
       _contactModel.dateCreated = serverTimestamp()
 
-      toast.current.show({ severity: "success", summary: "Successful", detail: "Submitted", life: 3000, });
-      WriteDoc(_contactModel, "Contacts").then((res) => {
-        _contactModel.firstName = formData.current["firstName"].value = "";
-        _contactModel.contactEmail = formData.current["contactEmail"].value = "";
-        _contactModel.subject = formData.current["subject"].value = "";
-        _contactModel.notes = formData.current["notes"].value = "";
-      });
-      emailjs.sendForm("service_2l3wljg", "template_iehmlgn", form.current, "KjCooaWk0QOfBkzcz").then(
-        (result) => {
-          //toast.current.show({ severity: "success", summary: "Successful", detail: "Submitted", life: 3000, });
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+      if (_contactModel.contactEmail) {
+        toast.current.show({ severity: "success", summary: "Successful", detail: "Submitted", life: 3000, });
+        WriteDoc(_contactModel, "Contacts").then((res) => {
+          _contactModel.firstName = formData.current["firstName"].value = "";
+          _contactModel.contactEmail = formData.current["contactEmail"].value = "";
+          _contactModel.subject = formData.current["subject"].value = "";
+          _contactModel.notes = formData.current["notes"].value = "";
+        });
+        emailjs.sendForm("service_2l3wljg", "template_iehmlgn", form.current, "KjCooaWk0QOfBkzcz").then(
+          (result) => {
+            //toast.current.show({ severity: "success", summary: "Successful", detail: "Submitted", life: 3000, });
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+      }
     }
 
   }

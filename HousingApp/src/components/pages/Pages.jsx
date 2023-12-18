@@ -1,6 +1,6 @@
 import React from "react"
 import Header from "../common/header/Header"
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import { BrowserRouter as Router, Route, Redirect, Routes } from "react-router-dom"
 import Home from "../home/Home"
 import Footer from "../common/footer/Footer"
 import About from "../about/About"
@@ -12,7 +12,7 @@ import AdminLogin from "../admin/AdminLogin"
 import AdminMainPage from "../admin/AdminMainPage"
 import ProjectDetails from "../home/recent/ProjectDetails"
 import { auth, GetAuthUser } from "../../firebase"
-import UserAuthorization from "../helper/UserAuthorization"
+// import UserAuthorization from "../helper/UserAuthorization"
 import NotFoundPage from "./NotFoundPage"
 // Layout component with Header and Footer
 const someUser = GetAuthUser();
@@ -52,21 +52,21 @@ const Pages = () => {
   return (
     <>
       <Router>
-        <Switch>
+        <Routes>
           {/* Routes with DefaultLayout */}
-          <Route exact path="/" render={() => <DefaultLayout><Home /></DefaultLayout>} />
-          <Route exact path="/about" render={() => <DefaultLayout><About /></DefaultLayout>} />
-          <Route exact path="/services" render={() => <DefaultLayout><Services /></DefaultLayout>} />
-          <Route exact path="/projects" render={() => <DefaultLayout><Projects /></DefaultLayout>} />
+          <Route exact path="/" Component={() => <DefaultLayout><Home /></DefaultLayout>} />
+          <Route exact path="/about" Component={() => <DefaultLayout><About /></DefaultLayout>} />
+          <Route exact path="/services" Component={() => <DefaultLayout><Services /></DefaultLayout>} />
+          <Route exact path="/projects" Component={() => <DefaultLayout><Projects /></DefaultLayout>} />
           {/* <Route exact path="/pricing" render={() => <DefaultLayout><Pricing /></DefaultLayout>} /> */}
-          <Route exact path="/contact" render={() => <DefaultLayout><Contact /></DefaultLayout>} />
+          <Route exact path="/contact" Component={() => <DefaultLayout><Contact /></DefaultLayout>} />
 
           {/* Route for AdminLogin with AdminLoginLayout */}
 
           {/* <Route exact path="/admin/home" render={() => someUser ? <AdminLoginLayout><AdminMainPage /></AdminLoginLayout> : <Redirect to='/admin' /> } /> */}
           {/* <UserAuthorization> */}
           {/* <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} /> */}
-          <Route exact path="/admin" render={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
+          <Route exact path="/admin" Component={() => <AdminLoginLayout><AdminLogin /></AdminLoginLayout>} />
           {/* </UserAuthorization> */}
           {/* <Route exact path="/admin/home" render={() => <AdminLoginLayout><AdminMainPage /></AdminLoginLayout>} /> */}
           {/* <Route path="/projects/:id">
@@ -74,9 +74,9 @@ const Pages = () => {
               <ProjectDetails />
             </DefaultLayout>
           </Route>  */}
-          <Route path="/projects/:id" component={ProjectDetails} />
-          <Route path='*' component={NotFoundPage} />
-        </Switch>
+          <Route path="/projects/:id" Component={ProjectDetails} />
+          <Route path='*' Component={NotFoundPage} />
+        </Routes>
       </Router>
     </>
   )

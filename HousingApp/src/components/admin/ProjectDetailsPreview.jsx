@@ -58,7 +58,7 @@ const ProjectDetailsPreview = ({
   // const [selectedProject, setSelectedProject] = useState(null);
   const [blocked, setBlocked] = useState(false);
   const op = useRef(null);
-  const toast = useRef(null);
+  const PreviewToast = useRef(null);
   // const [currProjectImages, setCurrProjectImages] = useState([]);
   // const [productIndex, setProductIndex] = useState(0);
   // const [lightboxController, setLightboxController] = useState({
@@ -92,7 +92,7 @@ const ProjectDetailsPreview = ({
 
   function copyUrl() {
     navigator.clipboard.writeText(window.location.href);
-    toast.current.show({
+    PreviewToast.current.show({
       severity: "success",
       summary: "Copied",
       detail: "URL Copied!",
@@ -334,7 +334,7 @@ const ProjectDetailsPreview = ({
 
   return (
     <>
-      <Toast ref={toast} position="bottom-right" />
+      <Toast ref={PreviewToast} position="bottom-right" />
       {/* <Seo title={project.title} description={project.title} pathSlug={`projects/${project.refName}`} keywords={[project.title, "project", `domus alba ${project.title}`]} /> */}
       <div className="overflow-hidden">
         <ScrollToTop />
