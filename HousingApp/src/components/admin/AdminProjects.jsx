@@ -931,14 +931,15 @@ export default function AdminProjects() {
     const val = (e.target && e.target.value) || "";
     let _project = { ...project };
 
-    switch (name) {
-      case "refName":
-        _project[`${name}`] = val.toLowerCase();
-        break;
-      default:
-        _project[`${name}`] = val;
-        break;
-    };
+    // switch (name) {
+    //   case "refName":
+    //     _project[`${name}`] = val.toLowerCase();
+    //     break;
+    //   default:
+    //     _project[`${name}`] = val;
+    //     break;
+    // };
+    _project[`${name}`] = val;
     setProject(_project);
   };
 
