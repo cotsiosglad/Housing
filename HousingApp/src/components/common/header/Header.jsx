@@ -173,7 +173,7 @@ const Header = () => {
           <div className="topicons">
             {/* <span className="d-block">
             <BsFacebook />
-            <a href="https://www.facebook.com/domusalbacy/" target="_blank" rel="noreferrer"> domusalbacy</a>
+            <a href="https://www.facebook.com/domusalbaltd/" target="_blank" rel="noreferrer"> domusalbaltd</a>
           </span> */}
             <SocialMediaBar />
           </div>

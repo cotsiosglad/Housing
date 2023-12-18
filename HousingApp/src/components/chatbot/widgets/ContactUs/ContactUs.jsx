@@ -6,8 +6,8 @@ const ContactUs = () => {
     return (
         <>
             <div className="contact-bot">
-                <span><a href='https://www.facebook.com/domusalbacy/'><BsFacebook className="pr-2"/> Our Facebook Page</a></span>
-                {/* <button className="button-18"> <a href='https://www.facebook.com/domusalbacy/'>Facebook</a></button> */}
+                <span><a href='https://www.facebook.com/domusalbaltd/'><BsFacebook className="pr-2"/> Our Facebook Page</a></span>
+                {/* <button className="button-18"> <a href='https://www.facebook.com/domusalbaltd/'>Facebook</a></button> */}
                 <br></br>
                 <br></br>
                 <Link to="/contact">

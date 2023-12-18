@@ -120,32 +120,32 @@ const Contact = () => {
                 <br></br>
                 <div className="alignItems">
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbacy/">
+                    <Link to="https://www.facebook.com/domusalbaltd/">
                       <BsFacebook></BsFacebook>
                     </Link>
                   </div>
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbacy/">
+                    <Link to="https://www.facebook.com/domusalbaltd/">
                       <FaViber></FaViber>
                     </Link>
                   </div>
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbacy/">
+                    <Link to="https://www.facebook.com/domusalbaltd/">
                       <BsTwitter></BsTwitter>
                     </Link>
                   </div>
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbacy/">
+                    <Link to="https://www.facebook.com/domusalbaltd/">
                       <FaWhatsappSquare></FaWhatsappSquare>
                     </Link>
                   </div>
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbacy/">
+                    <Link to="https://www.facebook.com/domusalbaltd/">
                       <BsLinkedin></BsLinkedin>
                     </Link>
                   </div>
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbacy/">
+                    <Link to="https://www.facebook.com/domusalbaltd/">
                       <BsInstagram></BsInstagram>
                     </Link>
                   </div>
