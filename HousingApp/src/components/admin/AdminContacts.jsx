@@ -41,7 +41,6 @@ export default function AdminContacts() {
         })
     }, []);
     const onContactRowClick = (e) => {
-        debugger
         setTextToShow(e.data.notes);
         setVisible(true);
         //update flag when initially false

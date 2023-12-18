@@ -98,11 +98,10 @@ const RecentCard = () => {
                 <div
                   className="houses-grid-img"
                   style={{
-                    backgroundImage: `url(${
-                      val.mainImage[0]?.itemImageSrc
-                        ? val.mainImage[0].itemImageSrc
-                        : "../../images/no_image.jpg"
-                    })`,
+                    backgroundImage: `url(${val.mainImage[0]?.itemImageSrc
+                      ? val.mainImage[0].itemImageSrc
+                      : "../../images/no_image.jpg"
+                      })`,
                   }}>
                   {/* <div className='houses-grid-img' style={{ backgroundImage: `url(${val.cover})` }}> */}
                   {/* <img src={cover} alt='' /> */}
@@ -111,7 +110,7 @@ const RecentCard = () => {
                   <span className="rentals-grid-tab" style={{ width: "50%" }}>
                     {val.data.status}
                   </span>
-                  <h4>{val.data.title}</h4>
+                  <h4 className="text-center">{val.data.title}</h4>
                 </div>
                 <div className="rentals-grid-tabs">
                   <span className="rentals-grid-tab">
@@ -122,9 +121,8 @@ const RecentCard = () => {
                   </span>
 
                   <span
-                    className={`rentals-grid-tab ${
-                      val.data.apartments ? "" : "d-none"
-                    }`}>
+                    className={`rentals-grid-tab ${val.data.apartments ? "" : "d-none"
+                      }`}>
                     <BsFillLayersFill /> {val.data.apartments} Apartments
                   </span>
                 </div>

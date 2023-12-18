@@ -122,7 +122,6 @@ const Header = () => {
     }
   }
   function openmenu() {
-    debugger;
     const svgmenu = document.getElementById("svgmenu");
     svgmenu.classList.add("opened");
     // $('#svgmenu').addClass('opened');

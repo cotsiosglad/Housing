@@ -26,7 +26,6 @@ const ProjectDetails = ({ match }) => {
   const [apartmentUploadedFiles, setApartmentUploadedFiles] = useState([]);
   const [projectVideo, setProjectVideo] = useState([]);
   // const [selectedApartmentFiles, setSelectedApartmentFiles] = useState([]);
-  debugger;
   let params = useParams();
   const projectRef = params.id;
   // const projectRef = match.params.id;

@@ -55,6 +55,7 @@ export default function AdminProjects() {
   const statuses = ["Διαθέσιμο", "Πωλήθηκε"];
   const types = ["Residential"];
   const projectStatuses = ["Ολοκληρωμένο", "Υπό Κατασκευή", "Σχεδιασμένο"];
+  const projectFor = ["Κατοικίες", "Διαμερίσματα"];
 
   let emptyProject = {
     // id: "",
@@ -69,6 +70,7 @@ export default function AdminProjects() {
     bedrooms: "",
     bathrooms: "",
     type: types[0],
+    projectFor: projectFor[0],
     apartments: "",
     status: statuses[0],
     availability: "",
@@ -94,6 +96,7 @@ export default function AdminProjects() {
     coveredVerandas: "",
     verandas: "",
     storage: "",
+    garage: "",
     area: "",
     status: "Available",
   };
@@ -857,11 +860,10 @@ export default function AdminProjects() {
 
   async function deleteProject() {
     let _projects = projects.filter((val) => val.id !== project.id);
-    debugger
-    // await DeleteDocByRefId("Projects", "id", project.id);
-    // await DeleteDocByRefId("ProjectApartments", "projectId", project.id);
-    // await DeleteStorageFolderFiles("projects/" + project.refName);
-    await DeleteStorageFolderFiles("projects/test");
+    await DeleteDocByRefId("Projects", "id", project.id);
+    await DeleteDocByRefId("ProjectApartments", "projectId", project.id);
+    await DeleteStorageFolderFiles("projects/" + project.refName);
+    // await DeleteStorageFolderFiles("projects/test");
 
     setProjects(_projects);
 
@@ -929,8 +931,14 @@ export default function AdminProjects() {
     const val = (e.target && e.target.value) || "";
     let _project = { ...project };
 
-    _project[`${name}`] = val;
-
+    switch (name) {
+      case "refName":
+        _project[`${name}`] = val.toLowerCase();
+        break;
+      default:
+        _project[`${name}`] = val;
+        break;
+    };
     setProject(_project);
   };
 
@@ -1123,6 +1131,7 @@ export default function AdminProjects() {
       "verandas",
       "coveredVerandas",
       "internalArea",
+      "garage",
       "storage",
     ];
     let _projectApartments = [...projectApartmentList];
@@ -1214,6 +1223,25 @@ export default function AdminProjects() {
       />
     );
   };
+  const projectForEditor = (value) => {
+    return (
+      <Dropdown
+        value={value}
+        options={projectFor}
+        onChange={(e) => {
+          let _project = { ...project };
+
+          _project["projectFor"] = e.value;
+
+          setProject(_project);
+        }}
+        placeholder="Select Option"
+        itemTemplate={(option) => {
+          return <Tag value={option} severity={getSeverity(option)}></Tag>;
+        }}
+      />
+    );
+  };
 
   const numericEditor = (options) => {
     switch (options.field) {
@@ -1222,6 +1250,7 @@ export default function AdminProjects() {
       case "coveredVerandas":
       case "verandas":
       case "storage":
+      case "garage":
       case "area":
         return (
           <InputNumber
@@ -1352,6 +1381,7 @@ export default function AdminProjects() {
       "flatNo",
       "status",
       "verandas",
+      "garage",
       "coveredVerandas",
       "internalArea",
       "storage",
@@ -1705,6 +1735,19 @@ export default function AdminProjects() {
                     style={{ gap: "20px" }}>
                     {typeEditor(project.type)}
                   </div>
+                </div>
+              </div>
+              <div className="col-md-2">
+                <label className=" field-header">For</label>
+                <div className="flex flex-wrap">
+                  <div
+                    className="flex align-items-center"
+                    style={{ gap: "20px" }}>
+                    {projectForEditor(project.projectFor)}
+                  </div>
+                  {submitted && !project.projectFor && (
+                    <small className="p-error">For is required.</small>
+                  )}
                 </div>
               </div>
             </div>
@@ -2072,7 +2115,7 @@ export default function AdminProjects() {
             </div>
             <div className="mt-2">
               <Panel
-                header="Apartment List"
+                header="House/Apartment List"
                 toggleable
                 onClick={(e) => {
                   if (e.target.className == "p-panel-header") {
@@ -2092,7 +2135,7 @@ export default function AdminProjects() {
                   {/* <Column field="id" header="Id" style={{ width: '10%' }}></Column> */}
                   <Column
                     field="flatNo"
-                    header="Flat No"
+                    header="Αρ."
                     editor={(options) => textEditor(options)}
                     style={{ width: "12%" }}></Column>
                   <Column
@@ -2124,6 +2167,11 @@ export default function AdminProjects() {
                   <Column
                     field="storage"
                     header="Storage"
+                    editor={(options) => textEditor(options)}
+                    style={{ width: "12%" }}></Column>
+                  <Column
+                    field="garage"
+                    header="Garage"
                     editor={(options) => textEditor(options)}
                     style={{ width: "12%" }}></Column>
                   <Column
