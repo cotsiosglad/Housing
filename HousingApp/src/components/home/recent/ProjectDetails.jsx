@@ -4,6 +4,7 @@ import Header from "../../common/header/Header";
 import Footer from "../../common/footer/Footer";
 import { ConvertPathToGalleriaModel } from "../../helper/CommonFunctions";
 import { GetDocById, GetStorageFolderFiles } from "../../../firebase";
+import { useNavigate, useParams } from "react-router-dom"
 
 const ProjectDetails = ({ match }) => {
   //     const [projectDialog, setProjectDialog] = useState(false);
@@ -25,8 +26,11 @@ const ProjectDetails = ({ match }) => {
   const [apartmentUploadedFiles, setApartmentUploadedFiles] = useState([]);
   const [projectVideo, setProjectVideo] = useState([]);
   // const [selectedApartmentFiles, setSelectedApartmentFiles] = useState([]);
-
-  const projectRef = match.params.id;
+  debugger;
+  let params = useParams();
+  const projectRef = params.id;
+  // const projectRef = match.params.id;
+  const navigate = useNavigate();
 
   const getDocuments = (projectRef, subFolder) => {
     //let path = "projects/" + projectData[0].refName + "/projectImages";
@@ -92,6 +96,9 @@ const ProjectDetails = ({ match }) => {
 
     GetDocById(projectRef, "Projects", "refName").then(async (projectData) => {
       let path = "";
+      if (!projectData[0]) {
+        navigate("/");
+      }
       setProject(projectData[0]);
       setTextEditorValue(projectData[0].description);
       GetDocById(projectData[0].id, "ProjectApartments", "projectId").then(

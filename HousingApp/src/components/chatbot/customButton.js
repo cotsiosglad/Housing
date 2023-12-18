@@ -1,6 +1,7 @@
 import { React, useState } from 'react';
 import { services, projects } from "../data/Data"
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+// import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from "react-router-dom";
 import "./chatBot.css"
 
 const CustomButton = (props) => {
