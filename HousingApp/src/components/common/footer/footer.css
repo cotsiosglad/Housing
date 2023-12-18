@@ -38,6 +38,7 @@ footer p {
   color: var(--color1) !important;
   font-weight: bolder;
   text-align: center;
+  font-size: x-large;
 }
 
 footer input {

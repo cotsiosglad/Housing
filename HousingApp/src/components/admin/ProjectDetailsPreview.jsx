@@ -288,7 +288,7 @@ const ProjectDetailsPreview = ({
     if (fileState && fileState.length > 0) {
       //  return <img src={fileState[0].files[0].itemImageSrc} alt={projectMainImage[0].files[0].name}></img>
       return (
-        <video controls autoPlay={false} style={{ height: "230px" }}>
+        <video controls autoPlay={false} style={{ height: "230px", width: "inherit" }}>
           <source src={fileState[0].files[0].itemImageSrc}></source>
           Your browser does not support the video tag.
         </video>
@@ -420,7 +420,7 @@ const ProjectDetailsPreview = ({
                     <LiaBedSolid />
                   </div>
                   <div className="info-icon-content">
-                    <p className="info-icon-title">Κρεβάτια</p>
+                    <p className="info-icon-title">Δωμάτια</p>
                     <p className="info-icon-description">{project.bedrooms}</p>
                   </div>
                 </div>
@@ -429,7 +429,7 @@ const ProjectDetailsPreview = ({
                     <LiaBathSolid />
                   </div>
                   <div className="info-icon-content">
-                    <p className="info-icon-title">Μπάνια</p>
+                    <p className="info-icon-title">Μπάνιο/Τουαλέτες</p>
                     <p className="info-icon-description">{project.bathrooms}</p>
                   </div>
                 </div>
@@ -449,10 +449,10 @@ const ProjectDetailsPreview = ({
                     <LiaBoxesSolid />
                   </div>
                   <div className="info-icon-content">
-                    <p className="info-icon-title">Διαμερίσματα</p>
+                    <p className="info-icon-title">{project.projectFor}</p>
                     <p className="info-icon-description">
                       {apartmentList && apartmentList.length > 0
-                        ? apartmentList.length + 1
+                        ? apartmentList.length
                         : 0}
                     </p>
                   </div>
@@ -484,7 +484,7 @@ const ProjectDetailsPreview = ({
                 </div>
               </div>
             </div>
-            <div className="col-12 col-md-4 col-lg-4">
+            <div className="align-self-center col-12 col-md-4 col-lg-4">
               <div className="project-info-card">
                 {/* <img src='../images/Gardens-Br-1.jpg' alt=''></img> */}
                 {/* <img src={projectSideImage.length > 0 && projectSideImage.filter(w => w.files.length > 0) ? projectSideImage[0].files[0].itemImageSrc : "../images/no_image.jpg"} alt={projectSideImage.length > 0 ? projectSideImage[0].files[0].name : ''}></img> */}
@@ -548,15 +548,16 @@ const ProjectDetailsPreview = ({
                     value={apartmentList}
                     stripedRows
                     tableStyle={{ minWidth: "50rem" }}>
-                    <Column field="flatNo" header="Διαμέρισμα"></Column>
-                    <Column field="beds" header="Κρεβάτια"></Column>
-                    <Column field="baths" header="Μπάνια"></Column>
-                    <Column field="internalArea" header="Καλ. Περιοχή"></Column>
+                    <Column field="flatNo" header={project.projectFor == "Κατοικίες" ? "Αρ." : "Διαμ."}></Column>
+                    <Column field="beds" header="Δωμάτια"></Column>
+                    <Column field="baths" header="Μπάνιο/Τουαλέτες"></Column>
+                    <Column field="internalArea" header="Εσ. Χώροι"></Column>
                     <Column
                       field="coveredVerandas"
                       header="Καλ. Βεράντες"></Column>
                     <Column field="verandas" header="Βεράντες"></Column>
                     <Column field="storage" header="Αποθήκη"></Column>
+                    <Column field="garage" header="Γκαράζ" hidden={project.projectFor == "Κατοικίες" ? false : true}></Column>
                     <Column field="area" header="Περιοχή"></Column>
 
                     <Column field="status" header="Κατάσταση"></Column>
@@ -655,7 +656,7 @@ const ProjectDetailsPreview = ({
               {renderSkeletonVideo(projectVideo)}
             </div>
           </div>
-          <div className="row mt-4">
+          <div className={`row mt-4 ${project.mapSrc ? "" : "d-none"}`}>
             <div className="col-12">
               <iframe
                 title={`map for ${project.title}`}

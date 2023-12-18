@@ -99,13 +99,13 @@ const Contact = () => {
                 <p>Mon - Fri 09:00 - 18:00</p>
                 <div>
                   <CiPhone />
-                  <a>+357 97729606</a>
+                  <a href="tel:70001440"> 70001440</a>
                 </div>
                 <div>
                   <CiMail />
-                  <a href="mailto:hadjisymeoubros@gmail.com" target="_blank">
+                  <a href="mailto:domusalbaltd@gmail.com" target="_blank">
                     {" "}
-                    hadjisymeoubros@gmail.com
+                    domusalbaltd@gmail.com
                   </a>
                 </div>
                 <div>

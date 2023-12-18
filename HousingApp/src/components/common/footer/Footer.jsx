@@ -64,8 +64,8 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="footer-info">
-                <p>∆εν είναι απλή αγορά ακινήτου</p>
-                <p>Είναι επένδυση</p>
+                <p>Τιμή και αξία</p>
+                <p>Ένα βήμα μπροστά</p>
               </div>
             </div>
             <div className="col-12 col-md-8 col-lg-8">
@@ -100,12 +100,12 @@ const Footer = () => {
                   <h5>ΕΠΙΚΟΙΝΩΝΙΑ</h5>
                   <div>
                     <CiPhone />
-                    <a href="tel:+35797729606">+357 97729606</a>
+                    <a href="tel:70001440">70001440</a>
                   </div>
                   <div>
                     <CiMail />
-                    <a href="mailto:hadjisymeoubros@gmail.com" target="_blank">
-                      hadjisymeoubros@gmail.com
+                    <a href="mailto:domusalbaltd@gmail.com" target="_blank">
+                      domusalbaltd@gmail.com
                     </a>
                   </div>
                   <div>
