@@ -58,7 +58,7 @@ const RecentCard = () => {
 
         const sortedProjects = data
           .map((m) => m.data)
-          .sort((a, b) => a.sortNumber - b.sortNumber);
+          .sort((a, b) => a.sortNumber - b.sortNumber).slice(0, 3);;
 
         const projectsWithImages = await Promise.all(
           sortedProjects.map(async (proj) => {

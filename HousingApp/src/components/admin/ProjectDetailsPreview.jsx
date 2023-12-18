@@ -656,8 +656,8 @@ const ProjectDetailsPreview = ({
               {renderSkeletonVideo(projectVideo)}
             </div>
           </div>
-          <div className={`row mt-4 ${project.mapSrc ? "" : "d-none"}`}>
-            <div className="col-12">
+          <div className={`row mt-4`}>
+            <div className={`col-12 ${project.mapSrc ? "" : "d-none"}`}>
               <iframe
                 title={`map for ${project.title}`}
                 src={GetGoogleMapsEmbedUrlSrc(project.mapSrc)}
