@@ -146,7 +146,7 @@ const Footer = () => {
                 </div>
                 <div>
                   <CiFacebook />
-                  <a href="https://www.facebook.com/domusalbacy/" target="_blank" rel="noreferrer">domusalbacy</a>
+                  <a href="https://www.facebook.com/domusalbaltd/" target="_blank" rel="noreferrer">domusalbaltd</a>
                 </div>
               </div>
             </div> */}

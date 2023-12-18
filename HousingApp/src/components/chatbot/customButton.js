@@ -46,7 +46,7 @@ const CustomButton = (props) => {
             return (
                 <>
                     <br></br>
-                    <p> Visit our <a href='https://www.facebook.com/domusalbacy/'>Facebook page</a></p>
+                    <p> Visit our <a href='https://www.facebook.com/domusalbaltd/'>Facebook page</a></p>
                     <Link to="/contact">
                         <button>Contact Page</button>
                     </Link>
