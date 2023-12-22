@@ -98,6 +98,7 @@ export default function AdminProjects() {
     storage: "",
     garage: "",
     area: "",
+    price: 0,
     status: "Available",
   };
 
@@ -166,12 +167,12 @@ export default function AdminProjects() {
     );
   }, []);
 
-  const formatCurrency = (value) => {
-    return value.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-  };
+  // const formatCurrency = (value) => {
+  //   return value.toLocaleString("el-GR", {
+  //     style: "currency",
+  //     currency: "EUR",
+  //   });
+  // };
 
   const updateTextEditorValue = (newState) => {
     // console.log(newState);
@@ -990,8 +991,12 @@ export default function AdminProjects() {
     );
   };
 
-  const priceBodyTemplate = (rowData) => {
-    return formatCurrency(rowData.price);
+  // const priceBodyTemplate = (rowData) => {
+  //   return formatCurrency(rowData.price);
+  // };
+
+  const priceEditor = (options) => {
+    return <InputNumber value={options.value} onValueChange={(e) => options.editorCallback(e.value)} mode="currency" currency="EUR" locale="el-GR" maxFractionDigits={0} />;
   };
 
   const ratingBodyTemplate = (rowData) => {
@@ -1370,9 +1375,9 @@ export default function AdminProjects() {
     }
   };
 
-  // const priceBodyTemplate = (rowData) => {
-  //     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(rowData.price);
-  // };
+  const priceBodyTemplate = (rowData) => {
+    return new Intl.NumberFormat('el-GR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(rowData.price);
+  };
 
   const validApartmentRow = (e) => {
     let fieldsToValid = [
@@ -1386,6 +1391,7 @@ export default function AdminProjects() {
       "coveredVerandas",
       "internalArea",
       "storage",
+      "price",
     ];
 
     const validation = fieldsToValid.map((item) => {
@@ -1487,6 +1493,7 @@ export default function AdminProjects() {
       }
     }
   };
+
 
   return (
     <>
@@ -2180,6 +2187,7 @@ export default function AdminProjects() {
                     header="Area"
                     editor={(options) => textEditor(options)}
                     style={{ width: "12%" }}></Column>
+                  <Column field="price" header="Τιμή" body={priceBodyTemplate} editor={(options) => priceEditor(options)} style={{ width: "20%" }}></Column>
                   <Column
                     field="status"
                     header="Status"
@@ -2192,7 +2200,6 @@ export default function AdminProjects() {
                     }}
                     editor={(options) => statusEditor(options)}
                     style={{ width: "20%" }}></Column>
-                  {/* <Column field="price" header="Price" body={priceBodyTemplate} editor={(options) => priceEditor(options)} style={{ width: '20%' }}></Column> */}
                   <Column
                     rowEditor
                     headerStyle={{ width: "10%", minWidth: "8rem" }}

@@ -94,7 +94,7 @@ const Contact = () => {
               <div className="contact-info h-100">
                 <strong>Domus Alba</strong>
                 <p className="adresss">
-                  Archiepiskopou Leontiou 23, 2407, Engomi, Nicosia, Cyprus
+                  170, Strovolou Avenue Street, Strovolos, Nicosia, Cyprus
                 </p>
                 <p>Mon - Fri 09:00 - 18:00</p>
                 <div>
@@ -122,32 +122,32 @@ const Contact = () => {
                 <br></br>
                 <div className="alignItems">
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbaltd/">
+                    <Link to="https://www.facebook.com/domusalbaltd/" target="_blank">
                       <BsFacebook></BsFacebook>
                     </Link>
                   </div>
-                  <div className="svgfacebook">
+                  {/* <div className="svgfacebook">
                     <Link to="https://www.facebook.com/domusalbaltd/">
                       <FaViber></FaViber>
                     </Link>
-                  </div>
-                  <div className="svgfacebook">
+                  </div> */}
+                  {/* <div className="svgfacebook">
                     <Link to="https://www.facebook.com/domusalbaltd/">
                       <BsTwitter></BsTwitter>
                     </Link>
-                  </div>
+                  </div> */}
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbaltd/">
+                    <Link to="https://wa.me/35799626440?text=Παρακαλώ%20επικοινωνήστε%20μαζί%20μου." target="_blank">
                       <FaWhatsappSquare></FaWhatsappSquare>
                     </Link>
                   </div>
-                  <div className="svgfacebook">
+                  {/* <div className="svgfacebook">
                     <Link to="https://www.facebook.com/domusalbaltd/">
                       <BsLinkedin></BsLinkedin>
                     </Link>
-                  </div>
+                  </div> */}
                   <div className="svgfacebook">
-                    <Link to="https://www.facebook.com/domusalbaltd/">
+                    <Link to="https://www.instagram.com/domus_alba" target="_blank">
                       <BsInstagram></BsInstagram>
                     </Link>
                   </div>
