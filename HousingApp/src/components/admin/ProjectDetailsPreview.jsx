@@ -38,8 +38,8 @@ import { GetGoogleMapsEmbedUrlSrc } from "../helper/CommonFunctions";
 import ImageFullScreenViewer from "../helper/ImageFullScreenViewer";
 import ScrollToTop from "../../customHelperComponents/ScrollToTop";
 import { OverlayPanel } from 'primereact/overlaypanel';
-import Seo from "../../customHelperComponents/SeoComponent";
 import { Toast } from "primereact/toast";
+import { InputNumber } from "primereact/inputnumber";
 
 
 const ProjectDetailsPreview = ({
@@ -331,7 +331,12 @@ const ProjectDetailsPreview = ({
       createObjectURLFromURL(path);
     } else return "";
   };
-
+  const priceBodyTemplate = (rowData) => {
+    return new Intl.NumberFormat('el-GR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(rowData.price).replace("€", "").trim();
+  };
+  const priceEditor = (options) => {
+    return <InputNumber value={options.value} onValueChange={(e) => options.editorCallback(e.value)} mode="currency" currency="EUR" locale="el-GR" />;
+  };
   return (
     <>
       <Toast ref={PreviewToast} position="bottom-right" />
@@ -540,6 +545,7 @@ const ProjectDetailsPreview = ({
                 <div className="project-wrapper-content">
                   <DataTable
                     selectionMode="single"
+                    scrollable
                     // selection={selectedProject}
                     metaKeySelection={false}
                     onSelectionChange={(e) => onSelectItem(e.value)}
@@ -548,19 +554,17 @@ const ProjectDetailsPreview = ({
                     value={apartmentList}
                     stripedRows
                     tableStyle={{ minWidth: "50rem" }}>
-                    <Column field="flatNo" header={project.projectFor == "Κατοικίες" ? "Αρ." : "Διαμ."}></Column>
-                    <Column field="beds" header="Δωμάτια"></Column>
-                    <Column field="baths" header="Μπάνιο/Τουαλέτες"></Column>
-                    <Column field="internalArea" header="Εσ. Χώροι"></Column>
-                    <Column
-                      field="coveredVerandas"
-                      header="Καλ. Βεράντες"></Column>
-                    <Column field="verandas" header="Βεράντες"></Column>
-                    <Column field="storage" header="Αποθήκη"></Column>
-                    <Column field="garage" header="Γκαράζ" hidden={project.projectFor == "Κατοικίες" ? false : true}></Column>
-                    <Column field="area" header="Περιοχή"></Column>
-
-                    <Column field="status" header="Κατάσταση"></Column>
+                    <Column field="flatNo" header={project.projectFor == "Κατοικίες" ? "Αρ." : "Διαμ."} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="beds" header="Δωμάτια" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="baths" header="Μπάνιο/Τουαλέτες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="internalArea" header="Εσ. Χώροι" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="coveredVerandas" header="Καλ. Βεράντες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="verandas" header="Βεράντες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="storage" header="Αποθήκη" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="garage" header="Γκαράζ" hidden={project.projectFor == "Κατοικίες" ? false : true} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="area" header="Περιοχή" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="price" header="Τιμή(€)" body={priceBodyTemplate} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="status" header="Κατάσταση" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
                     <Column
                       header="Actions"
                       body={actionBodyTemplate}
@@ -590,7 +594,7 @@ const ProjectDetailsPreview = ({
               <button
                 className="whatsapp-button"
                 onClick={() => {
-                  const whatsappUrl = `https://wa.me/35797729606?text=Ενδιαφέρομαι%20για%20το%20${project.refName}!%20Παρακαλώ%20επικοινωνήστε%20μαζί%20μου.`
+                  const whatsappUrl = `https://wa.me/35799626440?text=Ενδιαφέρομαι%20για%20το%20${project.refName}!%20Παρακαλώ%20επικοινωνήστε%20μαζί%20μου.`
                   // "https://web.whatsapp.com/send/?phone=%2B96812104&text=Ενδιαφέρομαι%2C&type=phone_number&app_absent=0";
                   window.open(whatsappUrl, "_blank");
                 }}>

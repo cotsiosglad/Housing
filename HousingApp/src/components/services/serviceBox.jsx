@@ -110,7 +110,7 @@ const ServiceBox = ({
               onClick={() => {
                 handleChangeState(items.title);
               }}>
-              Ενδιαφέρομαι
+              Ενδιαφερομαι
             </button>
           </div>
         </div>
