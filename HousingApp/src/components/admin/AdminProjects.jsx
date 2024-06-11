@@ -585,6 +585,10 @@ export default function AdminProjects() {
 
         const currUser = await GetAuthUser();
         const idx = _projects.findIndex((w) => w.id == project.id);
+
+        //transform reference number to lowercase
+        //_project.refName = _project.refName ? _project.refName.toLowerCase() : _project.refName;
+
         if (project.id) {
           //const index = findIndexById(project.id);
 
@@ -1331,7 +1335,7 @@ export default function AdminProjects() {
           customUpload
           chooseOptions={uploadOptions}
           accept="image/*"
-          maxFileSize={5000000}
+          maxFileSize={20000000}
           uploadHandler={(e) =>
             handleFileChange(
               e,
@@ -1889,7 +1893,7 @@ export default function AdminProjects() {
                     handleFileChange(e, "projectImages", "PROJECT_IMAGES")
                   }
                   accept="image/*"
-                  maxFileSize={5000000}
+                  maxFileSize={20000000}
                   auto
                   chooseLabel="Project Images"
                 />
@@ -1935,7 +1939,7 @@ export default function AdminProjects() {
                   chooseOptions={{ icon: "pi pi-upload" }}
                   name="projectDocs"
                   accept="application/pdf"
-                  maxFileSize={5000000}
+                  maxFileSize={20000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "documents", "PROJECT_DOCUMENTS")
                   }
@@ -1976,7 +1980,7 @@ export default function AdminProjects() {
                   customUpload
                   name="projectSideImage"
                   accept="image/*"
-                  maxFileSize={5000000}
+                  maxFileSize={20000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "sideImage", "PROJECT_SIDE_IMAGE")
                   }
@@ -2024,7 +2028,7 @@ export default function AdminProjects() {
                   customUpload
                   name="projectMainImage"
                   accept="image/*"
-                  maxFileSize={5000000}
+                  maxFileSize={20000000}
                   uploadHandler={(e) =>
                     handleFileChange(e, "mainImage", "PROJECT_MAIN_IMAGE")
                   }
