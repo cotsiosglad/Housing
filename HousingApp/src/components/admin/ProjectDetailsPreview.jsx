@@ -580,7 +580,7 @@ const ProjectDetailsPreview = ({
           </div>
 
           <div className="row mt-4">
-            <div className="col-12 col-md-4 col-lg-4 text-center align-self-center">
+            <div className={`${projectVideo && projectVideo.length > 0 ? 'col-12 col-md-4 col-lg-4 ' : 'col-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4 '} text-center align-self-center`}>
               <a
                 className="download-button"
                 href={retblob(
@@ -652,7 +652,7 @@ const ProjectDetailsPreview = ({
 
               </OverlayPanel>
             </div>
-            <div className="col-12 col-md-8 col-lg-8 text-center align-self-center">
+            <div className={`${projectVideo && projectVideo.length > 0 ? 'col-12 col-md-8 col-lg-8' : 'd-none'} text-center align-self-center`}>
               {/* <video controls autoPlay={false} style={{ height: "230px" }}>
                             <source src="../images/GARDENS.mp4" type="video/mp4"  ></source>
                             Your browser does not support the video tag.
