@@ -228,6 +228,10 @@ img {
   overflow: hidden!important;
 }
 
+.p-inputtext{
+  color: black !important;
+}
+
 @media screen and (max-width: 800px) {
 
   .grid4,
