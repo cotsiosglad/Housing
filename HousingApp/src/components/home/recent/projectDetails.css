@@ -289,6 +289,70 @@
   transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
 }
 
+.sold-apartment {
+  position: relative;
+  background-color: var(--color1) !important;
+  border-left: 3px solid #e74c3c;
+  pointer-events: none;
+}
+
+.sold-apartment:hover {
+  background-color: rgba(255, 240, 240, 0.7);
+}
+
+.sold-apartment td {
+  color: #c0392b;
+}
+
+.sold-apartment .apartment-price {
+  text-decoration: line-through;
+  color: #e74c3c;
+}
+
+.sold-apartment .apartment-status {
+  font-weight: 600;
+  color: #c0392b;
+}
+
+/* .sold-apartment::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  pointer-events: none;
+} */
+
+/* Badge for sold status */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.sold-badge {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #c0392b;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.available-badge {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #27ae60;
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.pending-badge {
+  background-color: rgba(241, 196, 15, 0.1);
+  color: #f39c12;
+  border: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+
 @media only screen and (max-width: 1149px) {
   video{
     /* width: inherit!important; */

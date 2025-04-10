@@ -1058,13 +1058,13 @@ export default function AdminProjects() {
 
   const getSeverity = (value) => {
     switch (value) {
-      case "Available":
+      case "Διαθέσιμο":
         return "success";
 
       case "Partial Availability":
         return "warning";
 
-      case "Sold":
+      case "Πωλήθηκε":
         return "danger";
 
       default:
@@ -2173,7 +2173,7 @@ export default function AdminProjects() {
                     style={{ width: "12%" }}></Column>
                   <Column
                     field="verandas"
-                    header="Verandas"
+                    header={project.refName === "AMARE" ? "Ανθώνες" : "Verandas"}
                     editor={(options) => textEditor(options)}
                     style={{ width: "12%" }}></Column>
                   <Column

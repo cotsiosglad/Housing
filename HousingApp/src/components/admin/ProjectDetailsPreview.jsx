@@ -40,6 +40,7 @@ import ScrollToTop from "../../customHelperComponents/ScrollToTop";
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { Toast } from "primereact/toast";
 import { InputNumber } from "primereact/inputnumber";
+import { classNames } from 'primereact/utils';
 
 
 const ProjectDetailsPreview = ({
@@ -337,6 +338,22 @@ const ProjectDetailsPreview = ({
   const priceEditor = (options) => {
     return <InputNumber value={options.value} onValueChange={(e) => options.editorCallback(e.value)} mode="currency" currency="EUR" locale="el-GR" />;
   };
+
+  const rowClass = (data) => {
+    return {
+      'sold-apartment': data.status === 'Πωλήθηκε',
+      'colouredRows': data.status !== 'Πωλήθηκε'
+    };
+  };
+
+  const statusBodyTemplate = (rowData) => {
+    const statusClassName = classNames('status-badge', {
+      'sold-badge': rowData.status === 'Πωλήθηκε',
+      'available-badge': rowData.status !== 'Πωλήθηκε'
+    });
+
+    return <div className={statusClassName}>{rowData.status}</div>;
+  };
   return (
     <>
       <Toast ref={PreviewToast} position="bottom-right" />
@@ -549,7 +566,8 @@ const ProjectDetailsPreview = ({
                     // selection={selectedProject}
                     metaKeySelection={false}
                     onSelectionChange={(e) => onSelectItem(e.value)}
-                    rowClassName={'colouredRows'}
+                    // rowClassName={'colouredRows'}
+                    rowClassName={rowClass}
                     dataKey="flatNo"
                     value={apartmentList}
                     stripedRows
@@ -559,12 +577,12 @@ const ProjectDetailsPreview = ({
                     <Column field="baths" header="Μπάνιο/Τουαλέτες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
                     <Column field="internalArea" header="Εσ. Χώροι" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
                     <Column field="coveredVerandas" header="Καλ. Βεράντες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="verandas" header="Βεράντες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="verandas" header={project.refName === "AMARE" ? "Ανθώνες" : "Βεράντες"} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
                     <Column field="storage" header="Αποθήκη" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
                     <Column field="garage" header="Γκαράζ" hidden={project.projectFor == "Κατοικίες" ? false : true} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
                     <Column field="area" header="Περιοχή" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
                     <Column field="price" header="Τιμή(€)" body={priceBodyTemplate} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="status" header="Κατάσταση" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                    <Column field="status" header="Κατάσταση" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }} body={statusBodyTemplate}></Column>
                     <Column
                       header="Actions"
                       body={actionBodyTemplate}
@@ -583,6 +601,7 @@ const ProjectDetailsPreview = ({
             <div className={`${projectVideo && projectVideo.length > 0 ? 'col-12 col-md-4 col-lg-4 ' : 'col-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4 '} text-center align-self-center`}>
               <a
                 className="download-button"
+                rel="noreferrer"
                 href={retblob(
                   projectDocuments && projectDocuments.length > 0
                     ? projectDocuments[0].files[0].itemImageSrc
