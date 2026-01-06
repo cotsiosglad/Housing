@@ -41,7 +41,8 @@ import { OverlayPanel } from 'primereact/overlaypanel';
 import { Toast } from "primereact/toast";
 import { InputNumber } from "primereact/inputnumber";
 import { classNames } from 'primereact/utils';
-
+import useDeviceType from "../../customHooks/useDeviceType";
+import ApartmentListing from "../helper/AvailabilityCards/ApartmentListing"
 
 const ProjectDetailsPreview = ({
   project,
@@ -58,8 +59,10 @@ const ProjectDetailsPreview = ({
   const [selectedApartment, setSelectedApartment] = useState("");
   // const [selectedProject, setSelectedProject] = useState(null);
   const [blocked, setBlocked] = useState(false);
+  const [currentPosition, setCurrectPosition] = useState({ x: 0, y: 0 });
   const op = useRef(null);
   const PreviewToast = useRef(null);
+  const deviceType = useDeviceType();
   // const [currProjectImages, setCurrProjectImages] = useState([]);
   // const [productIndex, setProductIndex] = useState(0);
   // const [lightboxController, setLightboxController] = useState({
@@ -228,6 +231,14 @@ const ProjectDetailsPreview = ({
     setDialogFormVisible(newState);
   };
 
+  const handleCardExpressInterestButton = (data) => {
+    debugger;
+    setSelectedApartment(
+      "Project:" + project.title + " Flat:" + data.flatNo
+    );
+    setDialogFormVisible(true);
+  };
+
   async function onSelectItem(item) {
     setBlocked(true);
     const path = "projects/" + project.refName + "/apartments/" + item.flatNo;
@@ -253,9 +264,13 @@ const ProjectDetailsPreview = ({
     //   if (res) {
     //     setToggler(true);
     //   }
+
     const aa = await fetchAndSetItemImages(path);
     if (aa) {
       setItemImages(aa);
+      if (deviceType === "mobile") {
+        setCurrectPosition({ x: window.scrollX, y: window.scrollY })
+      }
       setToggler(true);
     }
 
@@ -375,6 +390,9 @@ const ProjectDetailsPreview = ({
           toggler={toggler}
           updateToggler={(e) => {
             setToggler(false);
+            if (deviceType === "mobile") {
+              window.scrollTo(currentPosition.x, currentPosition.y);
+            }
           }}
         />
 
@@ -550,52 +568,63 @@ const ProjectDetailsPreview = ({
               </div>
             </div>
           </div>
-          <div
-            className={`row ${apartmentList && apartmentList.length > 0 ? "" : "d-none"
-              }`}>
-            <BlockUI blocked={blocked}>
-              <LoadingBar isVisible={blocked} />
-              <div className="col-12">
-                <div className="project-wrapper-title">
-                  <Heading title="ΔΙΑΘΕΣΙΜΟΤΗΤΑ" />
+          {apartmentList && apartmentList.length > 0 ? (
+            <div
+              className={`row`}>
+              <BlockUI blocked={blocked}>
+                <LoadingBar isVisible={blocked} />
+                <div className="col-12">
+                  <div className="project-wrapper-title">
+                    <Heading title="ΔΙΑΘΕΣΙΜΟΤΗΤΑ" />
+                  </div>
+                  <div>
+                    {deviceType === 'mobile' ? (
+                      <ApartmentListing
+                        apartmentList={apartmentList}
+                        projectFor={project.projectFor}
+                        onExpressInterestButtonClick={handleCardExpressInterestButton}
+                        onShowDocumentsClick={onSelectItem}
+                      />)
+                      :
+                      <DataTable
+                        selectionMode="single"
+                        scrollable
+                        // selection={selectedProject}
+                        metaKeySelection={false}
+                        onSelectionChange={(e) => onSelectItem(e.value)}
+                        // rowClassName={'colouredRows'}
+                        rowClassName={rowClass}
+                        dataKey="flatNo"
+                        value={apartmentList}
+                        stripedRows
+                        tableStyle={{ minWidth: "50rem" }}>
+                        <Column field="flatNo" header={project.projectFor == "Κατοικίες" ? "Αρ." : "Διαμ."} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="beds" header="Δωμάτια" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="baths" header="Μπάνιο/Τουαλέτες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="internalArea" header="Εσ. Χώροι" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="coveredVerandas" header="Καλ. Βεράντες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="verandas" header={project.refName === "AMARE" ? "Ανθώνες" : "Βεράντες"} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="storage" header="Αποθήκη" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="garage" header="Γκαράζ" hidden={project.projectFor == "Κατοικίες" ? false : true} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="area" header="Περιοχή" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="price" header="Τιμή(€)" body={priceBodyTemplate} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
+                        <Column field="status" header="Κατάσταση" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }} body={statusBodyTemplate}></Column>
+                        <Column
+                          header="Actions"
+                          body={actionBodyTemplate}
+                          exportable={false}
+                          style={{ minWidth: "8rem" }}
+                          alignFrozen="right"
+                          frozen={true}></Column>
+                        {/* <Column header="Actions" exportable={false} style={{ minWidth: '8rem' }} alignFrozen="right" frozen={true}></Column> */}
+                      </DataTable>
+                    }
+                  </div>
                 </div>
-                <div className="project-wrapper-content">
-                  <DataTable
-                    selectionMode="single"
-                    scrollable
-                    // selection={selectedProject}
-                    metaKeySelection={false}
-                    onSelectionChange={(e) => onSelectItem(e.value)}
-                    // rowClassName={'colouredRows'}
-                    rowClassName={rowClass}
-                    dataKey="flatNo"
-                    value={apartmentList}
-                    stripedRows
-                    tableStyle={{ minWidth: "50rem" }}>
-                    <Column field="flatNo" header={project.projectFor == "Κατοικίες" ? "Αρ." : "Διαμ."} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="beds" header="Δωμάτια" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="baths" header="Μπάνιο/Τουαλέτες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="internalArea" header="Εσ. Χώροι" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="coveredVerandas" header="Καλ. Βεράντες" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="verandas" header={project.refName === "AMARE" ? "Ανθώνες" : "Βεράντες"} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="storage" header="Αποθήκη" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="garage" header="Γκαράζ" hidden={project.projectFor == "Κατοικίες" ? false : true} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="area" header="Περιοχή" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="price" header="Τιμή(€)" body={priceBodyTemplate} headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }}></Column>
-                    <Column field="status" header="Κατάσταση" headerStyle={{ textAlign: "center" }} style={{ textAlign: "center" }} body={statusBodyTemplate}></Column>
-                    <Column
-                      header="Actions"
-                      body={actionBodyTemplate}
-                      exportable={false}
-                      style={{ minWidth: "8rem" }}
-                      alignFrozen="right"
-                      frozen={true}></Column>
-                    {/* <Column header="Actions" exportable={false} style={{ minWidth: '8rem' }} alignFrozen="right" frozen={true}></Column> */}
-                  </DataTable>
-                </div>
-              </div>
-            </BlockUI>
-          </div>
+              </BlockUI>
+            </div>
+          ) : null}
+
 
           <div className="row mt-4">
             <div className={`${projectVideo && projectVideo.length > 0 ? 'col-12 col-md-4 col-lg-4 ' : 'col-12 offset-md-4 col-md-4 offset-lg-4 col-lg-4 '} text-center align-self-center`}>
