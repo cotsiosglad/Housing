@@ -578,7 +578,13 @@ const ProjectDetailsPreview = ({
                     <Heading title="ΔΙΑΘΕΣΙΜΟΤΗΤΑ" />
                   </div>
                   <div>
-                    {deviceType === 'mobile' ? (
+                    <ApartmentListing
+                      apartmentList={apartmentList}
+                      projectFor={project.projectFor}
+                      onExpressInterestButtonClick={handleCardExpressInterestButton}
+                      onShowDocumentsClick={onSelectItem}
+                    />
+                    {/* {deviceType ? (
                       <ApartmentListing
                         apartmentList={apartmentList}
                         projectFor={project.projectFor}
@@ -616,9 +622,8 @@ const ProjectDetailsPreview = ({
                           style={{ minWidth: "8rem" }}
                           alignFrozen="right"
                           frozen={true}></Column>
-                        {/* <Column header="Actions" exportable={false} style={{ minWidth: '8rem' }} alignFrozen="right" frozen={true}></Column> */}
                       </DataTable>
-                    }
+                    } */}
                   </div>
                 </div>
               </BlockUI>

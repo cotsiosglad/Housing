@@ -340,9 +340,27 @@ button {
 
 @media (min-width: 1024px) {
     .cards-grid {
-    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(3, 1fr); */
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
     }
 
+    .specs-grid{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    }
+
+    .pulse-indicator{
+        display: none;
+    }
+    .card-content{
+        padding: 0.8rem;
+    }
+    .button-container{
+        flex-direction: row;
+    }
     .expanded-grid {
     grid-template-columns: repeat(3, 1fr);
     }

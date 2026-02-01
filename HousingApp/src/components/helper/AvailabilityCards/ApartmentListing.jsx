@@ -3,9 +3,11 @@ import "./AvailabilityCardsStyle.css"
 import { extractFloor } from '../CommonFunctions';
 import FloorCard from './FloorCard';
 import ApartmentCard from './ApartmentCard';
+import useDeviceType from "../../../customHooks/useDeviceType";
 
 const ApartmentListing = ({ apartmentList = [], projectFor = 'Διαμερίσματα', onExpressInterestButtonClick, onShowDocumentsClick }) => {
     const [expandedFloor, setExpandedFloor] = useState(null);
+    const deviceType = useDeviceType();
 
     // Process apartments based on projectFor
     const processedData = useMemo(() => {
@@ -56,7 +58,7 @@ const ApartmentListing = ({ apartmentList = [], projectFor = 'Διαμερίσμ
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
 
             <div className="cards-grid">
-                {processedData.type === 'apartments' ? (
+                {processedData.type === 'apartments' || deviceType === "desktop" ? (
                     // Render individual apartments
                     apartmentList.map((apartment, index) => (
                         <ApartmentCard key={apartment.flatNo || index} apartment={apartment} projectType={projectFor} onButtonClick={onExpressInterestButtonClick} onShowButtonClick={onShowDocumentsClick} />
