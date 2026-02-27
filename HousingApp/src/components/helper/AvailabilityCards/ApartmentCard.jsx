@@ -34,12 +34,15 @@ const ApartmentCard = ({ apartment, projectType, onButtonClick, onShowButtonClic
             <h3 className="apartment-number">{apartment.flatNo}</h3>
             {/* <p className="apartment-type">{apartment.area || 'Διαμέρισμα'}</p> */}
           </div>
-          <div className="card-price-container">
-            <span className={`price ${isAvailable ? 'available-price' : 'sold-price'}`}>
-              {formatPrice(apartment.price)}
-            </span>
-            {isAvailable && <span className="price-label">Τιμη πωλησης</span>}
-          </div>
+          {apartment.price && apartment.price > 0 ? (
+            <div className="card-price-container">
+              <span className={`price ${isAvailable ? 'available-price' : 'sold-price'}`}>
+                {formatPrice(apartment.price)}
+              </span>
+              {isAvailable && <span className="price-label">Τιμη πωλησης</span>}
+            </div>
+          ) : null}
+
         </div>
 
         <div className="specs-grid">
@@ -64,7 +67,7 @@ const ApartmentCard = ({ apartment, projectType, onButtonClick, onShowButtonClic
             </span>
           </div>
           <div className="spec-item">
-            <span className="spec-label">Καλ. Βεράντες</span>
+            <span className="spec-label">Καλ. Βεραντες</span>
             <span className="spec-value">
               <span className="material-icons-outlined">border_outer</span>
               {apartment.coveredVerandas}

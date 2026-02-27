@@ -75,6 +75,7 @@ export default function AdminProjects() {
     status: statuses[0],
     availability: "",
     mapSrc: "",
+    flipUrl: "",
     createdBy: "",
     createdOn: "",
     updatedBy: "",
@@ -1395,7 +1396,7 @@ export default function AdminProjects() {
       "coveredVerandas",
       "internalArea",
       "storage",
-      "price",
+      //"price",
     ];
 
     const validation = fieldsToValid.map((item) => {
@@ -1519,8 +1520,8 @@ export default function AdminProjects() {
             paginator
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} projects"
+            // paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            // currentPageReportTemplate="Showing {first} to {last} of {totalRecords} projects"
             globalFilter={globalFilter}
             header={header}
             exportFilename="ProjectsExport"
@@ -1866,6 +1867,22 @@ export default function AdminProjects() {
                   onChange={(e) => onInputChange(e, "mapSrc")}
                   required
                   autoFocus
+                  className={classNames({
+                    "p-invalid": submitted && !project.mapSrc,
+                  })}
+                />
+                {submitted && !project.mapSrc && (
+                  <small className="p-error">Location is required.</small>
+                )}
+              </div>
+              <div className="col-md-6">
+                <label htmlFor="flipUrl" className="field-header">
+                  Flip Html Url
+                </label>
+                <InputText
+                  id="flipUrl"
+                  value={project.flipUrl}
+                  onChange={(e) => onInputChange(e, "flipUrl")}
                   className={classNames({
                     "p-invalid": submitted && !project.mapSrc,
                   })}

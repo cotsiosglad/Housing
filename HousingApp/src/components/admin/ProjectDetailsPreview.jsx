@@ -568,6 +568,12 @@ const ProjectDetailsPreview = ({
               </div>
             </div>
           </div>
+          {project?.flipUrl ? (
+            <div className="mb-5" style={{ position: "relative", paddingTop: "max(42%,324px)", width: "100%", height: 0 }}>
+              <iframe style={{ position: "absolute", border: "none", width: "100%", height: "100%", left: 0, top: 0 }} src={project.flipUrl} title="DOMUS ALBA" seamless="seamless" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" >
+              </iframe>
+            </div>
+          ) : null}
           {apartmentList && apartmentList.length > 0 ? (
             <div
               className={`row`}>

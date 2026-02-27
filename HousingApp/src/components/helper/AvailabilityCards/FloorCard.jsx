@@ -68,14 +68,17 @@ const FloorCard = ({ floor, apartments, onShowAll, cardIsExpanded }) => {
                                 : `${stats.minArea} - ${stats.maxArea} m²`}
                         </span>
                     </div>
-                    <div className="spec-item" style={{ gridColumn: 'span 2' }}>
-                        <span className="spec-label">Ευρος Τιμων</span>
-                        <span className="spec-value spec-total">
-                            {stats.minPrice === stats.maxPrice
-                                ? formatPrice(stats.minPrice)
-                                : `${formatPrice(stats.minPrice)} - ${formatPrice(stats.maxPrice)}`}
-                        </span>
-                    </div>
+                    {stats.minPrice && stats.minPrice > 0 ? (
+                        <div className="spec-item" style={{ gridColumn: 'span 2' }}>
+                            <span className="spec-label">Ευρος Τιμων</span>
+                            <span className="spec-value spec-total">
+                                {stats.minPrice === stats.maxPrice
+                                    ? formatPrice(stats.minPrice)
+                                    : `${formatPrice(stats.minPrice)} - ${formatPrice(stats.maxPrice)}`}
+                            </span>
+                        </div>
+                    ) : null}
+
                 </div>
 
                 <div className="button-container">

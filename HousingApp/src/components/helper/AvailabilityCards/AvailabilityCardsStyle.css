@@ -221,11 +221,12 @@
 .spec-item {
     display: flex;
     flex-direction: column;
+    font-size: 1.5rem;
 }
 
 .spec-label {
     display: block;
-    font-size: 0.925rem;
+    font-size: 1.2rem;
     /* color: var(--muted-light); */
     text-transform: uppercase;
     margin-bottom: 0.125rem;
@@ -241,7 +242,7 @@
 }
 
 .spec-value .material-icons-outlined {
-    font-size: 1.475rem;
+    font-size: 1.875rem;
 }
 
 .spec-total {
@@ -336,6 +337,14 @@ button {
     .expanded-grid {
     grid-template-columns: repeat(2, 1fr);
     }
+
+    .spec-label{
+        font-size: 1.2rem;
+    }
+
+    .spec-value .material-icons-outlined {
+        font-size: 2.075rem;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -363,5 +372,13 @@ button {
     }
     .expanded-grid {
     grid-template-columns: repeat(3, 1fr);
+    }
+
+    .spec-label{
+        font-size: 1.5rem;
+    }
+
+    .spec-value .material-icons-outlined {
+        font-size: 2.075rem;
     }
 }
