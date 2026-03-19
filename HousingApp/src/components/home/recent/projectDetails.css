@@ -147,6 +147,16 @@
   color: var(--color1) !important;
 }
 
+.p-paginator.p-component{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.p-paginator-pages{
+  display: flex;
+}
+
 .project-wrapper-box .p-button {
   background-color: var(--color2) !important;
 

@@ -1,7 +1,5 @@
 export function ConvertPathToGalleriaModel(imagePath, imageName) {
-  {
-    /*Galleria component of prime react use the below model so we need to return the url like this*/
-  }
+  //Galleria component of prime react use the below model so we need to return the url like this
   return {
     itemImageSrc: imagePath,
     thumbnailImageSrc: imagePath,
@@ -92,3 +90,36 @@ export async function CreateObjectURLFromURL(url) {
     console.error("Error fetching or creating Object URL:", error);
   }
 }
+
+/**
+ * Utility function to extract numeric value from area string
+ * @param {*} str 
+ * @returns 0 if no numeric value found, else returns the numeric value as float
+ */
+export const extractNumericValue = (str) => {
+  if (!str) return 0;
+  const match = str.toString().match(/[\d.]+/);
+  return match ? parseFloat(match[0]) : 0;
+};
+
+/**
+ * Utility function to extract floor number from flatNo
+ * @param {*} flatNo 
+ * @returns 0 if no valid floor number found, else returns the floor number as integer
+ */
+export const extractFloor = (flatNo) => {
+  if (!flatNo) return 'Other';
+  const floorDigit = flatNo.toString().charAt(0);
+  return /^\d$/.test(floorDigit) ? parseInt(floorDigit, 10) : 'Other';
+};
+
+/**
+ * Utility function to format price
+ * @param {*} price 
+ * @returns Formatted price string in Euro currency
+ */
+export const formatPrice = (price) => {
+  if (!price) return '€0';
+  const numericPrice = typeof price === 'string' ? extractNumericValue(price) : price;
+  return `€${numericPrice.toLocaleString('el-GR')}`;
+};
